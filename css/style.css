@@ -1,0 +1,188 @@
+/* Table of Contents
+-----------------------
+    1.) IMPORTS
+    2.) BUTTONS
+    3.) USER INPUTS
+    4.) STUFF
+    5.) GRID
+    6.) TABLEIZER
+    7.) DATATABLES
+    8.) TABLE CURRENCY
+    9.) STYLED TABLE
+    10.) COINS
+    11.) MODALS
+    13.) RADIO GROUPS
+                     */
+
+/* =================
+        IMPORTS
+================= */
+@import 'constants.css';
+
+/* =================
+       GENERAL
+================= */
+body {
+    max-width: 80%;
+    margin: auto;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+main {
+    margin-bottom: 75px;
+    text-align: left;
+    margin-top: 150px;
+}
+
+main h1 {
+    text-decoration: underline;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    background-color: var(--light-nonary) !important;
+    left: 0;
+    width: 100%;
+}
+
+/* =================
+       FOOTER
+================= */
+#footer-parent {
+    background-color: #b1fcf7 !important;
+    z-index: 100 !important;
+    border-top: black solid 1px !important;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    vertical-align: middle;
+    text-align: center;
+    font-family: open sans, sans-serif;
+}
+.emoji { vertical-align: middle; }
+
+/* =================
+    STYLED TABLE
+================= */
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 45%;
+    box-shadow: 0 0 20px rgba(142, 142, 142, 0.15);
+    text-align: center;
+    max-width: 100%;
+}
+.styled-table button.table_button {
+    border: none;
+    background-color: var(--light-primary);
+    transition-duration: 0.3s;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 14px;
+}
+.styled-table thead tr {
+    background-color: var(--light-primary);
+    color: #ffffff;
+    text-align: center;
+}
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #4d4d4d;
+}
+.styled-table tbody tr:nth-of-type(odd) {
+    background-color: var(--light-quaternary);
+    color: black;
+}
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: var(--light-senary);
+    color: black;
+}
+.styled-table tbody tr:nth-of-type(even) select {
+    background-color: var(--light-octonary);
+    color: var(--light-text);
+    border-color: var(--light-text);
+}
+.styled-table tbody tr:nth-of-type(odd) select {
+    background-color: var(--light-quinary);
+    color: var(--light-text);
+    border-color: var(--light-text);
+}
+.styled-table tbody tr:last-of-type {
+    /* border-bottom: 2px solid #009879; */
+    border-bottom: none;
+}
+.styled-table img {
+    transition: transform .2s;
+    width: 7.5pc;
+    margin: 0 auto;
+}
+.styled-table img:hover {
+    -ms-transform: scale(5); /* IE 9 */
+    -webkit-transform: scale(5); /* Safari 3-8 */
+    transform: scale(5); 
+}
+
+.styled-table.total-prob {
+    border-right: thin solid !important;
+    border-color: white;
+    border-width: 5px !important;
+}
+.styled-table h2 {
+    color: var(--light-octonary);
+    margin-top: 0px;
+}
+.styled-table h3 {
+    color: var(--light-text);
+}
+.styled-table tbody h2 {
+    color: var(--light-text);
+}
+.styled-table tbody a {
+    color: var(--light-denary) !important;
+    font-style: italic;
+}
+
+/* ======================= 
+        RADIO GROUPS
+========================== */
+.radio-toolbar :checked + span {
+    font-weight: bold;
+    /* background-color: var(--light-tertiary); */
+    
+    color: var(--light-nonary);
+}
+.checkbox {
+    display: none;
+}
+.radio-toolbar :not(:checked) + span {
+    background-color: var(--light-nonary);
+    color: black;
+}
+.radio-toolbar span {
+    cursor: pointer;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 3px;
+}
+.radio-toolbar input {
+    cursor: pointer;
+}
+.radio-toolbar label {
+    display: inline-block;
+    margin-bottom: 2em;
+}
+.radio-toolbar {
+    margin-top: 30px;
+}
+.radio-toolbar label :hover {
+    background-color: var(--light-quinary);
+}

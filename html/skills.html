@@ -1,0 +1,170 @@
+<!DOCTYPE html> 
+<html lang ="en">  
+<head>  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vizier</title>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="stylesheet" href="/css/topnav.css"/>
+    <link rel="icon" href="/favicon.ico">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="topNav.js"></script>
+</head> 
+<body>
+   <main>
+        <div class="main" id="main">
+            <h1 class="anchor" id="general">General</h1>
+                <h2 style="padding-top: 10px;" class="anchor-sub" id="general-skill-training">Skill Training</h2>
+                <i>When the player uses the website to <a href="/src/pages/rollers/Roller_Training_Successes.html">roll for their training</a>, they can take excess successes back as unused training hours. E.G. if a PC needs 12 more successes in order to obtain proficiency in Medicine but uses the site's roller and winds up with Total Success = 19, they can take 19 - 12 = 7 hours back into their unused training hours.</i>
+                <ul class="ul-indent">
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">Nat 20 on the check means you gain 2 hrs</span></li>
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">Nat 1 means you lose an hour</span></li>
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">Proficiency</span></li>
+                    <ol>
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">starts at 100 hrs (minimum 10 hours)</span></li>
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">from the 100 hrs subtract your Int. mod. times 10 and the Ability mod. that is used in the skill your training times 10.</span></li>
+                    <ul class="ul-indent">
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">&nbsp;Example</span></li>
+                    <ul class="ul-indent">
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">I want to train Survival, which uses Wisdom.</span></li>
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">I have a Wisdom mod. of +2 and an Int. mod of +0.</span></li>
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">So, it&rsquo;ll take me 80 hours of study.</span></li>
+                    </ul>
+                    </ul>
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">DC 15</span></li>
+                    </ol>
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">Expertise</span></li>
+                    <ol>
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">Starts at 200 hrs (minimum 20 hours)</span></li>
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">from the 200 hrs subtract your Int. mod. times 10 and the Ability mod. that is used in the skill your training times 10.</span></li>
+                    <ul class="ul-indent">
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">&nbsp;Example</span></li>
+                    <ul class="ul-indent">
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">I want to train Survival, which uses Wisdom.</span></li>
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">I have a Wisdom mod. of +2 and an Int. mod of +1.</span></li>
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">So, it&rsquo;ll take me 170 hours of study.</span></li>
+                    </ul>
+                    </ul>
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">DC 20</span></li>
+                    </ol>
+                </ul>
+                <br>
+            <h1 class="anchor" id="animal-handling">Animal Handling</h1>
+            <h2 class="anchor-sub" id="animal-handling-animal-friendship">Animal Friendship</h2>
+                <p>
+                    The character must use the skill in the <i>Skill</i> column with their target creature, spending 1 hour to do so and succeed on that check as many times as is listed in the <i>Successes</i> column. 
+                    <br>A success is defined as any check total that is equal to or greater than the number listed in the <i>DC</i> column.
+                </p>
+                <table class="styled-table">
+                    <thead><tr class="tableizer-firstrow"><th>Creature Type</th><th>DC</th><th>Skill</th><th>Successes</th></tr></thead>
+                    <tbody>
+                        <tr><td>Aberration</td><td>20</td><td>History/Arcana</td><td>20</td></tr>
+                        <tr><td>Beast</td><td>10</td><td>Animal Handeling</td><td>10</td></tr>
+                        <tr><td>Celestial</td><td>20</td><td>Religion/History/Any Charisma Skill</td><td>1d12 + Target's Cha./Wis. Mod.</td></tr>
+                        <tr><td>Dragon</td><td>20</td><td>Any Charisma Skill</td><td>1d12 + Target's Cha./Wis. Mod.</td></tr>
+                        <tr><td>Elemental</td><td>20</td><td>Arcana</td><td>20</td></tr>
+                        <tr><td>Fey</td><td>20</td><td>Nature</td><td>20</td></tr>
+                        <tr><td>Fiend</td><td>20</td><td>Religion/History/Any Charisma Skill</td><td>1d12 + Target's Cha./Wis. Mod.</td></tr>
+                        <tr><td>Giant</td><td>15</td><td>Any Charisma Skill</td><td>1d12 + Target's Cha./Wis. Mod.</td></tr>
+                        <tr><td>Humanoid</td><td>15</td><td>Any Charisma Skill</td><td>1d12 + Target's Cha./Wis. Mod.</td></tr>
+                        <tr><td>Monstrosity</td><td>15</td><td>Animal Handeling</td><td>10</td></tr>
+                        <tr><td>Ooze</td><td>20</td><td>Arcana</td><td>5</td></tr>
+                        <tr><td>Plant</td><td>15</td><td>Nature</td><td>5</td></tr>
+                        <tr><td>Undead</td><td>15</td><td>Arcana</td><td>15</td></tr>
+                    </tbody>
+                </table>
+                <br>
+            <h1 class="anchor" id="arcana">Arcana</h1>
+                <h2 class="anchor-sub" id="arcana-identifying">Identifying a Spell Being Cast</h2>
+                    <i>This may be performed once per turn as a free reaction</i>
+                    <table class="styled-table">
+                        <thead><tr class="tableizer-firstrow"><th>DC</th><th>Result</th></tr></thead>
+                        <tbody>
+                            <tr><td>nat 1</td><td>"I'm not entirely sure they're casting a spell. <br>They may be swatting at insects flying around them while muttering foreign expletives under their breath."</td></tr>
+                            <tr><td>12</td><td>Learn spell's school</td></tr>
+                            <tr><td>16</td><td>Learn spell's base level</td></tr>
+                            <tr><td>21</td><td>Learn spell's name</td></tr>
+                            <tr><td>27</td><td>Learn exact level at whic hthe spell is cast</td></tr>
+                            <tr><td>nat 20</td><td>Same as DC 27</td></tr>
+                        </tbody>
+                    </table>
+                <br>
+            <h1 class="anchor" id="nature-medicine">Nature/Medicine</h1>
+                <h2 class="anchor-sub" id="nature-medicine-foraging/butchering">Foraging/Butchering</h2>
+                    <h3>Foraging/Butchering</h3>
+                        <table class="styled-table">
+                            <thead><tr class="tableizer-firstrow"><th>zDC</th><th>Result</th></tr></thead>
+                            <tbody>
+                                <tr><td>nat 1</td><td>"Those plants don't exist. I'm conviced of that!"<br>"Oh yeah, that creature...nothing was harvestable due to...hmm...external reasons."</td></tr>
+                                <tr><td>5</td><td>1d4 + skill mod.</td></tr>
+                                <tr><td>10</td><td>1d6 + skill mod.</td></tr>
+                                <tr><td>15</td><td>1d8 + skill mod.</td></tr>
+                                <tr><td>20</td><td>1d10 + skill mod.</td></tr>
+                                <tr><td>25</td><td>1d12 + skill mod.</td></tr>
+                                <tr><td>30</td><td>2d12 + skill mod</td></tr>
+                                <tr><td>nat 20</td><td>2d12 + skill mod</td></tr>
+                            </tbody>
+                        </table>
+                    <h3>Creature Size Modifiers</h3>
+                        <i>x10 for small things, such as Dragon scales.</i>
+                        <table class="styled-table">
+                            <thead><tr class="tableizer-firstrow"><th>Size</th><th>Modifier</th></tr></thead>
+                            <tbody>
+                            <tr><td>Tiny</td><td>/4</td></tr>
+                            <tr><td>Small</td><td>/2</td></tr>
+                            <tr><td>Medium</td><td>x1</td></tr>
+                            <tr><td>Large</td><td>x2</td></tr>
+                            <tr><td>Huge</td><td>x4</td></tr>
+                            <tr><td>Gargantuan</td><td>x8</td></tr>
+                            </tbody>
+                        </table>
+                <br>
+            <h1 class="anchor" id="medicine">Medicine</h1>
+                <h2 class="anchor-sub" id="medicine-determine-health">Medicine Check for Determing Health</h2>
+                    <i>This may be performed once per turn as a free reaction</i>
+                    <table class="styled-table">
+                        <thead><tr class="tableizer-firstrow"><th>DC</th><th>Result</th></tr></thead>
+                        <tbody>
+                            <tr><td>nat 1</td><td>"I'm not sure they're injured whatsoever. <br>Are you sure we've actually hit this creature before?"</td></tr>
+                            <tr><td>5</td><td>50% range</td></tr>
+                            <tr><td>10</td><td>25% range</td></tr>
+                            <tr><td>15</td><td>10% range</td></tr>
+                            <tr><td>20</td><td>5% range</td></tr>
+                            <tr><td>25</td><td>exact percentage</td></tr>
+                            <tr><td>nat 20</td><td>exact percentage</td></tr>
+                        </tbody>
+                    </table>
+                <br>
+            <h1 class="anchor" id="persuasion">Persuasion</h1>
+                <h2 class="anchor-sub" id="persuasion-negotiating">Negotiating a Price</h2>
+                    <table class="styled-table">
+                        <thead><tr class="tableizer-firstrow"><th>DC</th><th>Result</th></tr></thead>
+                        <tbody>
+                            <tr><td>DC - 10 or more</td><td>The price goes up by 25%</td></tr>
+                            <tr><td>DC - 5 or more</td><td>The price goes up by 10%</td></tr>
+                            <tr><td>DC +/- 4</td><td>No change</td></tr>
+                            <tr><td>DC + 5 or more</td><td>The price goes down by 10%</td></tr>
+                            <tr><td>DC + 10 or more</td><td>The price goes down by 25%</td></tr>
+                            <tr><td>nat 20</td><td>The price goes down by 25%</td></tr>
+                        </tbody>
+                    </table>
+                    <h3>DCs by Item Rarity</h3>
+                    <table class="styled-table">
+                        <thead><tr class="tableizer-firstrow"><th>Item Rarity</th><th>Difficulty Class (DC)</th></tr></thead>
+                        <tbody>
+                            <tr><td>Mundane</td><td>DC 10</td></tr>
+                            <tr><td>Common</td><td>DC 10</td></tr>
+                            <tr><td>Uncommon</td><td>DC 15</td></tr>
+                            <tr><td>Rare</td><td>DC 18</td></tr>
+                            <tr><td>Very Rare</td><td>DC 21</td></tr>
+                            <tr><td>Legendary</td><td>DC 26</td></tr>
+                        </tbody>
+                    </table>
+        </div>
+    </main> 
+    <script>
+        buildTopNav()
+    </script>
+</body> 
+</html>

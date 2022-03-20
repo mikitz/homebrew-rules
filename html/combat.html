@@ -1,0 +1,42 @@
+<!DOCTYPE html> 
+<html lang ="en">  
+<head>  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vizier</title>  
+    <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="stylesheet" href="/css/topnav.css"/>
+    <link rel="icon" href="/favicon.ico">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="topNav.js"></script>
+</head> 
+<body>
+   <main>
+        <div class="main" id="main">
+            <h1 class="anchor" id="passive">Passive</h1>
+                <h2 style="padding-top: 10px;" class="anchor-sub" id="passive-fall-damage">Fall Damage</h2>
+                <table class="styled-table">
+                    <thead><tr class="tableizer-firstrow"><th>Creature Size</th><th>Die Size</th></tr></thead>
+                    <tbody>
+                        <tr><td>Tiny</td><td>No Damage</td></tr>
+                        <tr><td>Small</td><td>d4</td></tr>
+                        <tr><td>Medium</td><td>d6</td></tr>
+                        <tr><td>Large</td><td>d8</td></tr>
+                        <tr><td>Huge</td><td>d10</td></tr>
+                        <tr><td>Gargantuan</td><td>d12</td></tr>
+                    </tbody>
+                </table>
+            <h1 class="anchor" id="active">Active</h1>
+                <h2 style="padding-top: 10px;" class="anchor-sub" id="active-flanking">Flanking</h2>
+                <ul class="ul-indent">
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">+2 when two teammates are flanking</span></li>
+                    <li style="font-weight: 400;"><span style="font-weight: 400;">+5 when 3 or more teammates are flanking</span></li>
+                </ul>
+        </div>
+    </main>
+    <script>
+        buildTopNav()
+    </script> 
+</body> 
+</html>
