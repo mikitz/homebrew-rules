@@ -8,18 +8,16 @@
         <link rel="icon" href="favicon.ico">
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/sidenav.css"/>
+        <link rel="stylesheet" href="css/topnav.css"/>
         <script src="https://kit.fontawesome.com/7e282d14cd.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         <script src="js/global.js"></script>
         <script src="js/app.js"></script>
-        <script src="js/topNav.js"></script>
+        <script src="js/topnav.js"></script>
     </head>
-    <div class="header">
-        <div id="top-nav" class="radio-toolbar"><i class="fa-solid fa-circle-half-stroke"></i></div>
-        <div id="nav_top" class="topnav"></div>
-    </div> 
+    <div class="sidenav" id="side-nav"></div> 
+    <div id="top-nav" class="topnav"></div>
     <body>
-        <div class="sidenav"></div> 
         <main>
             <div id="content"></div>
         </main>
@@ -31,6 +29,7 @@
     <script>
         populateNav()
         indexListeners()
-        populateContent()
+        $(document.getElementById('content')).load('html/home.html')
+        document.getElementById('home').classList.add('active') // Set active class
     </script>
 </html>

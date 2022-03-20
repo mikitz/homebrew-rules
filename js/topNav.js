@@ -3,7 +3,8 @@ function buildTopNav(){
     // GET ELEMENTS
         const anchors = document.querySelectorAll('.anchor') // Get all the anchor elements
         const anchorSubs = document.querySelectorAll('.anchor-sub') // Get all the sub-anchor elements
-        const topNav = document.getElementById('side-nav') // Get the Top Nav element
+        const topNav = document.getElementById('top-nav') // Get the Top Nav element
+        topNav.innerHTML = '' // Clear the Top Nav
     // LOOPS
         // Loop through the anchor elements
         anchors.forEach(element => {
@@ -52,78 +53,78 @@ function buildTopNav(){
                     topNav.appendChild(div) // Append div to topnav
                 }
         })
-    // PROFILE
-        // If the current page is the profile page
-        if (window.location.href.includes("profile")){
-            // LOGIN
-                function loginFunction(){
-                    const div = document.createElement('div') // Create new div
-                    div.setAttribute('class', 'dropdown right') // Set its class
-                    const button = document.createElement('button') // Create a new button
-                    button.setAttribute('class', 'dropbtn') // Set its class
-                    button.innerHTML = 'Login' // Set innerHTML
-                    button.id = 'login-button' // Set ID
-                    // Set onclick
-                    button.addEventListener('click', function() { 
-                        var modal = document.getElementById("modal-login"); // Alert the user that they don't have enouhg funds via a modal
-                        modal.style.display = "block"; // Display the modal
-                        var span = document.getElementsByClassName("close")[0]; // Get the <span> element that closes the modal
-                        // USER CLICKS
-                            // When the user clicks on <span> (x), close the modal
-                            span.onclick = function() {
-                                modal.style.display = "none";
-                            }
-                            // When the user clicks anywhere outside of the modal, close it
-                            window.onclick = function(event) {
-                                if (event.target == modal) {
-                                    modal.style.display = "none";
-                                }
-                            }
-                    })
-                    div.appendChild(button) // Append button to div
-                    topNav.appendChild(div) // Append div to topnav
-                }
-                loginFunction()
-            // SIGN UP
-                function signUpFunction() {
-                    const div = document.createElement('div') // Create new div
-                    div.setAttribute('class', 'dropdown right') // Set its class
-                    const button = document.createElement('button') // Create a new button
-                    button.setAttribute('class', 'dropbtn') // Set its class
-                    button.innerHTML = 'Signup' // Set innerHTML
-                    button.id = 'signup-button' // Set ID
-                    // Set onclick
-                    button.addEventListener('click', function() { 
-                        var modal = document.getElementById("modal-signup"); // Alert the user that they don't have enouhg funds via a modal
-                        modal.style.display = "block"; // Display the modal
-                        var span = document.getElementsByClassName("close")[0]; // Get the <span> element that closes the modal
-                        // USER CLICKS
-                            // When the user clicks on <span> (x), close the modal
-                            span.onclick = function() {
-                                modal.style.display = "none";
-                            }
-                            // When the user clicks anywhere outside of the modal, close it
-                            window.onclick = function(event) {
-                                if (event.target == modal) {
-                                    modal.style.display = "none";
-                                }
-                            }
-                    })
-                    div.appendChild(button) // Append button to div
-                    topNav.appendChild(div) // Append div to topnav
-                }
-                signUpFunction()
-            // LOGOUT
-                function logoutFunction() {
-                    const div = document.createElement('div') // Create new div
-                    div.setAttribute('class', 'dropdown right') // Set its class
-                    const button = document.createElement('button') // Create a new button
-                    button.setAttribute('class', 'dropbtn') // Set its class
-                    button.innerHTML = 'Logout' // Set innerHTML
-                    button.id = 'logout-button' // Set ID
-                    div.appendChild(button) // Append button to div
-                    topNav.appendChild(div) // Append div to topnav
-                }
-                logoutFunction()
-        }
+    // // PROFILE
+    //     // If the current page is the profile page
+    //     if (window.location.href.includes("profile")){
+    //         // LOGIN
+    //             function loginFunction(){
+    //                 const div = document.createElement('div') // Create new div
+    //                 div.setAttribute('class', 'dropdown right') // Set its class
+    //                 const button = document.createElement('button') // Create a new button
+    //                 button.setAttribute('class', 'dropbtn') // Set its class
+    //                 button.innerHTML = 'Login' // Set innerHTML
+    //                 button.id = 'login-button' // Set ID
+    //                 // Set onclick
+    //                 button.addEventListener('click', function() { 
+    //                     var modal = document.getElementById("modal-login"); // Alert the user that they don't have enouhg funds via a modal
+    //                     modal.style.display = "block"; // Display the modal
+    //                     var span = document.getElementsByClassName("close")[0]; // Get the <span> element that closes the modal
+    //                     // USER CLICKS
+    //                         // When the user clicks on <span> (x), close the modal
+    //                         span.onclick = function() {
+    //                             modal.style.display = "none";
+    //                         }
+    //                         // When the user clicks anywhere outside of the modal, close it
+    //                         window.onclick = function(event) {
+    //                             if (event.target == modal) {
+    //                                 modal.style.display = "none";
+    //                             }
+    //                         }
+    //                 })
+    //                 div.appendChild(button) // Append button to div
+    //                 topNav.appendChild(div) // Append div to topnav
+    //             }
+    //             loginFunction()
+    //         // SIGN UP
+    //             function signUpFunction() {
+    //                 const div = document.createElement('div') // Create new div
+    //                 div.setAttribute('class', 'dropdown right') // Set its class
+    //                 const button = document.createElement('button') // Create a new button
+    //                 button.setAttribute('class', 'dropbtn') // Set its class
+    //                 button.innerHTML = 'Signup' // Set innerHTML
+    //                 button.id = 'signup-button' // Set ID
+    //                 // Set onclick
+    //                 button.addEventListener('click', function() { 
+    //                     var modal = document.getElementById("modal-signup"); // Alert the user that they don't have enouhg funds via a modal
+    //                     modal.style.display = "block"; // Display the modal
+    //                     var span = document.getElementsByClassName("close")[0]; // Get the <span> element that closes the modal
+    //                     // USER CLICKS
+    //                         // When the user clicks on <span> (x), close the modal
+    //                         span.onclick = function() {
+    //                             modal.style.display = "none";
+    //                         }
+    //                         // When the user clicks anywhere outside of the modal, close it
+    //                         window.onclick = function(event) {
+    //                             if (event.target == modal) {
+    //                                 modal.style.display = "none";
+    //                             }
+    //                         }
+    //                 })
+    //                 div.appendChild(button) // Append button to div
+    //                 topNav.appendChild(div) // Append div to topnav
+    //             }
+    //             signUpFunction()
+    //         // LOGOUT
+    //             function logoutFunction() {
+    //                 const div = document.createElement('div') // Create new div
+    //                 div.setAttribute('class', 'dropdown right') // Set its class
+    //                 const button = document.createElement('button') // Create a new button
+    //                 button.setAttribute('class', 'dropbtn') // Set its class
+    //                 button.innerHTML = 'Logout' // Set innerHTML
+    //                 button.id = 'logout-button' // Set ID
+    //                 div.appendChild(button) // Append button to div
+    //                 topNav.appendChild(div) // Append div to topnav
+    //             }
+    //             logoutFunction()
+    //     }
 }

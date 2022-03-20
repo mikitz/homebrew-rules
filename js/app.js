@@ -1,4 +1,4 @@
-const pages = ['Home', 'Ability Scores',  'Combat',  'Crafting',  'Items',  'Mechanics',  'Skills',  'Spells',  'Spells',  'Tools',  'World']
+const pages = ['Home', 'Ability Scores',  'Combat',  'Crafting',  'Items',  'Mechanics',  'Skills',  'Spells',  'Tools',  'World']
 
 // Function to populate the top nav
 function populateNav() {
@@ -8,55 +8,27 @@ function populateNav() {
     let sideNavElement = document.getElementById('side-nav') // Get the side nav element
     pages.forEach(element => {
         let htmlPage = element.replaceAll(" ", "_").toLowerCase() // Format it to pull the proper file
-        if (htmlPage == 'home') {
-            let a = document.createElement('a')
+            let a = document.createElement('button')
             a.innerText = element
-            a.id = element
-        } else {
-            // Dropdown Button
-            let button = document.createElement('button')
-            button.classList.add('dropdown-btn')
-            button.innerHTML = `${element} <i class="fa fa-caret-down"></i>`
-            sideNavElement.appendChild(button)
-                // Div
-                let div = document.createElement('div')
-                div.classList.add('dropdown-container')
-                    // Inner Elements
-            sideNavElement.appendChild(div)
-        }   
+            a.id = htmlPage
+            a.classList.add('dropdown-btn')
+            a.addEventListener('click', function() { populateContent(htmlPage) }) 
+            sideNavElement.appendChild(a)
     });
-    // ===============
-    //     Top Nav
-    // ===============
-    // let topNavElement = document.getElementById('top-nav') // Get the top nav element
-    // pages.forEach(element => { // Loop through each page
-    //     let htmlPage = element.replaceAll(" ", "_").toLowerCase() // Format it to pull the proper file
-    //     // Label
-    //     let label = document.createElement('label') // Create the label
-    //     label.id = `${htmlPage}-label`
-    //     // Input
-    //     let input = document.createElement('input')
-    //     input.classList.add('checkbox')
-    //     input.type = 'radio'
-    //     input.name = 'top-nav'
-    //     input.id = htmlPage
-    //     input.value = htmlPage
-    //     if (element == 'Home') { input.checked = true }
-    //     label.appendChild(input)
-    //     // Span
-    //     let span = document.createElement('span')
-    //     span.innerText = element
-    //     label.appendChild(span)
-    //     topNavElement.appendChild(label)
-    // });
 }
 // Function to populate the homebrew content
-function populateContent() {
-    document.getElementById('nav_top').innerHTML = '' // Clear the local nav
-    let category = getSelectedValueFromRadioGroup('top-nav') // Get the selected homebrew category
-    category = category.replaceAll(" ", "_").toLowerCase() // Format it to pull the proper file
+function populateContent(htmlPage) {
     let content = document.getElementById('content') // Get the content element that gets populated with the proper HTML
-    $(content).load(`html/${category}.html`) // Populate the innerHTML based on the selected method
+    // Active Class Toggle
+    pages.forEach(element => {
+        let ID = element.replaceAll(" ", "_").toLowerCase() // Format it to pull the proper file
+        if ( ID == htmlPage ) {
+            document.getElementById(ID).classList.add('active') // Set active class
+        } else {
+            document.getElementById(ID).classList.remove('active') // Set active class
+        }
+    });
+    $(content).load(`html/${htmlPage}.html`) // Populate the innerHTML based on the selected method
 }
 // Function to set the listeners
 function indexListeners() {

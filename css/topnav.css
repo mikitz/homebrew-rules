@@ -2,15 +2,21 @@
 
 /* Add a black background color to the top navigation */
  .topnav {
-    top: 150px;
+    /* top: 150px; */
     overflow: hidden;
     position: fixed;
-    width: 100%;
+    width: 100% !important;
     transition: all 0.4s ease;
     /* bottom: 0; */
     z-index: 999;
     align-content: center;
     border-bottom: #4d4d4d solid 1px;
+    height: fit-content;
+    margin-bottom: 20px;
+    display: block;
+    left: 200px;
+    background-color: var(--light-primary);
+    top: 0;
   }
   .topnav.left {
     overflow: hidden;
@@ -32,7 +38,7 @@
     font-family: inherit !important;
   }
   /* Add an active class to highlight the current page */
-  .active {
+  .top-nav-active {
     background-color: #04AA6D;
     color: white;
   }
@@ -51,6 +57,7 @@
     border: none;
     outline: none;
     color: white;
+    background-color: var(--light-primary);
     padding: 14px 16px;
     font-family: inherit;
     margin: 5px;
@@ -59,10 +66,10 @@
   
   /* Style the dropdown content (hidden by default) */
   .dropdown-content {
-    top: 54px;
+    top: 48px;
     display: none;
     position: fixed;
-    background-color: var(--light-quaternary);
+    background-color: var(--light-tertiary);
     /* min-width: 160px; */
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 998 !important;
