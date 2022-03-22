@@ -1,0 +1,50 @@
+<!DOCTYPE html> 
+<html lang ="en">  
+    <head>  
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Vizier</title>  
+        <link rel="stylesheet" href="/css/style.css"/>
+        <link rel="icon" href="/favicon.ico">
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="Roller_Jail_Sentence.js"></script>
+        <script src="/src/modules/global.js"></script>
+<script src="/src\pages\profile\importExport.js"></script>
+<script src="/src/pages/profile/firebaseSetUp.js" type="module"></script>
+<script src="/src/pages/campaign/campaignFunctions.js"></script>
+</head> 
+  
+<body>
+    <!--Navigation Panel START-->   
+        <div id="nav_placeholder"></div>
+        <script>$(function(){$("#nav_placeholder").load("/src/pages/nav-sidebar.html");});</script>
+    <!--Navigation Local START-->   
+    
+        <main>
+            <div class="main" id="main">
+            <h1>Jail Sentence</h1>
+            <h2>Calculator</h2>
+                <label for="charges">Guilty Charges:</label>
+                    <input type="number" id="charges" name="charges" class="num-input"><br>
+                </form>
+                <textarea style="margin-top: 10px;" id='note' type="text" placeholder="Note (Input me first if you want it to save)"></textarea>
+            <h2>Steps</h2>
+                <ol type="1">
+                    <li>C = Number of charges the PC is guilty of</li>
+                    <li>Days = Cd10 x 10 (The duration of the PC's sentence in days)</li>
+                    <li>Fee = Days * 100 gp (The cost to buy their way to freedom)</li>
+                </ol>
+            <p id = "output"></p>
+    </div>
+        </main> 
+        <script>
+            setListenersJailSentence()
+        </script>
+    <script>setTheme()</script>
+</body>
+<!-- Campaign Popout -->
+    <div id="campaign-popout"></div>
+    <script>$(function(){$("#campaign-popout").load("/src/pages/campaign/campaignPopout.html");});</script>
+    <button id="popout-campaign-info-button" class="popout-button collapsed-popout-button"><i class="fas fa-chevron-circle-down fa-2x" id="popout-icon"></i></button>   
+</html>

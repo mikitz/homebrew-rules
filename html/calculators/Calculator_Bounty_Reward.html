@@ -1,0 +1,102 @@
+<!DOCTYPE html> 
+<html lang ="en">  
+    <head>  
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Vizier</title>  
+        <link rel="stylesheet" href="/css/style.css"/>
+        <link rel="icon" href="/favicon.ico">
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="/src/pages/calculators/Calculator_Bounty_Reward.js"></script>
+        <script src="/src\pages\profile\importExport.js"></script>
+        <script src="/src/pages/profile/firebaseSetUp.js" type="module"></script>
+        <script src="/src/pages/campaign/campaignFunctions.js"></script>
+</head> 
+      
+    <body>
+        <!--Navigation Panel START-->   
+        <div id="nav_placeholder"></div>
+        <script>$(function(){$("#nav_placeholder").load("/src/pages/nav-sidebar.html");});</script>
+        <!--Navigation Local START-->   
+        <!-- <div id="nav_local"></div>
+        <script>$(function(){$("#nav_local").load("./nav_local.html");});</script> -->
+        <main>
+            <div class="main" id="main">
+            <script src="Calculators.js"></script>
+            <h1>Bounty Reward Calculator</h1>
+            <label for="most-wanted">Most Wanted Status:</label>
+                <select name="most-wanted" id="most-wanted">
+                    <option value="0">N/A</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+            </select>
+            <br>
+            <label for="cr">Creature CR:</label>
+                <select name="cr" id="cr">
+                    <option value="0.0625">0</option>
+                    <option value="0.125">1/8</option>
+                    <option value="0.25">1/4</option>
+                    <option value="0.5">1/2</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+            </select>
+            </form>
+            <!-- <button onclick="calculate_bounty()">Calculate</button>
+            <button onclick="clear_sail()">Clear Output</button> -->
+            <p id = "output"></p>
+            <p>
+                <h2>Formulas</h2>
+                <ol type="1">
+                    <li>Without Most Wanted Status: CR x 100</li>
+                    <li>With Most Wanted Status: (CR x 100) x (Most Wanted Status x 10)</li>
+                </ol>
+            </p>
+        </div>
+        </main>
+        <script>
+            setListenersBountyReward()
+        </script> 
+    <script>setTheme()</script>
+</body>
+<!-- Campaign Popout -->
+    <div id="campaign-popout"></div>
+    <script>$(function(){$("#campaign-popout").load("/src/pages/campaign/campaignPopout.html");});</script>
+    <button id="popout-campaign-info-button" class="popout-button collapsed-popout-button"><i class="fas fa-chevron-circle-down fa-2x" id="popout-icon"></i></button>   
+</html>

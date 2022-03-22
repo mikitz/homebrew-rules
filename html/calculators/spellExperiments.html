@@ -1,0 +1,129 @@
+<!DOCTYPE html> 
+<html lang ="en">  
+    <head>  
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Vizier</title>  
+        <link rel="stylesheet" href="/css/style.css"/>
+        <link rel="icon" href="/favicon.ico">
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="/src\pages\profile\importExport.js"></script>
+        <script src="/src/pages/profile/firebaseSetUp.js" type="module"></script>
+        <script src="spellExperiments.js"></script>
+        <script src="/src/modules/global.js"></script>
+        <script src="/src/pages/dataviz/DataViz.js"></script>
+        <!-- TOAST.JS -->
+        <script src="/src/modules/Toast.js"></script>
+        <link rel="stylesheet" href="/css/Toast.css"/>
+         <!-- DataTables CDN -->
+         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.25/b-1.7.1/b-html5-1.7.1/b-print-1.7.1/cr-1.5.4/date-1.1.0/fc-3.3.3/fh-3.1.9/kt-2.6.2/r-2.2.9/rg-1.1.3/rr-1.2.8/sc-2.0.4/sb-1.1.0/sp-1.3.0/sl-1.3.3/datatables.min.css"/>
+         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+         <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.25/b-1.7.1/b-html5-1.7.1/b-print-1.7.1/cr-1.5.4/date-1.1.0/fc-3.3.3/fh-3.1.9/kt-2.6.2/r-2.2.9/rg-1.1.3/rr-1.2.8/sc-2.0.4/sb-1.1.0/sp-1.3.0/sl-1.3.3/datatables.min.js"></script>
+        <!-- Databases -->
+        <script src="/data/spells.js"></script>
+<script src="/src/pages/campaign/campaignFunctions.js"></script>
+</head> 
+      
+    <body>
+        <!--Navigation Panel START-->   
+        <div id="nav_placeholder"></div>
+        <script>$(function(){$("#nav_placeholder").load("/src/pages/nav-sidebar.html");});</script>
+        <!--Navigation Local START-->   
+        <!-- <div id="nav_local"></div>
+        <script>$(function(){$("#nav_local").load("./nav_local.html");});</script> -->
+        <main>
+            <div class="main" id="main">
+                <h1>Spell Experiments</h1>
+                    <p>See this <a href="https://www.reddit.com/r/DnDHomebrew/comments/act9c3/discovering_spells_a_mechanic_for_players/">Reddit post</a> or the <a href="/src/pages/homebrew/spells.html#spell-experiments">homebrew rules</a> for instructions for how to use these tables.</p>
+                    <!--********************
+                          GENERATE/LOAD 
+                    *********************-->
+                    <h2>Generate/Load Table</h2>
+                    <fieldset>
+                        <label for="generate">Generate:</label>
+                            <input class="grid-radio" type="radio" name="get" id="generate" value="generate" checked>
+                        <label for="load">Load:</label>
+                            <input class="grid-radio" type="radio" name="get" id="load" value="load">
+                        </p>
+                        <span id="get-type"></span>
+                        </p>
+                        <button style="margin-top: 5px;" id="gen-load-button">Generate Table</button>
+                    </fieldset>
+                    <section id='output'></section>
+                    <!--********************
+                        MAGICAL EXPERIMENT 
+                    *********************-->
+                    <!-- <h2>Perform Magical Experiment</h2>
+                    <fieldset>
+                        <select id="school-dropdown">
+                            <option value="choose">Select School</option>
+                            <option value="Conjuration">Conjuration</option>
+                            <option value="Necromancy">Necromancy</option>
+                            <option value="Evocation">Evocation</option>
+                            <option value="Abjuration">Abjuration</option>
+                            <option value="Transmutation">Transmutation</option>
+                            <option value="Divination">Divination</option>
+                            <option value="Enchantment">Enchantment</option>
+                            <option value="Illusion">Illusion</option>
+                        </select>
+                        <select id="range-dropdown">
+                            <option value="choose">Select Number</option>
+                            <option value="0">0</option>
+                        </select>
+                        <select id="combination-dropdown">
+                            <option value="choose">Select Combination</option>
+                            <option id="combo-drop-SVM" value="SVM">SVM</option>
+                            <option id="combo-drop-VMS" value="VMS">VMS</option>
+                            <option id="combo-drop-MSV" value="MSV">MSV</option>
+                            <option id="combo-drop-MVS" value="MVS">MVS</option>
+                            <option id="combo-drop-VSM" value="VSM">VSM</option>
+                            <option id="combo-drop-SMV" value="SMV">SMV</option>
+                        </select>
+                        </p>
+                        <button style="margin-top: 5px;" id="perform-magical-experiment-button">Perform Experiment</button>
+                    </fieldset>
+                    <p id="experiment-output"></p> -->
+            </div>
+        </main>
+</body>
+<script>
+    populateCharacterDropdown()
+    setTheme()
+    spellExperiementsListeners()
+    // RADIO BUTTONS
+        var get = document.getElementsByName('get')
+        get.forEach(element => {
+            if (element.checked){ get = element.value } // Get
+        })
+        const getSpan = document.getElementById('get-type')
+        if (get == 'generate'){
+            getSpan.innerHTML = ``
+            getSpan.innerHTML = `<select id="character-list-dropdown">
+                                    <option value="choose">Select Character</option>
+                                </select>
+                                <select id="class-dropdown">
+                                    <option value="choose">Select Class</option>
+                                    <option value="Artificer">Artificer</option>
+                                    <option value="Bard">Bard</option>
+                                    <option value="Cleric">Cleric</option>
+                                    <option value="Druid">Druid</option>
+                                    <option value="Paladin">Paladin</option>
+                                    <option value="Ranger">Ranger</option>
+                                    <option value="Sorcerer">Sorcerer</option>
+                                    <option value="Warlock">Warlock</option>
+                                    <option value="Wizard">Wizard</option>
+                                </select>`
+        } else {
+            getSpan.innerHTML = ``
+            getSpan.innerHTML = `<select id="character-list-dropdown">
+                                    <option value="choose">Select Character</option>
+                                </select>`
+        }
+</script>
+<!-- Campaign Popout -->
+    <div id="campaign-popout"></div>
+    <script>$(function(){$("#campaign-popout").load("/src/pages/campaign/campaignPopout.html");});</script>
+    <button id="popout-campaign-info-button" class="popout-button collapsed-popout-button"><i class="fas fa-chevron-circle-down fa-2x" id="popout-icon"></i></button>   
+</html>
