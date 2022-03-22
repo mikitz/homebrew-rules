@@ -8,8 +8,8 @@ A collection of my homebrew rules used for D&amp;D 5e.
     - [] Crafting
         - [] Calculators - Crafting Duration
         - [] Calculators - Custom Magic Item
-        - [] New Calculator - Crafting Constructs
-        - [] New Calculator - Adding More Charges to a Magic Item
+        - [] **NEW** Crafting Constructs
+        - [] **NEW** Adding More Charges to a Magic Item
     - [] Items
     - [] Mechanics
         - [] Roller - Jail Sentence
@@ -22,6 +22,7 @@ A collection of my homebrew rules used for D&amp;D 5e.
          - [] Roller - Training
     - [] Spells
         - [] Tools - Spell Experiments
+        - [] **NEW** DC Calculator for Casting Spells of a Higher Level
     - [] Tools
     - [] World
         - [] Add Level Demographics (Calculator - Level Demographics)
