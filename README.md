@@ -2,7 +2,8 @@
 A collection of my homebrew rules used for D&amp;D 5e.
 
 ## To-do List
-1. Add corresponding calculators from main site
+1. Set up all the data in a [JSON](https://docs.google.com/spreadsheets/d/13MtW11-pexxwCiKeWOxKYm41PWDV2JAe39tXxj39KIw/edit?usp=sharing)
+2. Add corresponding calculators from main site
     - [] Ability Scores
     - [] Combat
     - [] Crafting
@@ -26,3 +27,9 @@ A collection of my homebrew rules used for D&amp;D 5e.
     - [] Tools
     - [] World
         - [] Add Level Demographics (Calculator - Level Demographics)
+3. Upgrade Tables
+    - [] Make all tables collapsible
+    - [] Make all tables openable in a *HTML Dialog*
+    - [] Make all tables openable in a new tab
+    - [] Implement [Datatables](https://datatables.net/download/index)?
+4. Implement Search

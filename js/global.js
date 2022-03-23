@@ -1,3 +1,10 @@
+// Function to add Tippy
+function addTippy(elemeentID, message){
+    tippy(`#${elemeentID}`, {
+        content: message,
+    })
+}
+
 // Convertts a string into Camel Case
 // Source: https://stackoverflow.com/a/2970667
 function camelize(str) {

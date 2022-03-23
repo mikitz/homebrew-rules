@@ -25,11 +25,6 @@
 main h1 {
     text-decoration: underline;
 }
-
-.anchor-sub {
-    margin-top: 55px;
-}
-
 .header {
     position: fixed;
     top: 0;
@@ -38,7 +33,6 @@ main h1 {
     left: 0;
     width: 100%;
 }
-
 #content {
     max-width: 80%;
     margin: auto;

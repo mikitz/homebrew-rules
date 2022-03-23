@@ -1,0 +1,15 @@
+@import 'constants.css';
+
+.table-container {
+    padding: 12px;
+    border-collapse: collapse;
+}
+.table-row {
+    width: 100%;
+    border-bottom: 5px solid var(--light-primary) !important;
+}
+.table-left-column,
+.table-right-column {
+    width: 50%;   
+    vertical-align: top;
+}
