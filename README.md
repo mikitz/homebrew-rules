@@ -19,6 +19,7 @@ A collection of my homebrew rules used for D&amp;D 5e.
         - [] Add Mercenary Cost (Calculator - Mercenary Cost)
         - [] Add Roller - Business
         - [] Add Bounty Reward
+        - [] **NEW** Number of horses calculator
     - [] Skills
          - [] Roller - Training
     - [] Spells
