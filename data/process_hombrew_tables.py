@@ -12,7 +12,7 @@ def camel_case(s):
 import pandas as pd # Import Pandas
 xlsx = pd.ExcelFile('Homebrew Rules Tables.xlsx') # Read the XLSX using Pandas
 sheets = xlsx.sheet_names # Get the sheet names
-jsFile = open(f"data.js", "w") # Create a new file with a file version
+jsFile = open(f"data.js", "w") # Create a new file
 # =============================
 #    Process the Pages sheet
 # =============================
