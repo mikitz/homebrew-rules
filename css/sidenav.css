@@ -1,12 +1,13 @@
  /* Fixed sidenav, full height */
  .sidenav {
     height: 100%;
-    width: 200px;
+    width: 250px;
+    margin-bottom: 200px;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: var(--light-primary);
     overflow-x: hidden;
     padding-top: 20px;
   }
@@ -16,7 +17,7 @@
     padding: 16px 8px 6px 16px;
     text-decoration: underline 0.15em rgba(255, 255, 255, 0);;
     font-size: 20px;
-    color: #818181;
+    color: var(--light-quinary);
     display: block;
     border: none;
     background: none;
@@ -35,14 +36,14 @@
     
   /* Add an active class to the active dropdown button */
   .active {
-    color: white !important;
+    color: var(--light-text-alt) !important;
     text-decoration: underline 0.15em rgba(255, 255, 255, 1) !important;
   }
   
   /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
   .dropdown-container {
     display: none;
-    background-color: #262626;
+    background-color: var(--light-secondary);
     padding-left: 8px;
   }
   
@@ -51,3 +52,34 @@
     float: right;
     padding-right: 8px;
   } 
+
+.sidenav a {
+  font-size: 16px;
+}
+/* ================== 
+      Scroll bar 
+================== */
+.sidenav::-webkit-scrollbar {
+  width: 0.75em;
+}
+.sidenav::-webkit-scrollbar-track {
+  background: var(--light-quaternary);
+  border-radius: 100vw;
+  margin-block: 0.2em;
+}
+.sidenav::-webkit-scrollbar-thumb {
+  background: var(--light-senary);
+  border-radius: 100vw;
+  border: 0.20em solid var(--light-quaternary);
+}
+.sidenav::-webkit-scrollbar-thumb:hover {
+  background: hsl(120 100% 5% / 1);
+}
+@supports (scrollbar-color: var(--light-quaternary)) {
+  * { /* This doesn't work */
+    scrollbar-color: var(--light-quaternary);
+    scrollbar-width: 0.75em;
+    scrollbar-track-color: var(--light-quaternary);
+    scrollbar-arrow-color: var(--light-senary);
+  }
+)

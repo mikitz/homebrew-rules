@@ -32,39 +32,56 @@ main h1 {
     margin: auto;
     margin-bottom: 85px;
     text-align: left;
-    margin-left: 225px;
+    margin-left: 295px;
     display: block;
-    margin-top: 75px !important;
+    margin-top: 45px !important;
 }
 .page-heading {
     text-decoration: none;
-    color: var(--light-secondary)
+    color: var(--light-secondary);
+    font-family: 'Libre Baskerville', 'Lora', 'Calisto MT',
+                 'Bookman Old Style', Bookman, 'Goudy Old Style',
+                 Garamond, 'Hoefler Text', 'Bitstream Charter',
+                 Georgia, serif;
+    text-transform: uppercase;
 }
 .anchor {
     text-decoration: none;
     color: var(--light-text);
     border-bottom: var(--light-secondary) 3px solid;
+    font-family: 'Noto Sans', 'Myriad Pro', Calibri, Helvetica, Arial,
+                  sans-serif;
+    text-transform: uppercase;
+    font-weight: 900;
 }
 .anchor-sub {
+    text-decoration: underline;
     color: var(--light-text);
 }
 .anchor-sub-sub {
     color: var(--light-text);
 }
+code {
+    background-color: var(--light-nonary);
+    padding: 0px 15px 0px;
+    font-weight: bold;
+}
 /* =================
     3.) FOOTER
 ================= */
 #footer-parent {
-    background-color: #b1fcf7 !important;
-    z-index: 100 !important;
-    border-top: black solid 1px !important;
+    background-color: var(--light-octonary) !important;
+    /* z-index: 100 !important; */
+    border-top: var(--light-primary) solid 3px !important;
     position: fixed;
     bottom: 0;
+    display: inline-block;
     width: 100%;
     left: 0;
-    vertical-align: middle;
     text-align: center;
     font-family: open sans, sans-serif;
+    margin-left: 45px;
+    justify-content: center !important;
 }
 .emoji { vertical-align: middle; }
 

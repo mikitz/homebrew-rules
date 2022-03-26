@@ -1,29 +1,6 @@
-// Function to populate the top nav
-function populateSideNav() {
-    let sideNavElement = document.getElementById('side-nav') // Get the side nav element
-    pages.forEach(element => {
-        let htmlPage = (element.NAME).replaceAll(" ", "_").toLowerCase() // Format it to pull the proper file
-            // Button
-            let button = document.createElement('button') // Create the button
-            button.id = htmlPage // Set its ID
-            button.classList.add('dropdown-btn') // Append the appropriate class
-            button.addEventListener('click', function() { buildPage(this) })
-            // Icon
-            let icon = document.createElement('i')
-            icon.setAttribute('class', element.ICON)
-            icon.style.marginRight = '10px'
-            icon.style.textAlign = 'right'
-            button.appendChild(icon)
-            // Inner Text
-            let span = document.createElement('span')
-            span.innerText = element.NAME
-            button.appendChild(span)
-            // Append button to the side navigation
-            sideNavElement.appendChild(button)
-    });
-}
 // Function to build each page
 function buildPage(clickedElement){
+    console.log("-----------------------------------------------------------------")
     // ================
     //     Setup
     // ================
@@ -55,31 +32,43 @@ function buildPage(clickedElement){
     contentDiv.appendChild(h1) // Append it to the page
     // The Content
     const data = pageContent.filter(i => i.PAGE === title)
-    console.log("Data:", data)
     data.forEach(element => { // Loop through the content
+        console.log("**********")
+        // ***************
+        //     Set Up
+        // ***************
         // Anchor
         let anchor
+        let newAnchor
         if (element.ANCHOR) anchor = document.getElementById(element.ANCHOR) // Get the anchor from the DOM
         if (!anchor && element.ANCHOR) {
             anchor = document.createElement('h2') // If there is no anchor, create it
             anchor.setAttribute('class', 'anchor')
             anchor.innerText = element.ANCHOR
+            anchor.id = element.ANCHOR
+            newAnchor = true
         }
         // Sub-anchor
         let subAnchor
-        if (element.ANCHOR_SUB) subAnchor = document.getElementById(element.ANCHOR_SUB)
+        let newSubAnchor
+        if (element.ANCHOR_SUB) subAnchor = document.getElementById(`${element.ANCHOR_SUB}-${element.ANCHOR}`)
         if (!subAnchor && element.ANCHOR_SUB) {
             subAnchor = document.createElement('h3')
             subAnchor.setAttribute('class', 'anchor-sub')
             subAnchor.innerText = element.ANCHOR_SUB
+            subAnchor.id = `${element.ANCHOR_SUB}-${element.ANCHOR}`
+            newSubAnchor = true
         }
         // Sub-sub-anchor
         let subSubAnchor
+        let newSubSubAnchor
         if (element.ANCHOR_SUB_2) subSubAnchor = document.getElementById(element.ANCHOR_SUB_2)
-        if (!subAnchor && element.ANCHOR_SUB_2) {
+        if (!subSubAnchor && element.ANCHOR_SUB_2) {
             subSubAnchor = document.createElement('h4')
             subSubAnchor.setAttribute('class', 'anchor-sub-sub')
             subSubAnchor.innerText = element.ANCHOR_SUB_2
+            subSubAnchor.id = element.ANCHOR_SUB_2
+            newSubSubAnchor = true
         }
         // InnerHTML
         let paragraphContent
@@ -87,19 +76,27 @@ function buildPage(clickedElement){
         if (!paragraphContent && element.INNER_HTML) {
             paragraphContent = document.createElement('p')
             paragraphContent.innerHTML = element.INNER_HTML
+            paragraphContent.id = `${element.ANCHOR}-innerHTML`
         }
-        // Append to the appropraiate anchor
-        if (element.ANCHOR_SUB_2) { 
-            subAnchor.appendChild(subSubAnchor)
+        // Table(s)
+        let tables = element.TABLES
+        if (tables) {
+            tables = (element.TABLES).split(", ")
         }
-        else if (element.ANCHOR_SUB) {
-            anchor.appendChild(subAnchor)
-        }
-        else if (element.ANCHOR) {
-            contentDiv.appendChild(anchor)
-        }
-        contentDiv.appendChild(paragraphContent)
-    });
+        // ***************
+        //  Append to DOM
+        // ***************
+        // New Nodes
+        if (newAnchor) contentDiv.appendChild(anchor) // Append the newly created Anchor if one was created
+        if (newSubAnchor) contentDiv.appendChild(subAnchor) // Append the newly created Anchor-sub if one was created
+        if (newSubSubAnchor) contentDiv.appendChild(subSubAnchor) // Append the newly created Anchor-sub-sub if one was created
+        // Paragraph Content
+        if (element.ANCHOR_SUB_2 && paragraphContent) insertAfter(subSubAnchor, paragraphContent) // Insert the paragraph content after the Anchor-sub-sub
+        else if (element.ANCHOR_SUB && paragraphContent) insertAfter(subAnchor, paragraphContent) // Insert the paragraph content after the Anchor-sub
+        else if (element.ANCHOR && paragraphContent) insertAfter(anchor, paragraphContent) // Insert the paragraph content after the Anchor
+        // Table(s)
 
-    buildTopNav() // Bulid the top nav for the page
+    });
+    
+    // buildTopNav() // Bulid the top nav for the page
 }
