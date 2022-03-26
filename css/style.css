@@ -42,11 +42,13 @@ main h1 {
 }
 .anchor {
     text-decoration: none;
-    color: var(--light-secondary);
-    border-bottom: var(--light-secondary) 1px solid;
+    color: var(--light-text);
+    border-bottom: var(--light-secondary) 3px solid;
 }
 .anchor-sub {
-    
+    color: var(--light-text);
+}
+.anchor-sub-sub {
     color: var(--light-text);
 }
 /* =================
