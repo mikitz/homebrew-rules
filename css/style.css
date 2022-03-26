@@ -1,26 +1,20 @@
 /* Table of Contents
 -----------------------
     1.) IMPORTS
-    2.) BUTTONS
-    3.) USER INPUTS
-    4.) STUFF
-    5.) GRID
-    6.) TABLEIZER
-    7.) DATATABLES
-    8.) TABLE CURRENCY
-    9.) STYLED TABLE
-    10.) COINS
-    11.) MODALS
-    13.) RADIO GROUPS
+    2.) GENERAL
+    3.) FOOTER
+    4.) STYLED TABLE
+    5.) RADIO GROUPS
+    6.) 
                      */
 
 /* =================
-        IMPORTS
+    1.) IMPORTS
 ================= */
 @import 'constants.css';
 
 /* =================
-       GENERAL
+    2.) GENERAL
 ================= */
 main h1 {
     text-decoration: underline;
@@ -42,9 +36,21 @@ main h1 {
     display: block;
     margin-top: 75px !important;
 }
-
+.page-heading {
+    text-decoration: none;
+    color: var(--light-secondary)
+}
+.anchor {
+    text-decoration: none;
+    color: var(--light-secondary);
+    border-bottom: var(--light-secondary) 1px solid;
+}
+.anchor-sub {
+    
+    color: var(--light-text);
+}
 /* =================
-       FOOTER
+    3.) FOOTER
 ================= */
 #footer-parent {
     background-color: #b1fcf7 !important;
@@ -61,7 +67,7 @@ main h1 {
 .emoji { vertical-align: middle; }
 
 /* =================
-    STYLED TABLE
+  4.) STYLED TABLE
 ================= */
 .styled-table {
     border-collapse: collapse;
@@ -147,7 +153,7 @@ main h1 {
 }
 
 /* ======================= 
-        RADIO GROUPS
+    5.) RADIO GROUPS
 ========================== */
 .radio-toolbar :checked + span {
     font-weight: bold;

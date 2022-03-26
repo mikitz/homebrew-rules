@@ -1,3 +1,7 @@
+// Function to insert an element after a reference element
+function insertAfter(referenceNode, newNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
 // Function to add Tippy
 function addTippy(elemeentID, message){
     tippy(`#${elemeentID}`, {
@@ -11,41 +15,6 @@ function camelize(str) {
     return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(word, index) {
         return index === 0 ? word.toLowerCase() : word.toUpperCase();
     }).replace(/\s+/g, '');
-}
-// AUTH STATUS CHANGES
-function updateProfileButtons(){
-    const isLoggedIn = localStorage.getItem('loggedIn')
-    if (isLoggedIn == 'true'){
-        // TOP NAV
-        try {
-            document.getElementById('login-button').style.display = 'none' // Remove Login Button
-            document.getElementById('signup-button').style.display = 'none' // Remove Sign Up button
-            document.getElementById('logout-button').style.display = 'block' // Add Logout Button
-        } catch (e){ console.log("Not on Profile page", e) }
-        // SIDEBAR
-        try {
-            document.getElementById('open-login').style.display = 'none'
-            document.getElementById('open-signup').style.display = 'none'
-            document.getElementById('logout-button').style.display = 'block' 
-        } catch (e) { console.log("Unable to update Side Bar --", e) }
-    } else {
-        // TOP NAV
-        try {
-            document.getElementById('login-button').style.display = 'block' // Add Login Button
-            document.getElementById('signup-button').style.display = 'block' // Add Sign Up button
-            document.getElementById('logout-button').style.display = 'none' // Remove Logout Button
-        } catch (e) { console.log("Not on Profile page", e) }
-        // SIDEBAR
-        try {
-            document.getElementById('open-login').style.display = 'block'
-            document.getElementById('open-signup').style.display = 'block'
-            document.getElementById('logout-button').style.display = 'none'
-        } catch (e) { console.log("Unable to update Side Bar --", e) }
-    }
-}
-// Function to get the user's role in the campaign
-function getUserRole(){
-    return localStorage.getItem('campaignRole')
 }
 // Function for the proper ordinal
 // Source: https://stackoverflow.com/a/13627586/3725925

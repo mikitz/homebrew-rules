@@ -25,7 +25,7 @@
         <script src="js/calculators/calculatorsSkills.js"></script>
         <script src="js/calculators/calculatorsSpells.js"></script>
         <script src="js/calculators/calculatorsWorld.js"></script>
-        <script src="data/pages.js"></script>
+        <script src="data/data.js"></script>
     </head>
     <div class="sidenav" id="side-nav"></div> 
     <div id="top-nav" class="topnav"></div>
@@ -41,7 +41,7 @@
     <script>
         populateSideNav()
         indexListeners()
-        $(document.getElementById('content')).load('html/home.html')
+        buildPage()
         document.getElementById('home').classList.add('active') // Set active class
     </script>
 </html>
