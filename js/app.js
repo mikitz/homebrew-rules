@@ -95,6 +95,7 @@ function buildPage(clickedElement){
         if (calculator) {
             calcDiv = document.createElement('div')
             calcDiv.innerHTML = calcHTML
+            // TODO: Put these in <dialog>
         }
         // ***************
         //  Append to DOM
