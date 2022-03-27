@@ -1,6 +1,5 @@
 // Function to build each page
 function buildPage(clickedElement){
-    console.log("-----------------------------------------------------------------")
     // ================
     //     Setup
     // ================
@@ -13,8 +12,10 @@ function buildPage(clickedElement){
         ID = 'home'
         title = 'Home'
     } else {
-        ID = clickedElement.id // Grab the ID from the clicked element
+        if ((clickedElement.id).includes("-icon")) ID = (clickedElement.id).replace("-icon", "")
+        else ID = clickedElement.id // Grab the ID from the clicked element
         title = clickedElement.innerText // Grab the innerText, which is the page title, from the clicked element
+        if (!title) title = ID.toTitleCase()
     }
     // Active Page
     pages.forEach(element => {
@@ -28,12 +29,12 @@ function buildPage(clickedElement){
     // Header 1
     let h1 = document.createElement('h1') // Create a new H1 element
     h1.innerText = title // Set the H1 innerText to the page title
+    h1.id = `page-header` // Set the ID
     h1.setAttribute('class', 'page-heading') // Set the H1 class to anchor
     contentDiv.appendChild(h1) // Append it to the page
     // The Content
     const data = pageContent.filter(i => i.PAGE === title)
     data.forEach(element => { // Loop through the content
-        console.log("**********")
         // ***************
         //     Set Up
         // ***************
@@ -97,6 +98,4 @@ function buildPage(clickedElement){
         // Table(s)
 
     });
-    
-    // buildTopNav() // Bulid the top nav for the page
 }

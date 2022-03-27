@@ -66,24 +66,21 @@ function buildSideNav() {
         let button = document.createElement('button') // Create the button
         button.id = htmlPage // Set its ID
         button.classList.add('dropdown-btn') // Append the appropriate class
-        button.addEventListener('click', function() { 
-            buildPage(this) 
-            var dropdownContent = this.nextElementSibling;
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
-        })
         // Icon
         let icon = document.createElement('i')
         icon.setAttribute('class', element.ICON)
         icon.style.marginRight = '10px'
         icon.style.textAlign = 'right'
+        icon.id = `${htmlPage}-icon`
+        icon.addEventListener('click', function() { buildPage(this) })
         button.appendChild(icon)
         // Inner Text
         let span = document.createElement('span')
         span.innerText = element.NAME
+        span.id = htmlPage
+        span.addEventListener('click', function() { 
+            buildPage(this) 
+        })
         button.appendChild(span)
         // Dropdown Icon
         let dropdownIcon = document.createElement('i')
@@ -97,6 +94,7 @@ function buildSideNav() {
         // Div
         let div = document.createElement('div')
         div.setAttribute('class', 'dropdown-container')
+        div.id = `${htmlPage}-dropdown-content`
         // Get Anchor-subs
         let pgContent = pageContent.filter(i => i.PAGE === element.NAME)
         for (let index = 0; index < pgContent.length; index++) {
@@ -107,12 +105,34 @@ function buildSideNav() {
                 let a = document.createElement('a')
                 a.href = `#${element.ANCHOR}`
                 a.innerText = element.ANCHOR
+                a.id = `${htmlPage}-a`
+                a.addEventListener('click', function() { handleSubAnchorClick(this) })
                 div.appendChild(a)
             }
         }
+        // 
+        dropdownIcon.addEventListener('click', function(){
+            var dropdownContent = document.getElementById(`${htmlPage}-dropdown-content`)
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        })
         pgContent.forEach(element => {
             
         });
         sideNavElement.appendChild(div)
     });
+}
+// Function to handle the Anchor-sub click
+function handleSubAnchorClick(element){
+    const ID = (element.id).replace("-a", "") // Get the ID of the header element
+    const href = (element.href).replace("#", "")
+    const header = document.getElementById(`page-header`).innerText // Get the inner text of the current page
+    let htmlPage = (header).replaceAll(" ", "_").toLowerCase() // Get the htmlPage for the current page
+    if (htmlPage != ID) { 
+        buildPage(document.getElementById(ID)) // If the current page is different from the clicked page, build it
+        scrollTo(href) // Scroll to the clicked Anchor-sub
+    }
 }

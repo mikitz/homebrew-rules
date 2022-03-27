@@ -1,3 +1,20 @@
+// Define a function to convert a string to Title case
+String.prototype.toTitleCase = function () {
+    // Define a list of words not to be capitalized
+    const doNotCapitalize = ['a', 'an', 'the', 'for', 'and', 'nor', 'but', 'or', 'yet', 'so', 'at', 'around', 'by', 'after', 'along', 'for', 'from', 'of', 'on', 'to', 'with', 'without']
+    // Split the string by spaces
+    return this.replace(/\w\S*/g, function(txt){
+        if (doNotCapitalize.includes(txt)){
+            return txt
+        } else {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        }        
+    });
+};
+// Function to scroll to an HTML hash
+function scrollTo(hash) {
+    location.hash = "#" + hash;
+}
 // Function to insert an element after a reference element
 function insertAfter(referenceNode, newNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
