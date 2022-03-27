@@ -88,6 +88,14 @@ function buildPage(clickedElement){
             tableDiv.id = `${anchor}-${subAnchor}-${subSubAnchor}-tables`
             tableDiv.setAttribute('class', 'table-right-column')
         }
+        // Calculator
+        let calculator = element.CALC
+        let calcHTML = element.CALC_HTML
+        let calcDiv
+        if (calculator) {
+            calcDiv = document.createElement('div')
+            calcDiv.innerHTML = calcHTML
+        }
         // ***************
         //  Append to DOM
         // ***************
@@ -137,5 +145,7 @@ function buildPage(clickedElement){
                 // applyDataTable(`${tablename}-table`); // Format the table to be a DataTable
             }
         }
+        // Calculator
+        if (calculator) contentDiv.appendChild(calcDiv) // Append the calculator if there is one
     });
 }
