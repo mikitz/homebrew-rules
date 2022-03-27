@@ -95,7 +95,7 @@ function buildPage(clickedElement){
         if (element.ANCHOR_SUB_2 && paragraphContent) insertAfter(subSubAnchor, paragraphContent) // Insert the paragraph content after the Anchor-sub-sub
         else if (element.ANCHOR_SUB && paragraphContent) insertAfter(subAnchor, paragraphContent) // Insert the paragraph content after the Anchor-sub
         else if (element.ANCHOR && paragraphContent) insertAfter(anchor, paragraphContent) // Insert the paragraph content after the Anchor
-        // Table(s)
+        // TODO: Table(s)
 
     });
 }
