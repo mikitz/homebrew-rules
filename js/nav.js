@@ -79,7 +79,13 @@ function buildSideNav() {
         span.innerText = element.NAME
         span.id = htmlPage
         span.addEventListener('click', function() { 
-            buildPage(this) 
+            buildPage(this)
+            var dropdownContent = document.getElementById(`${htmlPage}-dropdown-content`)
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
         })
         button.appendChild(span)
         // Dropdown Icon

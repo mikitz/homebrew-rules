@@ -1,3 +1,26 @@
+// Function to select the contents of an element
+// Source: https://www.codegrepper.com/code-examples/javascript/frameworks/nextjs/copy+a+table+to+clipboard+javascript
+function selectElementContents(el) {
+	var body = document.body, range, sel;
+	if (document.createRange && window.getSelection) {
+		range = document.createRange()
+		sel = window.getSelection()
+		sel.removeAllRanges()
+		try {
+			range.selectNodeContents(el)
+			sel.addRange(range)
+		} catch (e) {
+			range.selectNode(el)
+			sel.addRange(range)
+		}
+        document.execCommand("copy");
+	} else if (body.createTextRange) {
+		range = body.createTextRange()
+		range.moveToElementText(el)
+		range.select()
+        range.execCommand("Copy")
+	}
+}
 // Define a function to convert a string to Title case
 String.prototype.toTitleCase = function () {
     // Define a list of words not to be capitalized
@@ -258,132 +281,6 @@ function getNumberOfUsers(){
 // Function to round a number
 Number.prototype.round = function(places) {
     return +(Math.round(this + "e+" + places)  + "e-" + places);
-}
-// Function to get the size of data in FireStore for the logged in user
-function userFireStoreSize(){
-    // TODO: Refactor to account for how the data is now stored: in multiple docs
-    import('/src/pages/profile/firebaseInit.js').then((init)=> { 
-        // IMPORTS
-            let db = init.db
-            let getDoc = init.getDoc
-            let doc = init.doc
-            let auth = init.auth
-            let onAuthStateChanged = init.onAuthStateChanged
-            let updateDoc = init.updateDoc
-        // Work with the FireStore Database
-        onAuthStateChanged(auth, (user) => { // Check if User is logged in
-            if (user){
-                // CAMPAIGNS
-                    const docRef = doc(db, "campaigns", user.uid) // Get just the doc for the current user
-                    let totalData = 0
-                    getDoc(docRef).then((snapshot) => {
-                        // GET DATA
-                        const campaignData = snapshot.data().campaigns // Get the campaigns data for the current user
-                        const campaignRealSize = roughSizeOfObject(campaignData) // Get the real size in bytes
-                        const campaignEstimatedSize = campaignRealSize + (campaignRealSize * 0.05) // Add 5% of the real size to calculate estimated size
-                        console.log("Campaign Size:", campaignEstimatedSize)
-                        // APPEND TO TOTAL DATA
-                        totalData += campaignEstimatedSize
-                    }).catch(error => { console.log(error) }) // getDoc Errors
-                // CHARACTERS
-                    const charRef = doc(db, "characters", user.uid)
-                    getDoc(charRef).then((snapshot) => {
-                        // GET DATA
-                        const characterData = snapshot.data().characters // Get the character data for the current user
-                        const charactersRealSize = roughSizeOfObject(characterData) // Get the real size in bytes
-                        const charactersEstimatedSize = charactersRealSize + (charactersRealSize * 0.05) // Add 5% of the real size to calculate estimated size
-                        console.log("Characters Size:", charactersEstimatedSize)
-                        // APPEND TO TOTAL DATA
-                        totalData += charactersEstimatedSize
-                    }).catch(error => { console.log(error) }) // getDoc Errors
-                // SETTINGS
-                    const settingsRef = doc(db, "settings", user.uid)
-                    getDoc(settingsRef).then((snapshot) => {
-                        // GET DATA
-                        const settingsData = snapshot.data().settings // Get the character data for the current user
-                        const settingsRealSize = roughSizeOfObject(settingsData) // Get the real size in bytes
-                        const settingsEstimatedSize = settingsRealSize + (settingsRealSize * 0.05) // Add 5% of the real size to calculate estimated size
-                        console.log("Settings Size:", settingsEstimatedSize)
-                        // APPEND TO TOTAL DATA   
-                        totalData += settingsEstimatedSize
-                    }).catch(error => { console.log(error) }) // getDoc Errors
-                // SETTINGS
-                    const usersRef = doc(db, "users", user.uid)
-                    getDoc(usersRef).then((snapshot) => {
-                        // GET DATA
-                        const data = snapshot.data().settings // Get the character data for the current user
-                        const realSize = roughSizeOfObject(data) // Get the real size in bytes
-                        const estimatedSize = realSize + (realSize * 0.05) // Add 5% of the real size to calculate estimated size
-                        console.log("Users Size:", estimatedSize)
-                        // APPEND TO TOTAL DATA   
-                        totalData += estimatedSize
-                        console.log("Total Size:", totalData)
-                        // TOTAL COST
-                        let totalCost = (totalData / 1000 / 1000 / 1000) * 0.18
-                        totalCost = totalCost.round(0) + 0.01
-                        if (isNaN(totalCost)){
-                            totalCost = 0.01
-                        }
-                        console.log("Total Cost:", totalCost)
-                        // UPDATE DOM
-                        document.getElementById('user-data-total').innerHTML = `${((totalData / 1000).round(0) + 1).toLocaleString()} kilobytes`
-                        document.getElementById('user-data-cost').innerHTML = totalCost
-                        document.getElementById('user-data-cost-annual').innerHTML = totalCost.round(0) + 0.01 * 12
-                    }).catch(error => { console.log(error) }) // getDoc Errors
-            }
-        })
-    }).catch(error => { console.log(error) }) // Auth Errors
-    // COMPUTATIONS
-}
-
-// Function to append generator/picker history to the DB
-function appendToDatabase(table){
-    
-}
-// Check signed in User
-function whoIsSignedIn(){
-    
-}
-// Function to clear output text and output links
-function clearOutpusAndLinks(){
-    document.getElementById('output').innerHTML = ""
-    document.getElementById("output_link_list").innerHTML = ""
-}
-// Function to clear just the output paragraph
-function clearOutput(){
-    document.getElementById('output').innerHTML = ""
-}
-// Clear the weather output
-function clearWeather(){
-    document.getElementById('weather').innerHTML = ""
-}
-// Function to clear the output elements
-function clear_shit(){
-    document.getElementById('output').innerHTML = ""
-    document.getElementById("output_link_list").innerHTML = ""
-}
-// Function to format gold value into all currencies
-// E.G. input 32.12 gp and output "3 pp, 2 gp, 1 sp, and 2 cp"
-function formatGold(goldPieces) {
-    goldPieces = goldPieces.toFixed(2)
-    // Get platinum pieces (pp)
-    let platinum = Math.floor(goldPieces * 0.1)
-    // Get gold pieces (gp)
-    let goldReg = goldPieces.toString().match(/\d\./gm)
-    // Replace the period in gold with nothing 
-    let gold = parseInt(goldReg[0].replace(".", ""))
-    // Get silver pieces (sp)
-    let silver = parseInt(goldPieces.toString().match(/\.\d/gm)[0].replace(".", ""))
-    // Get copper pieces (cp)
-    let copper = parseInt(goldPieces.toString().match(/\.\d+/gm)[0].replace(".", "").toString().slice(-1))
-    // Log it
-    console.log(`CURRENCIES CONVERTED
-        Platinum: ${platinum} pp
-        Gold: ${gold} gp
-        Silver: ${silver} sp
-        Copper: ${copper} cp`)
-    // Return
-    return `${platinum} pp, ${gold} gp, ${silver} sp, and ${copper} cp`
 }
 // Declare a function to select a random value from a dictionary
 // Source: https://stackoverflow.com/questions/2532218/pick-random-property-from-a-javascript-object

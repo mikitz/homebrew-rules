@@ -81,8 +81,12 @@ function buildPage(clickedElement){
         }
         // Table(s)
         let tables = element.TABLES
+        let tableDiv
         if (tables) {
             tables = (element.TABLES).split(", ")
+            tableDiv = document.createElement('div')
+            tableDiv.id = `${anchor}-${subAnchor}-${subSubAnchor}-tables`
+            tableDiv.setAttribute('class', 'table-right-column')
         }
         // ***************
         //  Append to DOM
@@ -95,7 +99,43 @@ function buildPage(clickedElement){
         if (element.ANCHOR_SUB_2 && paragraphContent) insertAfter(subSubAnchor, paragraphContent) // Insert the paragraph content after the Anchor-sub-sub
         else if (element.ANCHOR_SUB && paragraphContent) insertAfter(subAnchor, paragraphContent) // Insert the paragraph content after the Anchor-sub
         else if (element.ANCHOR && paragraphContent) insertAfter(anchor, paragraphContent) // Insert the paragraph content after the Anchor
-        // TODO: Table(s)
+        // Table(s)
+        if (tables) {
+            for (let index = 0; index < tables.length; index++) {
+                // Set up
+                const element = tables[index]; // Define an element object
+                if (element == 'TBD') continue // Skip this table if it is "TBD"
+                let tablename = camelize(element.replaceAll("&", "and")) // Camelize the Table Name to look it up in data.js
+                // Table Header
 
+                let copyIcon = document.createElement('i')
+                copyIcon.setAttribute('class', 'fa-solid fa-copy')
+
+                let h4 = document.createElement('h4')
+                h4.innerText = `${element} Table`
+                h4.setAttribute('class', 'table-header')
+
+                let dropdownIcon = document.createElement('i')
+                dropdownIcon.setAttribute('class', 'fa fa-caret-down')
+                dropdownIcon.style.paddingLeft = '15px'
+                h4.appendChild(dropdownIcon)
+                // h4.appendChild(copyIcon)
+                // Appending to the DOM
+                contentDiv.appendChild(h4) // Append the Table Name Header
+                buildTable(tablename, 'styled-table') // Append the Table
+                // Listener
+                let theTable = document.getElementById(`${tablename}-table`)
+                theTable.style.display = 'none'
+                h4.addEventListener('click', function() {
+                    if (theTable.style.display === "block") {
+                        theTable.style.display = "none";
+                    } else {
+                        theTable.style.display = "block";
+                    }
+                })
+                copyIcon.addEventListener('click', function() { selectElementContents(theTable) })
+                // applyDataTable(`${tablename}-table`); // Format the table to be a DataTable
+            }
+        }
     });
 }
