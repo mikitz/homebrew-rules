@@ -123,10 +123,12 @@ function buildPage(clickedElement){
                 let h4 = document.createElement('h4')
                 h4.innerText = `${element} Table`
                 h4.setAttribute('class', 'table-header')
+                // h4.classList.add('rotating')
 
                 let dropdownIcon = document.createElement('i')
                 dropdownIcon.setAttribute('class', 'fa fa-caret-down')
                 dropdownIcon.style.paddingLeft = '15px'
+                // dropdownIcon.classList.add('rotating')
                 h4.appendChild(dropdownIcon)
                 // h4.appendChild(copyIcon)
                 // Appending to the DOM

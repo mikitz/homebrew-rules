@@ -70,7 +70,7 @@ main h1 {
 code {
     background-color: var(--light-nonary);
     padding: 0px 15px 0px;
-    font-weight: bold;
+    font-weight: bold !important;
 }
 .fa-copy {
     cursor: pointer;

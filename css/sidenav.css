@@ -46,6 +46,7 @@
     display: none;
     background-color: var(--light-secondary);
     padding-left: 8px;
+    padding-bottom: 10px;
   }
   
   /* Optional: Style the caret down icon */

@@ -29,6 +29,10 @@
 .table-header {
     cursor: pointer;
     width: fit-content;
+    background-color: var(--light-nonary);
+    padding: 5px;
+    color: var(--light-tertiary);
+    font-weight: 900;
 }
 /* =================
   3.) Styled Table
