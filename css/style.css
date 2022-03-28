@@ -83,6 +83,9 @@ code {
     /* transform: rotate(90deg) */
     cursor: pointer;
 }
+.fa-calculator:hover {
+    color: var(--light-quinary);
+}
 /* =================
     3.) TODO: FOOTER
 ================= */
