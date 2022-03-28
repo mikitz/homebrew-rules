@@ -1,5 +1,8 @@
 // Function to build and populate the top nav
 function buildTopNav(){
+    const pageHeader = document.getElementById('page-header').innerText
+    console.log("Page Header:", pageHeader)
+    if (pageHeader == 'HOME') return
     // GET ELEMENTS
         const anchors = document.querySelectorAll('.anchor') // Get all the anchor elements
         const anchorSubs = document.querySelectorAll('.anchor-sub') // Get all the sub-anchor elements
@@ -47,6 +50,7 @@ function buildTopNav(){
                             const a = document.createElement('a') // Create a new a element
                             a.href = `#${subAnchorIDs[index]}` // Set its href
                             a.innerHTML = subAnchorHTML[index] // Set innerHTML
+                            // a.addEventListener('click', function() { scrollTo(subAnchorIDs[index], 50) })
                             div2.appendChild(a) // Append a to div2
                         }
                         div.appendChild(div2) // Append div2 to div
@@ -88,10 +92,13 @@ function buildSideNav() {
             }
         })
         button.appendChild(span)
+        let dropdownIcon
         // Dropdown Icon
-        let dropdownIcon = document.createElement('i')
-        dropdownIcon.setAttribute('class', 'fa fa-caret-down')
-        button.appendChild(dropdownIcon)
+        if (element.NAME != 'Home') {
+            dropdownIcon = document.createElement('i')
+            dropdownIcon.setAttribute('class', 'fa fa-caret-down')
+            button.appendChild(dropdownIcon)
+        }
         // Append button to the side navigation
         sideNavElement.appendChild(button)
         // --------------------
@@ -116,18 +123,17 @@ function buildSideNav() {
                 div.appendChild(a)
             }
         }
-        // 
-        dropdownIcon.addEventListener('click', function(){
-            var dropdownContent = document.getElementById(`${htmlPage}-dropdown-content`)
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
-        })
-        pgContent.forEach(element => {
-            
-        });
+        // Dropdown Icon Listener
+        if (element.NAME != 'Home') {
+            dropdownIcon.addEventListener('click', function(){
+                var dropdownContent = document.getElementById(`${htmlPage}-dropdown-content`)
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            })
+        }
         sideNavElement.appendChild(div)
     });
 }

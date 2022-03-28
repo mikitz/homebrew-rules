@@ -15,6 +15,10 @@
 /* =================
     2.) GENERAL
 ================= */
+body {
+    margin: 0;
+    padding: 0;
+  }
 main h1 {
     text-decoration: underline;
 }
@@ -34,6 +38,7 @@ main h1 {
     margin-left: 295px;
     display: block;
     margin-top: 45px !important;
+    padding-right: 15px;
 }
 .page-heading {
     text-decoration: none;
@@ -52,10 +57,12 @@ main h1 {
                   sans-serif;
     text-transform: uppercase;
     font-weight: 900;
+    scroll-margin-top: 60px;
 }
 .anchor-sub {
     text-decoration: underline;
     color: var(--light-text);
+    scroll-margin-top: 60px;
 }
 .anchor-sub-sub {
     color: var(--light-text);

@@ -4,18 +4,15 @@
  .topnav {
     /* top: 150px; */
     overflow: hidden;
-    position: fixed;
-    width: 100% !important;
-    transition: all 0.4s ease;
-    /* bottom: 0; */
-    z-index: 999;
+    position: sticky;
+    width: inherit;
+    /* transition: all 0.75s ease; */
+    z-index: 1;
     align-content: center;
-    border-bottom: #4d4d4d solid 1px;
     height: fit-content;
-    margin-bottom: 20px;
     display: block;
-    left: 200px;
-    background-color: var(--light-primary);
+    margin-left: 250px;
+    background-color: var(--light-secondary);
     top: 0;
   }
   .topnav.left {
@@ -56,8 +53,8 @@
     font-size: 17px;
     border: none;
     outline: none;
-    color: white;
-    background-color: var(--light-primary);
+    color: var(--light-octonary);
+    background-color: var(--light-secondary);
     padding: 14px 16px;
     font-family: inherit;
     margin: 5px;

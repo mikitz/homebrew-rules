@@ -35,8 +35,8 @@ String.prototype.toTitleCase = function () {
     });
 };
 // Function to scroll to an HTML hash
-function scrollTo(hash) {
-    location.hash = "#" + hash;
+function scrollTo(hash, offset) {
+    location.hash = `#${hash}` + offset;
 }
 // Function to insert an element after a reference element
 function insertAfter(referenceNode, newNode) {

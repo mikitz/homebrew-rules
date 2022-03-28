@@ -149,4 +149,5 @@ function buildPage(clickedElement){
         // Calculator
         if (calculator) contentDiv.appendChild(calcDiv) // Append the calculator if there is one
     });
+    buildTopNav() // Build the Top Nav
 }
