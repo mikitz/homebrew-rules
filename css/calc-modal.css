@@ -1,0 +1,54 @@
+@import 'constants.css';
+
+.calc-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 3; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(var(--light-primary-rgb), 0.6);
+    /* background-color: var(--light-primary); */
+    padding: 1em;
+    border: 5px solid var(--light-primary);
+}
+.calc-modal-content {
+    /* background-color: #fefefe; */
+    position: relative;
+    background-color: white;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 2px solid var(--light-primary);
+    max-width: 70%; /* Could be more or less, depending on screen size */
+    /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); */
+    animation-name: animatetop;
+    animation-duration: 0.6s
+}
+.fa-xmark {
+    float: right;
+    margin: 10px;
+    cursor: pointer;
+    line-height: 15px;
+}
+.fa-xmark:hover {
+    color: var(--light-secondary);
+}
+.calc-anchor {
+    /* display: flex; */
+    padding: 0;
+    margin: 0;
+    margin-bottom: 15px;
+    text-decoration: none;
+    color: var(--light-text);
+    border-bottom: var(--light-secondary) 3px solid;
+    font-family: 'Noto Sans', 'Myriad Pro', Calibri, Helvetica, Arial,
+                  sans-serif;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}

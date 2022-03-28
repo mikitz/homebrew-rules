@@ -63,6 +63,7 @@ main h1 {
     text-decoration: underline;
     color: var(--light-text);
     scroll-margin-top: 60px;
+    width: fit-content;
 }
 .anchor-sub-sub {
     color: var(--light-text);
@@ -73,6 +74,13 @@ code {
     font-weight: bold !important;
 }
 .fa-copy {
+    cursor: pointer;
+}
+.fa-calculator {
+    color: var(--light-primary) !important;
+    height: inherit !important;
+    padding-left: 15px;
+    /* transform: rotate(90deg) */
     cursor: pointer;
 }
 /* =================

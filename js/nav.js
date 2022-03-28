@@ -1,13 +1,12 @@
 // Function to build and populate the top nav
 function buildTopNav(){
+    const topNav = document.getElementById('top-nav') // Get the Top Nav element
+    topNav.innerHTML = '' // Clear the Top Nav
     const pageHeader = document.getElementById('page-header').innerText
-    console.log("Page Header:", pageHeader)
     if (pageHeader == 'HOME') return
     // GET ELEMENTS
         const anchors = document.querySelectorAll('.anchor') // Get all the anchor elements
         const anchorSubs = document.querySelectorAll('.anchor-sub') // Get all the sub-anchor elements
-        const topNav = document.getElementById('top-nav') // Get the Top Nav element
-        topNav.innerHTML = '' // Clear the Top Nav
     // LOOPS
         // Loop through the anchor elements
         anchors.forEach(element => {
@@ -105,26 +104,27 @@ function buildSideNav() {
         //   Dropdown Content
         // --------------------
         // Div
-        let div = document.createElement('div')
-        div.setAttribute('class', 'dropdown-container')
-        div.id = `${htmlPage}-dropdown-content`
-        // Get Anchor-subs
-        let pgContent = pageContent.filter(i => i.PAGE === element.NAME)
-        for (let index = 0; index < pgContent.length; index++) {
-            const element = pgContent[index];
-            let prevElement = ''
-            if (index != 0) prevElement = pgContent[index - 1]
-            if (element.ANCHOR && prevElement.ANCHOR != element.ANCHOR){
-                let a = document.createElement('a')
-                a.href = `#${element.ANCHOR}`
-                a.innerText = element.ANCHOR
-                a.id = `${htmlPage}-a`
-                a.addEventListener('click', function() { handleSubAnchorClick(this) })
-                div.appendChild(a)
-            }
-        }
-        // Dropdown Icon Listener
+        let div
         if (element.NAME != 'Home') {
+            div = document.createElement('div')
+            div.setAttribute('class', 'dropdown-container')
+            div.id = `${htmlPage}-dropdown-content`
+            // Get Anchor-subs
+            let pgContent = pageContent.filter(i => i.PAGE === element.NAME)
+            for (let index = 0; index < pgContent.length; index++) {
+                const element = pgContent[index];
+                let prevElement = ''
+                if (index != 0) prevElement = pgContent[index - 1]
+                if (element.ANCHOR && prevElement.ANCHOR != element.ANCHOR){
+                    let a = document.createElement('a')
+                    a.href = `#${element.ANCHOR}`
+                    a.innerText = element.ANCHOR
+                    a.id = `${htmlPage}-a`
+                    a.addEventListener('click', function() { handleSubAnchorClick(this) })
+                    div.appendChild(a)
+                }
+            }
+        // Dropdown Icon Listener
             dropdownIcon.addEventListener('click', function(){
                 var dropdownContent = document.getElementById(`${htmlPage}-dropdown-content`)
                 if (dropdownContent.style.display === "block") {
@@ -134,7 +134,7 @@ function buildSideNav() {
                 }
             })
         }
-        sideNavElement.appendChild(div)
+        if (element.NAME != 'Home') sideNavElement.appendChild(div)
     });
 }
 // Function to handle the Anchor-sub click

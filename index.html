@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="css/topnav.css"/>
         <link rel="stylesheet" href="css/table.css"/>
         <link rel="stylesheet" href="css/perma-rotation.css"/>
+        <link rel="stylesheet" href="css/calc-modal.css"/>
         
         <script src="https://kit.fontawesome.com/7e282d14cd.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -40,7 +41,15 @@
             </div>
         </main>
     </body>
-    
+    <div class="calc-modal" id="calc-modal">
+        <div class="calc-modal-content">
+            <h2 class="calc-anchor">
+                <i class="fa-solid fa-xmark" id="close-modal"></i>
+                <span id="calc-title">TITLE</span>
+            </h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut ante mauris. Vestibulum vel mollis erat, eu interdum urna. Donec a laoreet neque. Sed eget tincidunt lorem, nec tincidunt elit. Nullam sed libero id eros dapibus condimentum. Integer purus lectus, ornare at varius et, consectetur et turpis. Phasellus varius tincidunt turpis, nec sagittis tellus ullamcorper sit amet. Curabitur ut arcu viverra, rutrum ligula ut, eleifend lorem. Proin condimentum pulvinar velit at vehicula. Morbi congue, magna iaculis fringilla consectetur, sapien lacus tincidunt mauris, sed mattis enim ipsum quis lorem. Proin finibus velit at dui feugiat, porta fermentum lacus dignissim. </p>
+          </div>
+    </div>
     <script>
         buildSideNav()
         buildPage()

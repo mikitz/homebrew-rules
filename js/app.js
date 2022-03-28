@@ -95,6 +95,11 @@ function buildPage(clickedElement){
         if (calculator) {
             calcDiv = document.createElement('div')
             calcDiv.innerHTML = calcHTML
+            // Calculator Icon
+            let calcIcon = document.createElement('i')
+            calcIcon.setAttribute('class', "fa-solid fa-calculator fa-sm")
+            calcIcon.addEventListener('click', function() { showCalculatorDialog(this.parentElement) })
+            subAnchor.append(calcIcon)
             // TODO: Put these in <dialog>
         }
         // ***************
@@ -149,7 +154,30 @@ function buildPage(clickedElement){
             }
         }
         // Calculator
-        if (calculator) contentDiv.appendChild(calcDiv) // Append the calculator if there is one
+        if (calculator && calculator != 'TBD') contentDiv.appendChild(calcDiv) // Append the calculator if there is one
     });
     buildTopNav() // Build the Top Nav
+}
+// Function to set up the calculator dialog
+function showCalculatorDialog(element) {
+    let ID = element.innerText
+    ID = ID.replace(/-\w+/gm, "").replace(/-\w+\s\w+/gm, "")
+    console.log("ID:", ID)
+    const idCamel = camelize(ID)
+    const modal = document.getElementById('calc-modal')
+    const closeModal = document.getElementById('close-modal')
+    closeModal.addEventListener('click', function() { modal.style.display = 'none' })
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none'
+        }
+    } 
+    modal.style.display = 'block'
+    // ============
+    //  Update DOM
+    // ============
+    // TItle
+    const title = document.getElementById('calc-title')
+    title.innerText = ''
+    title.innerText = `${ID} Calculator` // Set the Title
 }
