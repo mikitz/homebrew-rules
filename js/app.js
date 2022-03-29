@@ -160,24 +160,64 @@ function buildPage(clickedElement){
 }
 // Function to set up the calculator dialog
 function showCalculatorDialog(element) {
-    let ID = element.innerText
-    ID = ID.replace(/-\w+/gm, "").replace(/-\w+\s\w+/gm, "")
-    console.log("ID:", ID)
-    const idCamel = camelize(ID)
-    const modal = document.getElementById('calc-modal')
-    const closeModal = document.getElementById('close-modal')
-    closeModal.addEventListener('click', function() { modal.style.display = 'none' })
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = 'none'
-        }
-    } 
-    modal.style.display = 'block'
+    function findRow(ID){
+        let data = pageContent.find(i => i.ANCHOR_SUB_2 == ID)
+        if (data) return data
+        data = pageContent.find(i => i.ANCHOR_SUB == ID)
+        if (data) return data
+        data = pageContent.find(i => i.ANCHOR == ID)
+        return data
+    }
+    document.getElementById('right-column').innerHTML = ''
+    document.getElementById('modal-form').innerHTML = ''
+    // ====================
+    //   Set Up the Modal
+    // ====================
+    let ID = (element.innerText).replace(/-\w+/gm, "").replace(/-\w+\s\w+/gm, "") // Format the ID
+    const idCamel = camelize(ID) // Convert the ID into camel case
+    const modal = document.getElementById('calc-modal') // Get the modal element
+    const closeModal = document.getElementById('close-modal') // Get the upper-right X
+    closeModal.addEventListener('click', function() { modal.style.display = 'none' }) // Let the X in the upper-right corner close the modal
+    window.onclick = function(event) { if (event.target == modal) modal.style.display = 'none' } // Make the modal close if the user clicks outside of it
+    modal.style.display = 'block' // Display the Modal
+    let modalForm = document.getElementById('modal-form')
     // ============
-    //  Update DOM
+    //   Get Data
     // ============
-    // TItle
-    const title = document.getElementById('calc-title')
-    title.innerText = ''
-    title.innerText = `${ID} Calculator` // Set the Title
+    const data = findRow(ID) // Get the row from the table where this is in a cell
+    const calculator = data.CALC // Get the calculator function name
+    const inputs = (data.INPUTS).split(", ") // Get the inputs needed for the function as a list
+    // ==============
+    //   Update DOM
+    // ==============
+    document.getElementById('calc-title').innerText = `${ID} Calculator` // Set the Title
+    inputs.forEach(element => { // Loop through the Inputs
+        let htmlID = IDify(element) // Convert the element into an  HTML ID
+
+        let label = document.createElement('label')
+        label.innerText = element.toTitleCase()
+        label.for = htmlID
+
+        let input = document.createElement('input') // Set up the Input element
+        input.id = htmlID // Set its ID
+        input.placeholder = element.toTitleCase() // Add in the place holder
+        input.type = 'number'
+
+        modalForm.appendChild(label) // Add a Label
+        modalForm.innerHTML += '<br>' // Add a line break
+        modalForm.appendChild(input) // Append to the form
+        modalForm.innerHTML += '<br>' // Add a line break
+    })
+    const submit = document.createElement('input')
+    submit.type = 'submit'
+    submit.value = 'Calculate'
+    submit.addEventListener('click', function(e) { 
+        e.preventDefault()
+        eval(calculator)
+    })
+    submit.addEventListener('keypress', function(e) { 
+        if(e.key === 13) eval(calculator)
+    })
+    modalForm.innerHTML += '<br>' // Add a line break
+    modalForm.appendChild(submit)
 }

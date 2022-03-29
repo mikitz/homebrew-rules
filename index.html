@@ -27,6 +27,7 @@
         <script src="js/calculators/calculatorsSkills.js"></script>
         <script src="js/calculators/calculatorsSpells.js"></script>
         <script src="js/calculators/calculatorsWorld.js"></script>
+        <script src="js/calculators/calculatorAbilityScores.js"></script>
         <script src="js/tables.js"></script>
         <script src="data/data.js"></script>
     </head>
@@ -47,8 +48,15 @@
                 <i class="fa-solid fa-xmark" id="close-modal"></i>
                 <span id="calc-title">TITLE</span>
             </h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut ante mauris. Vestibulum vel mollis erat, eu interdum urna. Donec a laoreet neque. Sed eget tincidunt lorem, nec tincidunt elit. Nullam sed libero id eros dapibus condimentum. Integer purus lectus, ornare at varius et, consectetur et turpis. Phasellus varius tincidunt turpis, nec sagittis tellus ullamcorper sit amet. Curabitur ut arcu viverra, rutrum ligula ut, eleifend lorem. Proin condimentum pulvinar velit at vehicula. Morbi congue, magna iaculis fringilla consectetur, sapien lacus tincidunt mauris, sed mattis enim ipsum quis lorem. Proin finibus velit at dui feugiat, porta fermentum lacus dignissim. </p>
-          </div>
+            <table class="table-container">
+                <tr class="table-row">
+                    <td class="table-left-column" id="left-column">
+                        <form id="modal-form"></form>
+                    </td>
+                    <td class="table-right-column" id="right-column"></td>
+                </tr>
+            </table>
+        </div>
     </div>
     <script>
         buildSideNav()

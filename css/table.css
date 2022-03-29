@@ -16,14 +16,18 @@
 .table-container {
     padding: 12px;
     border-collapse: collapse;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 .table-row {
     width: 100%;
-    border-bottom: 5px solid var(--light-primary) !important;
+    /* border-bottom: 5px solid var(--light-primary) !important; */
 }
 .table-left-column,
 .table-right-column {
-    width: 50%;   
+    width: 50% !important;   
     vertical-align: top;
 }
 .table-header {

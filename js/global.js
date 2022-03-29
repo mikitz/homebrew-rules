@@ -38,6 +38,10 @@ String.prototype.toTitleCase = function () {
 function scrollTo(hash, offset) {
     location.hash = `#${hash}` + offset;
 }
+// Function to turn a string into HTML ID format
+function IDify(string){
+    return string.replaceAll(" ", "-")
+}
 // Function to insert an element after a reference element
 function insertAfter(referenceNode, newNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
