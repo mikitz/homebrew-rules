@@ -1,3 +1,17 @@
+// Function to get an array of numbers between two integers
+function range(min, max) {
+    return [...Array(max - min + 1).keys()].map(i => i + min)
+}
+// Function to perform addition factorial
+function additionFactorialize(n) {
+    return (n * (n + 1) / 2 )
+}
+// Function to facorialize a number
+function factorialize(n) {
+    if (n < 0) return -1
+    if (n == 0) return 1
+    return (n * factorialize(n - 1))
+}
 // Function to select the contents of an element
 // Source: https://www.codegrepper.com/code-examples/javascript/frameworks/nextjs/copy+a+table+to+clipboard+javascript
 function selectElementContents(el) {
@@ -63,18 +77,13 @@ function camelize(str) {
 // Function for the proper ordinal
 // Source: https://stackoverflow.com/a/13627586/3725925
 function ordinal_suffix_of(i) {
-    var j = i % 10,
-        k = i % 100;
-    if (j == 1 && k != 11) {
-        return i + "st";
-    }
-    if (j == 2 && k != 12) {
-        return i + "nd";
-    }
-    if (j == 3 && k != 13) {
-        return i + "rd";
-    }
-    return i + "th";
+    if (!Number.isInteger(i)) return i
+    const j = i % 10
+    const k = i % 100;
+    if (j == 1 && k != 11) return i + "st"
+    if (j == 2 && k != 12) return i + "nd"
+    if (j == 3 && k != 13) return i + "rd"
+    return i + "th"
 }
 // Function to return text color based on background color
 // Source: https://stackoverflow.com/a/41491220/3725925

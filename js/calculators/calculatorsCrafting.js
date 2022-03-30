@@ -1,3 +1,18 @@
+// Function to calculate how much gold-value a PC can craft per day
+function goldPerDay(){
+    // Inputs
+    const profBonus = parseInt(document.getElementById('proficiency-bonus').value)
+    const intMod = parseInt(document.getElementById('intelligence-modifier').value)
+    const outputElement = document.getElementById('right-column') // Get the outpu element
+    outputElement.innerHTML = '' // Clear the output element
+    if ( !profBonus || !intMod ) return alert("One of the inputs is empty.")
+    // Compute
+    const gold = (profBonus + intMod) * 10
+    // Update DOM
+    outputElement.innerHTML = `<h3>Output</h3>
+                                <b>Gold per 8 Work-hours:</b> ${gold}gp<br>
+                                <b>Gold per Work-hour:</b> ${(gold / 8).toLocaleString()}gp`
+}
 // Calculates how long it will take to craft a certain item
 function calculate_crafting_time(){
     // Clear Output
@@ -26,62 +41,60 @@ function calculate_crafting_time(){
     document.getElementById("output").appendChild(p)
 }
 // Function to Calculate the cost of a custom magic item based on a spell
-function customMagicItem() {
-    // Clear Output
-    document.getElementById('output1').innerHTML = ''
-    // Log
-    console.log(`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`)
-    // Get the Spell Level
-    var spellLevelName = document.getElementById('spell-level').value
-        // Get the int from the spell level
-        if (spellLevelName.length > 3) {
-            spellLevel = 0.5
-        } else {
-            spellLevel = parseInt(spellLevelName.charAt(0))
-        }
-    console.log(`Spell Level: ${spellLevel}`)
-    // Get the # of Charges
-    var numCharges = parseInt(document.getElementById('numOfCharges').value)
-    console.log(`# of Charges: ${numCharges}`)
+function turningASpellIntoAMagicItem() {
+    // Inputs
+    document.getElementById('right-column').innerHTML = '' // Clear the output
+    let spellLevel = parseInt(document.getElementById('spell-level').value) // Get the spell level
+    let spellLevelName = document.getElementById('spell-level').value
+    if (spellLevelName == 'Cantrip') spellLevel = 0.5
+    if (spellLevelName != 'Cantrip') spellLevelName = ordinal_suffix_of(spellLevel)
+    const numCharges = parseInt(document.getElementById('number-of-charges').value) // Get the number of charges
     // Alert the user if the number of charges exceeds the spells level
-    if (spellLevel === 0.5 && numCharges > 1){
-        alert(`The number of charges cannot exceed 1 for cantrips.`)
-        return
-    } else if (spellLevel < numCharges && spellLevel !== 0.5) {
-        alert(`The number of charges cannot exceed the spell's level. The max number of charges for an item made from a level-${spellLevel} spell is ${spellLevel}.`)
-        return
-    } else if (spellLevelName === "Cantrip" && numCharges > 1) {
-        alert("The number of charges cannot exceed the spell's level. Cantrip items cannot support more than 1 charge.")
-        return
-    }
-    // Pull the cost for the spell scroll
-    var cSpellScroll = parseInt(item_prices.find(i => i["Spell Scrolls"] == spellLevelName)["Cost (To Purchase)"])
-    console.log(`Cost - Spell Scroll: ${cSpellScroll}`)
-    // Pull the cost for the spell slot
-    var cSpellSlot = parseInt(item_prices.find(i => i["Spell Scrolls"] == spellLevelName)["Cost (For Service) + Materials"])
-    console.log(`Cost - Spell Slot: ${cSpellSlot}`)
-    // Calculate cost of spell scrolls
-    var pSpellScrolls = parseInt(numCharges * cSpellScroll)
-    console.log(`Price - Spell Scrolls: ${pSpellScrolls}`)
-    // Calculate cost of spell slots
-    var pSpellSlots = parseInt(numCharges * cSpellSlot)
-    console.log(`Price - Spell Slots: ${pSpellSlots}`)
-    // Calculate total price
-    var pTotal = parseInt(pSpellScrolls + pSpellSlots)
-    console.log(`Price - Total: ${pTotal}`)
-    // Calculate total time to make
-    var tTotal = parseInt((spellLevel * 8) * numCharges)
-    console.log(`Time - Workhours: ${tTotal}`)
-    // Calculate the # of workdays the character has to wait
-    var tDays = parseInt(tTotal / 8)
-    console.log(`Time - Workdays: ${tDays}`)
-    // Print the output
-    var p = document.createElement('p')
-    p.innerHTML = `<h2>Output</h2>
-                    <b>Total Price:</b> ${pTotal.toLocaleString()} gp <br>
-                    <b>Total Days:</b> ${tDays.toLocaleString()} workdays <br>
-                    <b>Total Workhours:</b> ${tTotal.toLocaleString()} workhours<br>
-                    <b>Cost for Spell Scrolls:</b> ${pSpellScrolls.toLocaleString()} gp<br>
-                    <b>Cost for Spell Slots:</b> ${pSpellSlots.toLocaleString()} gp <br>`
-    document.getElementById("output1").appendChild(p)
+    if (spellLevel === 0.5 && numCharges > 1) return alert(`The number of charges cannot exceed 1 for cantrips.`)
+    else if (spellLevel < numCharges && spellLevel !== 0.5) return alert(`The number of charges cannot exceed the spell's level. The max number of charges for an item made from a level-${spellLevel} spell is ${spellLevel}.`)
+    // Compute
+    const cSpellScroll = parseInt(spellScrollsBySpellLevel.find(i => i["SPELL-LEVEL"] == spellLevelName)["COST-(TO-BUY)"]) // Pull the cost for the spell scroll
+    const cSpellSlot = parseInt(spellScrollsBySpellLevel.find(i => i["SPELL-LEVEL"] == spellLevelName)["COST-(FOR-SERVICE)"]) // Pull the cost for the spell slot
+    const pSpellScrolls = parseInt(numCharges * cSpellScroll) // Calculate cost of spell scrolls
+    const pSpellSlots = parseInt(numCharges * cSpellSlot) // Calculate cost of spell slots
+    const tTotal = parseInt((spellLevel * 8) * numCharges) // Calculate total time to make
+    const tDays = parseInt(tTotal / 8) // Calculate the # of workdays the character has to wait
+    const itemCost = parseInt((spellLevel * numCharges) * 1000) // Calculate the cost of the item
+    const pTotal = parseInt(pSpellScrolls + pSpellSlots + itemCost) // Calculate total price
+    // Update DOM
+    document.getElementById("right-column").innerHTML = `<h2>Output</h2>
+                        <b>Total Price:</b> ${pTotal.toLocaleString()} gp <br>
+                        <b>Total Days:</b> ${tDays.toLocaleString()} workdays <br>
+                        <b>Total Workhours:</b> ${tTotal.toLocaleString()} workhours<br>
+                        <b>Cost for Spell Scrolls:</b> ${pSpellScrolls.toLocaleString()} gp<br>
+                        <b>Cost for Spell Slots:</b> ${pSpellSlots.toLocaleString()} gp <br>
+                        <b>Item Cost:</b> ${itemCost.toLocaleString()} gp`
+}
+// Functiont to compute the cost of adding more charges
+function addingMoreChargesToAMagicItem(){
+    // Inputs
+    document.getElementById('right-column').innerHTML = '' // Clear the output
+    let spellLevel = parseInt(document.getElementById('spell-level').value) // Get the spell level
+    let spellLevelName = document.getElementById('spell-level').value
+    if (spellLevelName == 'Cantrip') spellLevel = 0.5
+    if (spellLevelName != 'Cantrip') spellLevelName = ordinal_suffix_of(spellLevel)
+    const numCharges = parseInt(document.getElementById('number-of-charges').value) // Get the number of charges
+    // Alert the user if the number of charges exceeds the spells level
+    if (spellLevel === 0.5 && numCharges > 1) return alert(`The number of charges cannot exceed 1 for cantrips.`)
+    else if (spellLevel < numCharges && spellLevel !== 0.5) return alert(`The number of charges cannot exceed the spell's level. The max number of charges for an item made from a level-${spellLevel} spell is ${spellLevel}.`)
+    // Compute
+    const cSpellScroll = parseInt(spellScrollsBySpellLevel.find(i => i["SPELL-LEVEL"] == spellLevelName)["COST-(TO-BUY)"]) // Pull the cost for the spell scroll
+    const cSpellSlot = parseInt(spellScrollsBySpellLevel.find(i => i["SPELL-LEVEL"] == spellLevelName)["COST-(FOR-SERVICE)"]) // Pull the cost for the spell slot
+    const pSpellScrolls = parseInt(numCharges * cSpellScroll) // Calculate cost of spell scrolls
+    const pSpellSlots = parseInt(numCharges * cSpellSlot) // Calculate cost of spell slots
+    const tTotal = parseInt((spellLevel * 8) * numCharges) // Calculate total time to make
+    const tDays = parseInt(tTotal / 8) // Calculate the # of workdays the character has to wait
+    const pTotal = parseInt(pSpellScrolls + pSpellSlots) // Calculate total price
+    // Update DOM
+    document.getElementById("right-column").innerHTML = `<h2>Output</h2>
+                        <b>Total Price:</b> ${pTotal.toLocaleString()} gp <br>
+                        <b>Total Days:</b> ${tDays.toLocaleString()} workdays <br>
+                        <b>Total Workhours:</b> ${tTotal.toLocaleString()} workhours<br>
+                        <b>Cost for Spell Scrolls:</b> ${pSpellScrolls.toLocaleString()} gp<br>
+                        <b>Cost for Spell Slots:</b> ${pSpellSlots.toLocaleString()} gp <br>`
 }

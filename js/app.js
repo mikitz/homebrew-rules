@@ -183,11 +183,9 @@ function showCalculatorDialog(element) {
     //   Get Data
     // ============
     const data = findRow(ID) // Get the row from the table where this is in a cell
-    console.log("Data:", data)
     const calculator = data.CALC // Get the calculator function name
     // const inputs = (data.INPUTS).split(", ") // Get the inputs needed for the function as a list
     const inputs = JSON.parse(data.INPUTS)
-    console.log("Inputs:", inputs)
     // ==============
     //   Update DOM
     // ==============
@@ -211,7 +209,6 @@ function showCalculatorDialog(element) {
             input = document.createElement('select') // Create the select element
             input.id = htmlID // Set its ID
             const options = ((element.OPTIONS).replace("[", "").replace("]", "").replaceAll("'", "")).split(",")
-            console.log("Options:", options)
             options.forEach(element => {
                 let option = document.createElement('option')
                 option.innerText = element
