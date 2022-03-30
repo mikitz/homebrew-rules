@@ -98,7 +98,7 @@ function buildPage(clickedElement){
             // Calculator Icon
             let calcIcon = document.createElement('i')
             calcIcon.setAttribute('class', "fa-solid fa-calculator fa-sm")
-            calcIcon.addEventListener('click', function() { showCalculatorDialog(this.parentElement) })
+            calcIcon.addEventListener('click', function() { showCalculatorDialog(this.parentElement) }) // TODO: This needs to be on the anchor-sub-sub or anchor-sub
             subAnchor.append(calcIcon)
             // TODO: Put these in <dialog>
         }

@@ -35,3 +35,6 @@ A collection of my homebrew rules used for D&amp;D 5e.
     - [] Make all tables openable in a new tab
     - [] Implement [Datatables](https://datatables.net/download/index)?
 4. Implement Search
+5. Check out these librariies
+    - [] Danfo.js
+    - [] 
