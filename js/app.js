@@ -90,17 +90,13 @@ function buildPage(clickedElement){
         }
         // Calculator
         let calculator = element.CALC
-        let calcHTML = element.CALC_HTML
-        let calcDiv
+        let calcIcon
         if (calculator) {
-            calcDiv = document.createElement('div')
-            calcDiv.innerHTML = calcHTML
             // Calculator Icon
-            let calcIcon = document.createElement('i')
+            calcIcon = document.createElement('i')
             calcIcon.setAttribute('class', "fa-solid fa-calculator fa-sm")
             calcIcon.addEventListener('click', function() { showCalculatorDialog(this.parentElement) })
-            subAnchor.append(calcIcon)
-            // TODO: Put these in <dialog>
+            // subAnchor.append(calcIcon)
         }
         // ***************
         //  Append to DOM
@@ -113,6 +109,10 @@ function buildPage(clickedElement){
         if (element.ANCHOR_SUB_2 && paragraphContent) insertAfter(subSubAnchor, paragraphContent) // Insert the paragraph content after the Anchor-sub-sub
         else if (element.ANCHOR_SUB && paragraphContent) insertAfter(subAnchor, paragraphContent) // Insert the paragraph content after the Anchor-sub
         else if (element.ANCHOR && paragraphContent) insertAfter(anchor, paragraphContent) // Insert the paragraph content after the Anchor
+        // Calculator
+        if (element.ANCHOR_SUB_2 && calculator) subSubAnchor.append(calcIcon) // Insert the calculator icon content after the Anchor-sub-sub
+        else if (element.ANCHOR_SUB && calculator) subAnchor.append(calcIcon) // Insert the calculator icon content after the Anchor-sub
+        else if (element.ANCHOR && calculator) anchor.append(calcIcon) // Insert the calculator icon content after the Anchor
         // Table(s)
         if (tables) {
             for (let index = 0; index < tables.length; index++) {
@@ -153,8 +153,6 @@ function buildPage(clickedElement){
                 // applyDataTable(`${tablename}-table`); // Format the table to be a DataTable
             }
         }
-        // Calculator
-        if (calculator && calculator != 'TBD') contentDiv.appendChild(calcDiv) // Append the calculator if there is one
     });
     buildTopNav() // Build the Top Nav
 }
@@ -185,23 +183,42 @@ function showCalculatorDialog(element) {
     //   Get Data
     // ============
     const data = findRow(ID) // Get the row from the table where this is in a cell
+    console.log("Data:", data)
     const calculator = data.CALC // Get the calculator function name
-    const inputs = (data.INPUTS).split(", ") // Get the inputs needed for the function as a list
+    // const inputs = (data.INPUTS).split(", ") // Get the inputs needed for the function as a list
+    const inputs = JSON.parse(data.INPUTS)
+    console.log("Inputs:", inputs)
     // ==============
     //   Update DOM
     // ==============
     document.getElementById('calc-title').innerText = `${ID} Calculator` // Set the Title
     inputs.forEach(element => { // Loop through the Inputs
-        let htmlID = IDify(element) // Convert the element into an  HTML ID
+        let htmlID = IDify(element.NAME) // Convert the element into an  HTML ID
 
         let label = document.createElement('label')
-        label.innerText = element.toTitleCase()
+        label.innerText = (element.NAME).toTitleCase()
         label.for = htmlID
 
-        let input = document.createElement('input') // Set up the Input element
-        input.id = htmlID // Set its ID
-        input.placeholder = element.toTitleCase() // Add in the place holder
-        input.type = 'number'
+        const type = element.TYPE
+        let input
+        if (type == 'number') {
+            input = document.createElement('input') // Set up the Input element
+            input.id = htmlID // Set its ID
+            input.placeholder = (element.NAME).toTitleCase() // Add in the place holder
+            input.type = 'number'
+        }
+        if (type == 'select') {
+            input = document.createElement('select') // Create the select element
+            input.id = htmlID // Set its ID
+            const options = ((element.OPTIONS).replace("[", "").replace("]", "").replaceAll("'", "")).split(",")
+            console.log("Options:", options)
+            options.forEach(element => {
+                let option = document.createElement('option')
+                option.innerText = element
+                option.value = element
+                input.appendChild(option)
+            });
+        }
 
         modalForm.appendChild(label) // Add a Label
         modalForm.innerHTML += '<br>' // Add a line break
