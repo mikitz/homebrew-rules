@@ -14,7 +14,7 @@ function goldPerDay(){
                                 <b>Gold per Work-hour:</b> ${(gold / 8).toLocaleString()}gp`
 }
 // Calculates how long it will take to craft a certain item
-function calculate_crafting_time(){
+function computeCraftingTime(){
     // Clear Output
     document.getElementById('output').innerHTML = ''
     // Get gold
