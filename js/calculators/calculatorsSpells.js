@@ -1,47 +1,3 @@
-// Function to populate the Character list
-function populateCharacterDropdown(){
-// Do the thing
-import('/src/pages/profile/firebaseInit.js').then((init)=> {
-    // Declare collection
-    let db = init.db
-    let getDoc = init.getDoc
-    let doc = init.doc
-    let auth = init.auth
-    let onAuthStateChanged = init.onAuthStateChanged
-    // User is logged in
-    onAuthStateChanged(auth, (user) => {
-        if (user){
-            const selectedCharacter = localStorage.getItem('selectedCharacter') // Get the currently Selected Campaign from FireStore
-            // ====================
-            //    CAMPAIGN LIST
-            // ====================
-            const docRef = doc(db, "characters", user.uid) // Get just the doc for the current user
-            getDoc(docRef).then((snapshot) => {
-                // GET DATA
-                    let characters = snapshot.data().characters // Get the characters object array from FireStore
-                // UPDATE DOM
-                    const dropdown = document.getElementById('character-list-dropdown') // Get the Campaign Dropdown
-                    characters.forEach(element => { // Loop through each campaign
-                        const option = document.createElement('option')
-                        option.value = element // Set the value to the given campaign's name
-                        option.innerText = element // Set the innerText to the given campaign's name
-                        dropdown.appendChild(option) // Append the option to the dropdown
-                    })
-                    if (selectedCharacter){
-                        dropdown.value = selectedCharacter // Set the dropdown's value to the selected campaign
-                    } else {
-                        dropdown.value = 'choose'
-                    }
-                    
-            }).catch(error => {
-                console.log(error)
-            })
-        }
-    })
-}).catch(error => {
-    console.log(error)
-}) 
-}
 // Function to generate the tables
 function generateSpellTables(){
 // USER INPUTS
@@ -76,7 +32,8 @@ function generateSpellTables(){
                 message: `${selectedCharacter}'s tables have been loaded and exported! You may proceed with your arcane musings.`,
                 type: 'success'
             })
-        }        
+        }      
+    }  
 // Function to Generate Tables
 function generateTable(selectedClass){
     // Filter by Class
@@ -220,85 +177,6 @@ function generateTable(selectedClass){
         }).catch(error => { console.log(error) }) // Auth Errors
         
 }
-// Function to Load Tables
-function loadTables(selectedCharacter){
-    const schoolList = ['conjuration', 'necromancy', 'evocation', 'abjuration', 'transmutation', 'divination', 'enchantment', 'illusion']
-    let conjuration = []
-    let necromancy = []
-    let evocation = []
-    let abjuration = []
-    let transmutation = []
-    let divination = []
-    let enchantment = []
-    let illusion = []
-    // FIRESTORE
-    import('/src/pages/profile/firebaseInit.js').then((init)=> { 
-        // IMPORTS
-            let db = init.db
-            let auth = init.auth
-            let onAuthStateChanged = init.onAuthStateChanged
-            let collection = init.collection
-            let getDocs = init.getDocs
-        // Work with the FireStore Database
-        onAuthStateChanged(auth, (user) => { // Check if User is logged in
-            if (user){
-                schoolList.forEach(school => {
-                    const collectionRef = collection(db, 'characters', user.uid, selectedCharacter, school, `${school}_table`) // Create the School's collection
-                    getDocs(collectionRef).then((snapshot) => { // Get all the docs in the above collection
-                        snapshot.forEach(doc => { // Loop through each doc
-                            eval(school).push(doc.data()) // Push the doc's data to the appropriate array
-                        });
-                        const csvString = [
-                            [ // Row Headers
-                              "ID",
-                              "Name",
-                              "School",
-                              "Level",
-                              "Combination",
-                              "Outcome",
-                              "Outcome Description",
-                              "Link",
-                              "Discovered"
-                            ],
-                            ...eval(school).map(item => [ // Use the Key names in the specified array and put them in order of the above
-                                `"${item.ID}"`,
-                                `"${item.NAME}"`,
-                                `"${item.SCHOOL}"`,
-                                `"${item.LEVEL}"`,
-                                `"${item.COMBINATION}"`,
-                                `"${item.OUTCOME}"`,
-                                `"${item.OUTCOME_DESCRIPTION}"`,
-                                `"${item.LINK}"`,
-                                `"${item.DISCOVERED}"`
-                            ])
-                          ]
-                           .map(e => e.join(",")) 
-                           .join("\n");
-                        // EXPORT THE TABLE
-                        var blob = new Blob([csvString], { type : 'text/csv;charset=utf-8;'})
-                        const filename = `${selectedCharacter} - ${school}.csv`
-                        if (navigator.msSaveBlob) { // IE 10+
-                            navigator.msSaveBlob(blob, filename);
-                        } else {
-                            var link = document.createElement("a");
-                            if (link.download !== undefined) { // feature detection
-                                // Browsers that support HTML5 download attribute
-                                var url = URL.createObjectURL(blob);
-                                link.setAttribute("href", url);
-                                link.setAttribute("download", filename);
-                                link.style.visibility = 'hidden';
-                                document.body.appendChild(link);
-                                link.click();
-                                document.body.removeChild(link);
-                            }
-                        }
-                    })
-                });
-            }
-        })
-    }).catch(error => { console.log(error) }) // Auth Errors
-}
-}
 // Function to populate the Number Dropdown
 function populateMagicalExperimentDropdown(){
 // SCHOOL DROPDOWN
@@ -309,67 +187,4 @@ function populateMagicalExperimentDropdown(){
 
 // COMBINATION DROPDOWN
     // TODO: Modify the combos that have been discovered based on the the school and number (12/22/2021)
-}
-// Function to perform a magical experiment
-function performMagicalExperiement(){
-// TODO: finish this! Lots of things to consider that I've forgotten (12/22/2021)
-// USER INPUTS
-    const school = document.getElementById('school-dropdown').value.toLowerCase()
-    const number = parseInt(document.getElementById('range-dropdown').value)
-    const combination = document.getElementById('combination-dropdown').value
-    const selectedCharacter = document.getElementById('character-list-dropdown').value
-    // Handle unselected options
-    if (school == 'choose' || number == 'choose' || combination == 'choose' || selectedCharacter == 'choose') {
-        alert("Please ensure you have selected a character, a school, a number, a combination, and a spell level.")
-        return
-    }
-    console.log("School:", school)
-    console.log("ID:", number)
-    console.log("Combination:", combination)
-    console.log("Selected Character:", selectedCharacter)
-// FIRESTORE
-import('/src/pages/profile/firebaseInit.js').then((init)=> { 
-    // IMPORTS
-        let db = init.db
-        let auth = init.auth
-        let onAuthStateChanged = init.onAuthStateChanged
-        let collection = init.collection
-        let query = init.query
-        let where = init.where
-        let getDocs = init.getDocs
-        let doc = init.doc
-        let updateDoc = init.updateDoc
-    // Work with the FireStore Database
-    onAuthStateChanged(auth, (user) => { // Check if User is logged in
-        if (user){
-            // GET DATA
-                const colRef = collection(db, 'characters', user.uid, selectedCharacter, school, `${school}_table`) // Get the collection from which to query
-                const querySnapshot = query(colRef, where("COMBINATION", "==", combination), where("ID", "==", number)) // Query the above collection where the comination equals the combination the user input and the number the user input
-                getDocs(querySnapshot).then((snapshot) => { // Get all the docs that match
-                    snapshot.forEach(docu => { // Loop through each doc
-                        // GET DATA
-                        const data = docu.data() // Get the doc's data
-                        const ID = docu.id // Get the doc's ID
-                        const outcome = data.OUTCOME // Get the doc's outcome
-                        const name = data.NAME
-                        const level = data.LEVEL
-                        // UPDATE DOC
-                        const docRef = doc(db, 'characters', user.uid, selectedCharacter, school, `${school}_table`, ID)
-                        updateDoc(docRef, {
-                            DISCOVERED: true
-                        })
-                        // UPDATE DOM
-                        const output = document.getElementById('experiment-output')
-                        output.innerHTML = `<b>Outcome:</b> ${outcome}<br>
-                                            <b>Combination:</b> ${combination}<br>
-                                            <b>Spell Name:</b> ${name}<br>
-                                            <b>Spell Level:</b> ${level}<br>
-                                            <b>Spell School:</b> ${school.toTitleCase()}<br>
-                                            <b>Spell Number:</b> ${number}`
-                    });
-
-                }).catch(error => { console.log(error) }) // Get Docs Errors
-        }
-    })
-}).catch(error => { console.log(error) }) // Auth Errors
 }

@@ -78,6 +78,7 @@ function calculate_level_demographics(){
     
 }
 // Function to add a City
+// TODO: Update to LocalStorage
 function addCity(){
     // USER INPUTS
         // Population
@@ -117,6 +118,7 @@ function addCity(){
     setCityDropdown()
 }
 // Function to set the Cities select dropdown
+// TODO: Update to LocalStorage
 function setCityDropdown(){
     // LOCAL STORAGE PULL
         // Cities

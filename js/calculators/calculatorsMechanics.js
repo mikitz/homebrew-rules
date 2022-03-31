@@ -1,4 +1,5 @@
 // Calculate the reward for a bounty
+// TODO: Add to Spreadsheet
 function calculate_bounty(){
     // Clear Output
     document.getElementById('output').innerHTML = ''
@@ -21,6 +22,7 @@ function calculate_bounty(){
         document.getElementById("output").appendChild(p)
 }
 // Function to calculate SIMPLE business income
+// TODO: Add to Spreadsheet
 function simpleBusinessIncome() {
     // Get the selected campaign
     var campaignName = localStorage.getItem('selectedCampaign')
@@ -176,11 +178,10 @@ function populateProfitShare(){
         PSE.appendChild(div)
 }
 // Function to calculate the cost of a mercenary
-function calculateMercenaryCost(){
+function calculatingMercenaryCost(){
     // USER INPUTS
         // CR
-        const CR = parseFloat(document.getElementById('cr').value)
-        console.log("CR:", CR)
+        const CR = document.getElementById('mercenary-CR').value
         // Quantity
         const quantity = parseInt(document.getElementById('quantity').value)
     // CALCULATIONS
@@ -209,14 +210,14 @@ function calculateMercenaryCost(){
             const totalMinPayIndCombat = totalCombatCost * minTime
     // MESSAGE
         // Set message
-        var message = `<h2>Output</h2>`
+        var message = `<h3>Output</h3>`
         // If 10 or more Mercs
         if (quantity >= 10){
             // Add Wait Time
             message += `Wait Time: ${waitTime.toLocaleString()} days`
         }
         // Add Individual Calculations
-        message += `<h3>Individual</h3>
+        message += `<h4>Individual</h4>
                     Non-combat Pay: ${costCR.toLocaleString()} gp per day
                     <br>Combat Pay: ${combatCostCR.toLocaleString()} gp per day`
             if(quantity >= 10){
@@ -224,7 +225,7 @@ function calculateMercenaryCost(){
                             <br>Minimum Combat Pay: ${minPayIndCombat.toLocaleString()} gp for ${minTime.toLocaleString()} days`
             }
         // Add Total Cost
-        message += `<h3>Group Total</h3>
+        message += `<h4>Group Total</h4>
                     Non-combat Pay: ${totalCost.toLocaleString()} gp per day
                     <br>Combat Pay: ${totalCombatCost.toLocaleString()} gp per day`
             if(quantity >= 10){
@@ -232,11 +233,11 @@ function calculateMercenaryCost(){
                             <br>Minimum Combat Pay: ${totalMinPayIndCombat.toLocaleString()} gp for ${minTime.toLocaleString()} days`
             }
         // Append the message to the dom
-        document.getElementById('output').innerHTML = message
+        document.getElementById('right-column').innerHTML = message
 
 }
-// Calculates the duration of the sailing 
-// as well as revenue earned from the conveyance of cargo
+// Calculates the duration of the sailing as well as revenue earned from the conveyance of cargo
+// TODO: Add to Spreadsheet
 function calculate_sail_duration_and_cargo_revenue() {
     // Clear Output
     document.getElementById('output').innerHTML = ''
@@ -295,53 +296,4 @@ function calculate_sail_duration_and_cargo_revenue() {
     var p = document.createElement('p')
     p.innerHTML = vMessage
     document.getElementById('output').appendChild(p)
-}
-// Function to compute jail sentence and fee
-function calcJailSentence(){
-    // USER INPUTS
-        // Get the # of charges
-        const charges = parseInt(document.getElementById('charges').value)
-        // Get the selected campaign
-        var campaignName = localStorage.getItem('selectedCampaign')
-        const note = document.getElementById('note').value
-    // COMPUTE
-        // Compute number of days
-        const days = fMultiRoll(charges, 10, 10)
-        // Compute the fee to go free
-        const fee = (days * 100).toLocaleString()
-    // OUTPUT
-        // Build message
-        let message = `<h2>Output</h2>
-                        <b>Sentence:</b> ${days} days<br>
-                        <b>Fee:</b> ${fee} gp`
-        // Append to DOM
-        document.getElementById('output').innerHTML = message
-    // APPEND TO THE DB
-    if (campaignName){
-        // FIRESTORE
-        import('/src/pages/profile/firebaseInit.js').then((init)=> { 
-            // IMPORTS
-                let db = init.db
-                let auth = init.auth
-                let onAuthStateChanged = init.onAuthStateChanged
-                let addDoc = init.addDoc
-                let collection = init.collection
-            // Work with the FireStore Database
-            onAuthStateChanged(auth, (user) => { // Check if User is logged in
-                if (user){
-                    // UPDATE DATA
-                    var date = new Date(); // Instantiate a new Date objectzsz
-                    const today = date.toLocaleDateString() // Today's date
-                    // Set up the NPC object
-                    var npcObj = {"guilty-charges": charges,
-                                            "days": days,
-                                            "fee": fee,
-                                            "note": note,
-                                            "date": today}
-                    // SET THE DATA
-                    addDoc(collection(db, `campaigns`, user.uid, campaignName, `jail_sentence`, 'jail_sentence_history'), npcObj)
-                }
-            })
-        }).catch(error => { console.log(error) }) // Auth Errors
-    }
 }

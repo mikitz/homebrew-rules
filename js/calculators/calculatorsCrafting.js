@@ -2,43 +2,25 @@
 function goldPerDay(){
     // Inputs
     const profBonus = parseInt(document.getElementById('proficiency-bonus').value)
+    const itemCost = parseInt(document.getElementById('item-cost').value)
     const intMod = parseInt(document.getElementById('intelligence-modifier').value)
-    const outputElement = document.getElementById('right-column') // Get the outpu element
+    const outputElement = document.getElementById('right-column') // Get the output element
     outputElement.innerHTML = '' // Clear the output element
     if ( !profBonus || !intMod ) return alert("One of the inputs is empty.")
     // Compute
     const gold = (profBonus + intMod) * 10
     // Update DOM
+    if (!itemCost) {
+        outputElement.innerHTML = `<h3>Output</h3>
+                                    <b>Gold per Work-day:</b> ${gold}gp <br>
+                                    <b>Gold per Work-hour:</b> ${(gold / 8).toLocaleString()}gp`
+        return
+    }
     outputElement.innerHTML = `<h3>Output</h3>
-                                <b>Gold per 8 Work-hours:</b> ${gold}gp<br>
-                                <b>Gold per Work-hour:</b> ${(gold / 8).toLocaleString()}gp`
-}
-// Calculates how long it will take to craft a certain item
-function computeCraftingTime(){
-    // Clear Output
-    document.getElementById('output').innerHTML = ''
-    // Get gold
-    var g = parseInt(document.getElementById("gold").value)
-    // Get prof. bonus
-    var p = parseInt(document.getElementById("prof").value)
-    // Get int. mod.
-    var i = parseInt(document.getElementById("int").value)
-    // Calculate amount of gold per 8 hours of work (1 workday)
-    var wd = (p + i)*10
-    // Calculate the amount of gold per 1 hour (1 workhour)
-    var wh = Math.round(wd/8)
-    // Calculate the # of hours for this specific item
-    var whi = Math.round(g / wh)
-    // Calcualte the workdays for this specific item
-    var wdi = (whi / 8).toFixed(2)
-    // Print the output
-    var p = document.createElement('p')
-    p.innerHTML = `<h2>Output</h2>
-                    Gold per Workday: ${wd} gp <br>
-                    Gold per Workhour: ${wh} gp <br>
-                    Workhours for this Item: ${whi} hours <br>
-                    Workdays for this Item: ${wdi} days`
-    document.getElementById("output").appendChild(p)
+                                    <b>Gold per Work-day:</b> ${gold}gp <br>
+                                    <b>Gold per Work-hour:</b> ${(gold / 8).toLocaleString()}gp <br>
+                                    <b>Work-hours for This Item:</b> ${Math.ceil(itemCost / (gold / 8)).toLocaleString()} Work-hours <br>
+                                    <b>Work-days for This Item:</b> ${Math.ceil(itemCost / gold).toLocaleString()} Work-days`
 }
 // Function to Calculate the cost of a custom magic item based on a spell
 function turningASpellIntoAMagicItem() {
@@ -59,7 +41,7 @@ function turningASpellIntoAMagicItem() {
     const pSpellSlots = parseInt(numCharges * cSpellSlot) // Calculate cost of spell slots
     const tTotal = parseInt((spellLevel * 8) * numCharges) // Calculate total time to make
     const tDays = parseInt(tTotal / 8) // Calculate the # of workdays the character has to wait
-    const itemCost = parseInt((spellLevel * numCharges) * 1000) // Calculate the cost of the item
+    const itemCost = parseInt((spellLevel * numCharges) * 100) // Calculate the cost of the item
     const pTotal = parseInt(pSpellScrolls + pSpellSlots + itemCost) // Calculate total price
     // Update DOM
     document.getElementById("right-column").innerHTML = `<h2>Output</h2>
@@ -97,4 +79,70 @@ function addingMoreChargesToAMagicItem(){
                         <b>Total Workhours:</b> ${tTotal.toLocaleString()} workhours<br>
                         <b>Cost for Spell Scrolls:</b> ${pSpellScrolls.toLocaleString()} gp<br>
                         <b>Cost for Spell Slots:</b> ${pSpellSlots.toLocaleString()} gp <br>`
+}
+// Function to 
+function craftingAConstruct(){
+    // Inputs
+    const profBonus = parseInt(document.getElementById('proficiency-bonus').value) // Get the Proficiency Bonus that the user input
+    const creatureCR = parseInt(document.getElementById('creature-CR').value) // Get the Creature CR that the user input
+    const intMod = parseInt(document.getElementById('intelligence-modifier').value) // Get the Intelligence Mod. that the user input
+    const outputElement = document.getElementById('right-column') // Get the output element
+    outputElement.innerHTML = '' // Clear the output element 
+    // Compute
+    let controlGemCost
+    let crLimit
+    for (let index = 0; index < gemstonesAndControlGems.length; index++) {
+        if (index == 0) continue // Skip the first entry
+        const element = gemstonesAndControlGems[index] // Get the current element
+        const currentCRLimit = element['CONTROL-GEM-CR-LIMIT'] // Get the current element's CR Limit
+        const prevCRLimit = gemstonesAndControlGems[index - 1]['CONTROL-GEM-CR-LIMIT'] // Get the previous element's CR Limit
+        if (index == (gemstonesAndControlGems.length) - 1) { 
+            controlGemCost = element['CONTROL-GEM-PRICE'] // If the last element
+            crLimit = element['CONTROL-GEM-CR-LIMIT']
+            break
+        }
+        const nextCRLimit = gemstonesAndControlGems[index + 1]['CONTROL-GEM-CR-LIMIT'] // Get the next element's CR Limit
+        if (creatureCR <= currentCRLimit) {
+            controlGemCost = element['CONTROL-GEM-PRICE']
+            crLimit = element['CONTROL-GEM-CR-LIMIT']
+            break
+        }
+    }
+    const materialsCost = ( creatureCR * ( creatureCR + 1 ) * 100 ) /2
+    const totalCost = controlGemCost + materialsCost
+    // Update DOM
+    if (!profBonus || !intMod) {
+        outputElement.innerHTML = `<h3>Output</h3>
+                                <b>Control Gem Cost:</b> ${controlGemCost.toLocaleString()} gp <br>
+                                <b>Materials Cost:</b> ${materialsCost.toLocaleString()} gp <br>
+                                <b>Total Cost:</b> ${totalCost.toLocaleString()} gp`
+        return
+    }
+    const gold = (profBonus + intMod) * 10
+    outputElement.innerHTML = `<h3>Output</h3>
+                                <b>Control Gem Cost:</b> ${controlGemCost.toLocaleString()} gp <br>
+                                <b>Materials Cost:</b> ${materialsCost.toLocaleString()} gp <br>
+                                <b>Total Cost:</b> ${totalCost.toLocaleString()} gp <br>
+                                <b>Work-hours for This Item:</b> ${Math.ceil(totalCost / (gold / 8)).toLocaleString()} Work-hours <br>
+                                <b>Work-days for This Item:</b> ${Math.ceil(totalCost / gold).toLocaleString()} Work-days`
+}
+// Function to compute how much time is needed to repair a controlled construct to full HP
+function repairingAConstruct(){
+    // Inputs
+    const totalHP = parseInt(document.getElementById('total-HP').value) // Get the Proficiency Bonus that the user input
+    const currentHP = parseInt(document.getElementById('current-HP').value) // Get the Creature CR that the user input
+    const creatureSize = document.getElementById('creature-size').value // Get the Intelligence Mod. that the user input
+    const outputElement = document.getElementById('right-column') // Get the output element
+    outputElement.innerHTML = '' // Clear the output element 
+    // Compute
+    if (!totalHP || !currentHP || !creatureSize) return alert("At least one of the below inputs is empty. They must all have values.")
+    const timeForSize = parseInt(repairTimeBySize.find(i => i['SIZE'] == creatureSize)["TIME_PER_HIT_POINT_(SECONDS)"])
+    const remainingHP = totalHP - currentHP
+    const timeToHeal = timeForSize * remainingHP
+    const fancyTime = fancyTimeFormat(timeToHeal)
+    const hours = Math.ceil(timeToHeal / 3600)
+    outputElement.innerHTML = `<h3>Output</h3>
+                                <b>Remaining HP:</b> ${remainingHP.toLocaleString()} HP <br>
+                                <b>Remaining Hours (rounded up):</b> ${hours.toLocaleString()} hrs <br>
+                                <b>Remaining Time (hh:mm:ss):</b> ${fancyTime} <br>`
 }
