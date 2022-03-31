@@ -1,5 +1,4 @@
 // Calculate the reward for a bounty
-// TODO: Add to Spreadsheet
 function calculate_bounty(){
     // Clear Output
     document.getElementById('output').innerHTML = ''
@@ -22,7 +21,7 @@ function calculate_bounty(){
         document.getElementById("output").appendChild(p)
 }
 // Function to calculate SIMPLE business income
-// TODO: Add to Spreadsheet
+// TODO: Add to Spreadsheet: It's a yellow row 36
 function simpleBusinessIncome() {
     // Get the selected campaign
     var campaignName = localStorage.getItem('selectedCampaign')
