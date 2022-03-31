@@ -8,13 +8,14 @@ A collection of my homebrew rules used for D&amp;D 5e.
     - [] Training Skills - 5sp per hour to train a proficiency
     - [] Training Skills - 1gp per hour to train an expertise
     - [] Random Encounter rules
-2. [] Add corresponding calculators from main site
-3. [] Upgrade Tables
+3. [] Add corresponding calculators from main site
+4. [] Mobile Support
+5. [] Upgrade Tables
     - [x] Make all tables collapsible
     - [] Make all tables openable in a *HTML Dialog*
     - [] Make all tables openable in a new tab
     - [] Implement [Datatables](https://datatables.net/download/index)?
-4. [] Implement Search
-5. [] Check out these librariies
+6. [] Implement Search
+7. [] Check out these librariies
     - [] Danfo.js
     - [] 
