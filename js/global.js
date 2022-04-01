@@ -366,7 +366,8 @@ function fMultiRoll(number_of_dice, dice_sides, multiplier) {
     // Parse integers
     var number_of_dice = parseInt(number_of_dice)
     var dice_sides = parseInt(dice_sides)
-    var multiplier = parseInt(multiplier)
+    if (!multiplier) multiplier = 1
+    // var multiplier = parseInt(multiplier)
     // Set total to zero
     //var total = 0
     // Loop through all the dice and return random integers

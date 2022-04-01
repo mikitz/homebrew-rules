@@ -8,16 +8,9 @@ function setDropdown(){
     idxMagicness.selectedIndex = parseInt(dMagicness)
 }
 // Calculate level demographics
-function calculate_level_demographics(){ 
-    document.getElementById("output").innerHTML = ""
-    document.getElementById('table_output_body').innerHTML = ""
-
+function demographicsCalculator(){ 
+    document.getElementById("right-column").innerHTML = ""
     // USER INTPUTS
-        // Get the level
-        var a = document.getElementById("lvl")
-        var level = a.options[a.selectedIndex].text
-        // Turn level into an int if it's not "All"
-        if (level != "All") {level = parseInt(level)}
         // Get the population
         var pop = parseInt(document.getElementById("population").value)
         // Get wealth
@@ -27,54 +20,38 @@ function calculate_level_demographics(){
 
     // PULL NECESSARY DATA
         // Pull the wealth mod
-        var modWealth = tableWealth.find(i => i.WEALTH == wealth).MODIFIER
+        var modWealth = cityWealth.find(i => i.WEALTH == wealth).MODIFIER
         // Pull the magicness mod
-        var modMagicness = tableMagicness.find(i => i.MAGICNESS == magicness).MODIFIER
+        var modMagicness = cityMagicness.find(i => i.MAGICNESS == magicness).MODIFIER
 
     // CALCULATE
         // Calculate the demographics
-        if (level === "All") {
-            document.getElementById('output').innerHTML = `Population: ${pop.toLocaleString()}`
-            // Loop through each level and calculate its population
-            for (lvl = 1; lvl < 20 + 1; lvl++) {
-                // Get the respective percentage
-                var perc = oaData.find(i => i.lvl == lvl).perc_of_pop
-                var demographics = parseInt(Math.round(pop * perc))
-                demographics = parseInt(Math.round((demographics * modMagicness) * modWealth))
-                // Log it
-                console.log(`Level ${lvl}: ${demographics}`)
-                // // Build it
-                // var vMessage = `Level ${lvl.toLocaleString()}: ${demographics.toLocaleString()} person(s)`
-                // // Output it
-                // var ul = document.createElement('li')
-                // ul.innerHTML = vMessage
-                // document.getElementById('output_list').appendChild(ul)
-
-                // Create a new row in the table
-                var row = document.createElement('tr')
-                row.setAttribute('id', `lvl-${lvl}`)
-                document.getElementById('table_output_body').appendChild(row)
-                // Add the level to the row
-                const tLevel = document.createElement('td')
-                tLevel.setAttribute("style", "padding: 5px 5px")
-                tLevel.innerHTML = lvl
-                row.appendChild(tLevel)
-                // Add the popuulation to the row
-                const tPop = document.createElement('td')
-                tPop.setAttribute("style", "padding: 5px 5px")
-                tPop.innerHTML = demographics
-                row.appendChild(tPop)
-                // Append the row to the table
-            }
-        } else {
+        document.getElementById('right-column').innerHTML = `Population: ${pop.toLocaleString()}`
+        const table = document.createElement('table')
+        table.classList.add('styled-table')
+        // Loop through each level and calculate its population
+        for (lvl = 1; lvl < 20 + 1; lvl++) {
             // Get the respective percentage
-            var perc = oaData.find(i => i.lvl == level).perc_of_pop
+            var perc = levelDemographicsData.find(i => i.LEVEL == lvl).PERCENTAGE_OF_POPULATION
             var demographics = parseInt(Math.round(pop * perc))
-            // Print the output
-            var p = document.createElement('p')
-            p.innerHTML = `Level ${level.toLocaleString()}: ${demographics.toLocaleString()} person(s)`
-            document.getElementById("output").appendChild(p)
+            demographics = parseInt(Math.round((demographics * modMagicness) * modWealth))
+            // Create a new row in the table
+            var row = document.createElement('tr')
+            row.setAttribute('id', `lvl-${lvl}`)
+            table.appendChild(row)
+            // Add the level to the row
+            const tLevel = document.createElement('td')
+            tLevel.setAttribute("style", "padding: 5px 5px")
+            tLevel.innerHTML = lvl
+            row.appendChild(tLevel)
+            // Add the popuulation to the row
+            const tPop = document.createElement('td')
+            tPop.setAttribute("style", "padding: 5px 5px")
+            tPop.innerHTML = demographics
+            row.appendChild(tPop)
+            // Append the row to the table
         }
+        document.getElementById('right-column').appendChild(table)
     
 }
 // Function to add a City

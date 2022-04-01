@@ -171,7 +171,7 @@ function showCalculatorDialog(element) {
     // ====================
     //   Set Up the Modal
     // ====================
-    let ID = (element.innerText).replace(/-\w+/gm, "").replace(/-\w+\s\w+/gm, "") // Format the ID
+    let ID = (element.innerText).replace(/-\w+/gm, "").replace(/-\w+\s\w+/gm, "").toTitleCase() // Format the ID
     const idCamel = camelize(ID) // Convert the ID into camel case
     const modal = document.getElementById('calc-modal') // Get the modal element
     const closeModal = document.getElementById('close-modal') // Get the upper-right X

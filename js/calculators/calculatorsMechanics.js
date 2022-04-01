@@ -1,15 +1,16 @@
 // Calculate the reward for a bounty
-function calculate_bounty(){
+function bounty(){
     // Clear Output
-    document.getElementById('output').innerHTML = ''
+    document.getElementById('right-column').innerHTML = ''
     // USER INPUTS
         // Get the most wanted status
-        const mostWanted = parseInt(document.getElementById("most-wanted").value)
+        const mostWanted = parseInt(document.getElementById("most-wanted-status").value)
+        console.log("Most Wanted:", mostWanted)
         // Get the target's CR
-        const cr = parseFloat(document.getElementById("cr").value)
+        const cr = parseInt(document.getElementById("creature-CR").value)
     // CALCULATE
         // Bounty Reward
-        if (mostWanted === 0){
+        if (isNaN(mostWanted)){
             var bountyReward = (cr * 100) 
         } else {
             var bountyReward = (cr * 100) * (mostWanted * 10)
@@ -18,11 +19,10 @@ function calculate_bounty(){
         // Print the output
         var p = document.createElement('p')
         p.innerHTML = `<h2>Output</h2> Bounty Reward: ${bountyReward.toLocaleString()} gp`
-        document.getElementById("output").appendChild(p)
+        document.getElementById("right-column").appendChild(p)
 }
-// Function to calculate SIMPLE business income
-// TODO: Add to Spreadsheet: It's a yellow row 36
-function simpleBusinessIncome() {
+// TODO: Function to calculate SIMPLE business income
+function runningABusiness() {
     // Get the selected campaign
     var campaignName = localStorage.getItem('selectedCampaign')
     // Clear the output
@@ -236,10 +236,9 @@ function calculatingMercenaryCost(){
 
 }
 // Calculates the duration of the sailing as well as revenue earned from the conveyance of cargo
-// TODO: Add to Spreadsheet
-function calculate_sail_duration_and_cargo_revenue() {
+function deliveryContracts() {
     // Clear Output
-    document.getElementById('output').innerHTML = ''
+    document.getElementById('right-column').innerHTML = ''
     // Define some global variables
     let vHours = ''
     let vMilesPerDay = ''
@@ -252,15 +251,15 @@ function calculate_sail_duration_and_cargo_revenue() {
     let vShippingFee = 0
     let vRevenue = 0    
     // Get the number of sailing shifts from the user input
-    var a = document.getElementById("shifts")
+    var a = document.getElementById("number-of-shifts")
     var vShifts = parseInt(a.options[a.selectedIndex].text)
     // Get the ship speed from the user input
-    var b = document.getElementById("speed")
+    var b = document.getElementById("speed-(MPH)")
     var vSpeed = parseFloat(b.options[b.selectedIndex].value)
     // Get the distance to destination from the user input
-    var vDistance = parseInt(document.getElementById("distance").value)
+    var vDistance = parseInt(document.getElementById("distance-to-destination").value)
     // Get the weight of the cargo from the user input
-    var vWeight = parseInt(document.getElementById("weight").value)
+    var vWeight = parseInt(document.getElementById("cargo-weight-(pounds)").value)
     // Calcualte the number of hours sailed per day
     vHours = vShifts * 8
     // Calculate the distance travelled in a day
@@ -276,14 +275,6 @@ function calculate_sail_duration_and_cargo_revenue() {
     // Calculate total revenue
     vRevenue = vShippingFee + vHandlingFee
     // Log to the console for debugging purposes
-    console.log(`VARIABLES
-                Shifts: ${vShifts}
-                Speed: ${vSpeed}
-                Distance: ${vDistance}
-                Hours: ${vHours}
-                Miles per Day: ${vMilesPerDay}
-                Time to Destination: ${vDaysToDestination} days and ${vRemaining} hours
-                Days to Destination: ${vDistance / vMilesPerDay}`)
     // Build the message
     vMessage += `While sailing for <I>${vHours} hours</I> per day at a speed of <I>${vSpeed} MPH</I>, 
     you will cover a distance of <I>${vDistance} miles</I> in about <B>${vDaysToDestination} days and ${vRemaining} hours</B>. 
@@ -294,5 +285,20 @@ function calculate_sail_duration_and_cargo_revenue() {
     // Print the message
     var p = document.createElement('p')
     p.innerHTML = vMessage
-    document.getElementById('output').appendChild(p)
+    document.getElementById('right-column').appendChild(p)
+}
+// Function to determine how many horses are needed for a given party
+function ridingHorses(){
+    // INPUTS
+    const desiredSpeed = `${parseInt(document.getElementById('desired-speed').value)} mph` // Get the user's current ability score
+    const numberOfCreatures = parseInt(document.getElementById('number-of-riding-creatures').value) // Get the user's desired ability score
+    const periodLength = parseInt(document.getElementById('period-length').value)
+    const outputElement = document.getElementById('right-column') // Get the output element
+    outputElement.innerHTML = '' // Clear the output element
+    // COMPUTE
+    const horsesPerRider = horsesPerRidingCreature.find(i => i.SPEED == desiredSpeed && i['PERIOD_LENGTH_(IN_HOURS)'] == periodLength)['#_OF_HORSES']
+    const totalHorses = horsesPerRider * numberOfCreatures
+    // UPDATE DOM
+    outputElement.innerHTML = `<h3>Output</h3>
+                                Each member of your party needs <b>${horsesPerRider} horses</b> for a total of <b>${totalHorses} horses</b>.`
 }

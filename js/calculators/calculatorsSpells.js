@@ -1,39 +1,11 @@
 // Function to generate the tables
-function generateSpellTables(){
-// USER INPUTS
-    let selectedCharacter = ''
-    let selectedClass = ''
-    // TYPE
-        var get = document.getElementsByName('get') // Get all the elements with this name
-        get.forEach(element => { // Loop through each one
-            if (element.checked){ get = element.value } // Set Get based on which is selected
-        })
+function spellExperiments(){
+    // USER INPUTS
+    const selectedClass = document.getElementById('class-dropdown').value // Get the selected Class
     // GET APPROPRIATE INPUTS
-        if (get == 'generate'){
-            selectedCharacter = document.getElementById('character-list-dropdown').value // Selected Character
-            selectedClass = document.getElementById('class-dropdown').value // Get the selected Class
-            if (selectedClass == 'choose'){
-                alert("You must select a class.")
-                return
-            }
-            generateTable(selectedClass) // Generate the tables
-            new Toast({
-                message: `${selectedCharacter}'s ${selectedClass} tables have been generated, saved, and exported! You may proceed with your arcane musings.`,
-                type: 'success'
-            })
-        } else {
-            selectedCharacter = document.getElementById('character-list-dropdown').value // Selected Character
-            if (selectedCharacter == 'choose'){
-                alert("Please select a character.")
-                return
-            }
-            loadTables(selectedCharacter)
-            new Toast({
-                message: `${selectedCharacter}'s tables have been loaded and exported! You may proceed with your arcane musings.`,
-                type: 'success'
-            })
-        }      
-    }  
+    if (selectedClass == 'choose') return alert("You must select a class.") // Return if no class is selected
+    generateTable(selectedClass) // Generate the tables
+}  
 // Function to Generate Tables
 function generateTable(selectedClass){
     // Filter by Class
@@ -150,32 +122,7 @@ function generateTable(selectedClass){
                     document.body.removeChild(link);
                 }
             }
-        });
-        // FIRESTORE
-        import('/src/pages/profile/firebaseInit.js').then((init)=> { 
-            // IMPORTS
-                let db = init.db
-                let auth = init.auth
-                let onAuthStateChanged = init.onAuthStateChanged
-                let collection = init.collection
-                let addDoc = init.addDoc
-            // Work with the FireStore Database
-            onAuthStateChanged(auth, (user) => { // Check if User is logged in
-                if (user){
-                    // SET THE DATA
-                    schoolList.forEach(element => {
-                        const school = element.replace("Mapped", "") // Extract just the school's name
-                        const collectionRef = collection(db, 'characters', user.uid, selectedCharacter, school, `${school}_table`) // Create the School's collection
-                        eval(element).forEach(element => {
-                            addDoc(collectionRef, element)
-                        });
-                    });
-                    // POPULATE THE DROPDOWNS
-                    populateMagicalExperimentDropdown()
-                }
-            })
-        }).catch(error => { console.log(error) }) // Auth Errors
-        
+        });       
 }
 // Function to populate the Number Dropdown
 function populateMagicalExperimentDropdown(){
@@ -187,4 +134,27 @@ function populateMagicalExperimentDropdown(){
 
 // COMBINATION DROPDOWN
     // TODO: Modify the combos that have been discovered based on the the school and number (12/22/2021)
+}
+// Function to get the outcome for a casting a spell of a higher level
+function outcome(){
+    // Inputs
+    let numberOfSuccesses = parseInt(document.getElementById('number-of-successes').value) // Get the number of successes
+    let numberOfFailures = parseInt(document.getElementById('number-of-failures').value) // Get the number of failures
+    const spellLevel = parseInt(document.getElementById('spell-level').value) // Get the spell level that was attempted
+    const outputElement = document.getElementById('right-column') // Get the output element
+    let outcome // Set up our outcome element
+    outputElement.innerHTML = '' // Clear the output element
+    // Handle Empty Inputs
+    if (!spellLevel) return alert("Please input a Spell Level.")
+    if (!numberOfSuccesses) numberOfSuccesses = 0
+    if (!numberOfFailures) numberOfFailures = 0
+    // Compute
+    const totalChecks = numberOfFailures + numberOfSuccesses // Compute the total number of checks
+    const failPercent = parseFloat(numberOfFailures / (totalChecks)) * 100 // Comput the failure percentage
+    if (failPercent == 0.0) outcome = `Total Success!`
+    else if (failPercent == 100.0) outcome = `<b>Catastrophic Failure:</b> All creatures and objects within a radius of <i>${spellLevel * 2 * 5} feet</i> suffer <i>${fMultiRoll(spellLevel * 2, 12)} force damage</i> and 3 levels of exhaustion!`
+    else if (failPercent >= 50.0) outcome = `<b>Major Failure:</b> All creatures and objects within a radius of <i>${spellLevel * 5} feet</i> suffer <i>${fMultiRoll(spellLevel, 12)} force damage</i> and 2 levels of exhaustion!`
+    else if (failPercent <= 50.0) outcome = `<b>Minor Failure:</b> All creatures and objects within a radius of <i>${spellLevel * 5} feet</i> suffer <i>${fMultiRoll(spellLevel, 6)} force damage</i> and 1 level of exhaustion!`
+    // Update DOM
+    outputElement.innerHTML = outcome // Set the output element's innerHTML
 }
