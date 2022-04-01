@@ -11,14 +11,14 @@ function generateTable(selectedClass){
     // Filter by Class
         const spells = dbSpells.filter(i => i.CLASSES.includes(selectedClass)) // Filter the spells down to a table jsut for the selected class
     // Filter by School of Magic
-        const conjuration = spells.filter(i => i.SCHOOL === 'conjuration') // Get a table of just conjuration spells
-        const necromancy = spells.filter(i => i.SCHOOL === 'necromancy') // Get a table of just necromancy spells
-        const evocation = spells.filter(i => i.SCHOOL === 'evocation') // Get a table of just evocation spells
-        const abjuration = spells.filter(i => i.SCHOOL === 'abjuration') // Get a table of just abjuration spells
-        const transmutation = spells.filter(i => i.SCHOOL === 'transmutation') // Get a table of just transmutation spells
-        const divination = spells.filter(i => i.SCHOOL === 'divination') // Get a table of just divination spells
-        const enchantment = spells.filter(i => i.SCHOOL === 'enchantment') // Get a table of just enchantment spells
-        const illusion = spells.filter(i => i.SCHOOL === 'illusion') // Get a table of just illusion spells
+        const conjuration = spells.filter(i => i['school'] === 'C') // Get a table of just conjuration spells
+        const necromancy = spells.filter(i => i['school'] === 'N') // Get a table of just necromancy spells
+        const evocation = spells.filter(i => i['school'] === 'E') // Get a table of just evocation spells
+        const abjuration = spells.filter(i => i['school'] === 'A') // Get a table of just abjuration spells
+        const transmutation = spells.filter(i => i['school'] === 'T') // Get a table of just transmutation spells
+        const divination = spells.filter(i => i['school'] === 'D') // Get a table of just divination spells
+        const enchantment = spells.filter(i => i['school'] === 'E') // Get a table of just enchantment spells
+        const illusion = spells.filter(i => i['school'] === 'I') // Get a table of just illusion spells
     // Multiply Each Entry by 6, one for each combination
         // Create emtpy arrays to which we will push modified elements
             const conjurationMapped = []
@@ -53,12 +53,12 @@ function generateTable(selectedClass){
                         combos.splice(comboIndex, 1) // Remove that COMBINATION based on its index
                     // CREATE THE NEW ELEMENT
                         const elementModified = {
-                            "NAME": element.NAME,
+                            "NAME": element['name'],
                             "OUTCOME": randOutcome,
                             "COMBINATION": randCombo,
-                            "LEVEL": element.LEVEL,
-                            "SCHOOL": element.SCHOOL,
-                            "LINK": element.LINK,
+                            "LEVEL": element['level'],
+                            "SCHOOL": element['school'],
+                            "LINK": linkGenerator5eTools(element['name'], element['source']),
                             "ID": number,
                             "DISCOVERED": false,
                             "OUTCOME_DESCRIPTION": ""
