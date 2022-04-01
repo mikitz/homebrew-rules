@@ -1,3 +1,21 @@
+// Define a function to generate a 5etools link based on the creature name and book
+function linkGenerator5eTools(Creature, Book) {
+    let creatureLink = Creature.replace(/ /g, "%20")
+    let link = `<a href="https://5e.tools/bestiary.html#${creatureLink}_${Book}" target="_blank" rel="noreferrer noopener">${Creature}</a>`
+    return link
+}
+// Define a function to get the link on DnDBeyond
+function linkGeneratorDnDBeyondMonster(Creature) {
+    let creatureLink = Creature.replace(/ /g, "-")
+    let link = `<a href="https://www.dndbeyond.com/monsters/${creatureLink}" target="_blank" rel="noreferrer noopener">${Creature}</a>`
+    return link
+}
+// Define a function to get the link on DnDBeyond
+function linkGeneratorDnDBeyondSpell(Creature) {
+    let creatureLink = Creature.replace(/ /g, "-")
+    let link = `<a href="https://www.dndbeyond.com/spells/${creatureLink}" target="_blank" rel="noreferrer noopener">${Creature}</a>`
+    return link
+}
 // Function to convert secodns into ##h ##m ##s
 function fancyTimeFormat(duration){   
     // Hours, minutes and seconds
@@ -214,100 +232,6 @@ function exportToCsv(filename, rows) {
 // Function to help with sleeping
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-}
-// Function to update the historical log of a given input
-function updateLog(type, name){
-    // FIRESTORE PULL
-    import('/src/pages/profile/firebaseInit.js').then((init)=> { 
-        // IMPORTS
-            let db = init.db
-            let auth = init.auth
-            let onAuthStateChanged = init.onAuthStateChanged
-            let collection = init.collection
-            let getDocs = init.getDocs
-    // Work with the FireStore Database
-        onAuthStateChanged(auth, (user) => { // Check if User is logged in
-            if (user){
-                let transactions = []
-                let attribute = ''
-                if (type === 'campaign'){
-                    attribute = localStorage.getItem('selectedCampaign')
-                } else {
-                    attribute = localStorage.getItem('selectedCharacter')
-                }
-                const colRef = collection(db, `${type}s`, user.uid, attribute, name, `${name}_history`) // Define the collection for which we want all docs from
-                getDocs(colRef).then((snapshot) => { // Get all the docs within the above collection
-                    snapshot.forEach(doc => { // Loop through each doc
-                        if (doc.id != 'placeholder'){ // Skip the placeholder doc
-                            transactions.push(doc.data()) // Push the doc's data to the array
-                        }
-                    });
-                    if (transactions.length != 0) {
-                        // Populate the table
-                        displayColumns(transactions, 'styled-table', `${name}-table`)
-                    } else {
-                        // Set table to empty
-                        document.getElementById(`${name}-table`).innerHTML = `No data present for <b>${attribute}</b>. Try applying <b>${name}</b> changes for the history to appear here.`
-                        console.log('No table data in the xp ledger.')
-                    }
-                }).catch(error => { console.log(error) }) // getDoc Errors
-            }
-        })
-    }).catch(error => { console.log(error) }) // Auth Errors
-}
-function roughSizeOfObject( object ) {
-    var objectList = [];
-    var stack = [ object ];
-    var bytes = 0;
-
-    while ( stack.length ) {
-        var value = stack.pop();
-
-        if ( typeof value === 'boolean' ) {
-            bytes += 4;
-        }
-        else if ( typeof value === 'string' ) {
-            bytes += value.length * 2;
-        }
-        else if ( typeof value === 'number' ) {
-            bytes += 8;
-        }
-        else if
-        (
-            typeof value === 'object'
-            && objectList.indexOf( value ) === -1
-        )
-        {
-            objectList.push( value );
-
-            for( var i in value ) {
-                stack.push( value[ i ] );
-            }
-        }
-    }
-    return bytes;
-}
-// Function to get the number of users
-function getNumberOfUsers(){
-    import('/src/pages/profile/firebaseInit.js').then((init)=> { 
-        // IMPORTS
-            let db = init.db
-            let getDocs = init.getDocs
-            let collection = init.collection
-        // GET DATA
-        const userCollection = collection(db, "users")
-        let numUsers = 0
-        getDocs(userCollection).then((snapshot) => {
-            snapshot.forEach(element => {
-                numUsers += 1
-            })
-            // VARIABLES
-            const numUsersRemaining = 333 - numUsers
-            // UPDATE DOM
-            document.getElementById('num-users').innerHTML = numUsers
-            document.getElementById('num-users-remaining-until-payments').innerHTML = numUsersRemaining
-        }).catch(error => { console.log(error) }) // Auth Errors  
-    }).catch(error => { console.log(error) }) // Auth Errors  
 }
 // Function to round a number
 Number.prototype.round = function(places) {

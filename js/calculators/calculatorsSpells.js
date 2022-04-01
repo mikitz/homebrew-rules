@@ -9,7 +9,13 @@ function spellExperiments(){
 // Function to Generate Tables
 function generateTable(selectedClass){
     // Filter by Class
-        const spells = dbSpells.filter(i => i['classes'].includes(selectedClass)) // Filter the spells down to a table jsut for the selected class
+    // console.log("Spells:", dbSpells)
+    // dbSpells.forEach(element => {
+    //     const classes = element['classes']
+    //     if(classes.includes(selectedClass)) console.log("Classes:", classes)
+    // });
+    // return
+        const spells = dbSpells.filter(i => (i.classes).includes(selectedClass)) // Filter the spells down to a table jsut for the selected class
     // Filter by School of Magic
         const conjuration = spells.filter(i => i['school'] === 'C') // Get a table of just conjuration spells
         const necromancy = spells.filter(i => i['school'] === 'N') // Get a table of just necromancy spells
@@ -68,13 +74,13 @@ function generateTable(selectedClass){
                 }
             }
             // console.log(`${school} Mapped:`, eval(schoolMapped))
-            if (eval(school).length != 0){
-                const output = document.createElement('div')
-                output.id = school
-                output.style.marginTop = '10px'
-                document.getElementById('output').appendChild(output)
-                displayColumns(eval(schoolMapped), 'styled-table', school)
-            }
+            // if (eval(school).length != 0){
+            //     const output = document.createElement('div')
+            //     output.id = school
+            //     output.style.marginTop = '10px'
+            //     document.getElementById('output').appendChild(output)
+            //     displayColumns(eval(schoolMapped), 'styled-table', school)
+            // }
         });
         // EXPORT TABLES
         const schools = ['conjuration', 'necromancy', 'evocation', 'abjuration', 'transmutation', 'divination', 'enchantment', 'illusion']
