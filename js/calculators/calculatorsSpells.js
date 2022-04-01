@@ -1,7 +1,7 @@
 // Function to generate the tables
 function spellExperiments(){
     // USER INPUTS
-    const selectedClass = document.getElementById('class-dropdown').value // Get the selected Class
+    const selectedClass = document.getElementById('class').value // Get the selected Class
     // GET APPROPRIATE INPUTS
     if (selectedClass == 'choose') return alert("You must select a class.") // Return if no class is selected
     generateTable(selectedClass) // Generate the tables
@@ -9,7 +9,7 @@ function spellExperiments(){
 // Function to Generate Tables
 function generateTable(selectedClass){
     // Filter by Class
-        const spells = dbSpells.filter(i => i.CLASSES.includes(selectedClass)) // Filter the spells down to a table jsut for the selected class
+        const spells = dbSpells.filter(i => i['classes'].includes(selectedClass)) // Filter the spells down to a table jsut for the selected class
     // Filter by School of Magic
         const conjuration = spells.filter(i => i['school'] === 'C') // Get a table of just conjuration spells
         const necromancy = spells.filter(i => i['school'] === 'N') // Get a table of just necromancy spells
