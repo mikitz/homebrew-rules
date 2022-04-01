@@ -60,11 +60,12 @@ function generateTable(selectedClass){
                     // CREATE THE NEW ELEMENT
                         const elementModified = {
                             "NAME": element['name'],
+                            "SOURCE": element['source'],
                             "OUTCOME": randOutcome,
                             "COMBINATION": randCombo,
                             "LEVEL": element['level'],
                             "SCHOOL": element['school'],
-                            "LINK": linkGenerator5eTools(element['name'], element['source']),
+                            "LINK": `=HYPERLINK(""https://5e.tools/spells.html#${element['name'].replace(/ /g, "%20")}_${element['source']}"")`,
                             "ID": number,
                             "DISCOVERED": false,
                             "OUTCOME_DESCRIPTION": ""
@@ -73,14 +74,6 @@ function generateTable(selectedClass){
                         eval(schoolMapped).push(elementModified) // Push the modified element to the modified array
                 }
             }
-            // console.log(`${school} Mapped:`, eval(schoolMapped))
-            // if (eval(school).length != 0){
-            //     const output = document.createElement('div')
-            //     output.id = school
-            //     output.style.marginTop = '10px'
-            //     document.getElementById('output').appendChild(output)
-            //     displayColumns(eval(schoolMapped), 'styled-table', school)
-            // }
         });
         // EXPORT TABLES
         const schools = ['conjuration', 'necromancy', 'evocation', 'abjuration', 'transmutation', 'divination', 'enchantment', 'illusion']

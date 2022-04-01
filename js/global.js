@@ -16,6 +16,12 @@ function linkGeneratorDnDBeyondSpell(Creature) {
     let link = `<a href="https://www.dndbeyond.com/spells/${creatureLink}" target="_blank" rel="noreferrer noopener">${Creature}</a>`
     return link
 }
+// Function to add 5e.Tools Excel HYPERLINK
+function excelHyperLink5eTools(creature, book) {
+    let creatureLink = creature.replace(/ /g, "%20")
+    let link = `=HYPERLINK("https://5e.tools/bestiary.html#${creatureLink}_${book}")`
+    return link
+}
 // Function to convert secodns into ##h ##m ##s
 function fancyTimeFormat(duration){   
     // Hours, minutes and seconds
