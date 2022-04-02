@@ -2,7 +2,7 @@
 /* ================== 
       Mobile Nav 
 ================== */
-@media (max-width: 600px) {
+@media (max-width: 600px), (max-height: 600px) {
   .topnav {
     display: none !important;
   }
