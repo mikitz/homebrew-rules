@@ -76,7 +76,6 @@ function saveLocation(){
     setCityDropdown() // Set up the City Dropdown with the new city that was just added
 }
 // Function to set the Cities select dropdown
-// TODO: Update to LocalStorage
 function setCityDropdown(){
     // LOCAL STORAGE PULL
         // Cities
