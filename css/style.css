@@ -42,8 +42,8 @@ main h1 {
 }
 @media (max-width: 600px) {
     #content {
-        margin-left: 85px !important;
-        margin-top: 35px !important;
+        margin-left: 95px !important;
+        margin-top: 45px !important;
     }
 }
 .page-heading {

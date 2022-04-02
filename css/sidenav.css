@@ -3,13 +3,13 @@
 ================== */
 @media (max-width: 600px) {
   .sidenav {
-    width: 60px !important;
+    width: 70px !important;
   }
   .sidenav button span {
     display: none;
   }
   .sidenav button {
-    font-size: 150% !important;
+    font-size: 200% !important;
     padding-bottom: 10px !important;
   }
   .sidenav .fa-caret-down {
