@@ -122,7 +122,6 @@ function setInputsBasedOnSelectedLocation(){
     const wealthInput = document.getElementById('wealth')
     const magicnessInput = document.getElementById('magicness')
     const nameInput = document.getElementById('name')
-    
     // Local Storage
     const cities = JSON.parse(localStorage.getItem('location_list')) // Get the location list from local storage
     const pop = cities.find(i => i.NAME == name).POPULATION

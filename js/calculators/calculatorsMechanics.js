@@ -21,142 +21,73 @@ function bounty(){
         p.innerHTML = `<h2>Output</h2> Bounty Reward: ${bountyReward.toLocaleString()} gp`
         document.getElementById("right-column").appendChild(p)
 }
-// TODO: Function to calculate SIMPLE business income
+// Function to determine the monthly profit of a business
 function runningABusiness() {
-    // Get the selected campaign
-    var campaignName = localStorage.getItem('selectedCampaign')
-    // Clear the output
-    document.getElementById('output').innerHTML = ''
-    // Get number of profit-share employees
-    var profitShare = document.getElementById('profit_share').value
-    // Note
-    const note = document.getElementById('note').value
-    // Check to see if there are profit-share employees
-    if (profitShare > 0){
-        // Make al ist to store the profit share percents in
-        var listProfitShare = []
-        // Set total of these values
-        var percentTotal = 0
-        // Loop through the profit-share inputs to make sure they add up to 100
-        for (empID = 0; empID < profitShare; empID++) {
-            // Get the percent for this employee
-            let percent = parseFloat(document.getElementById(`percent${empID}`).value)
-            // Push the percent to the list
-            listProfitShare.push(percent)
-            // Add it to the total
-            percentTotal += percent
+    // Inputs
+    let numDaysRunningBusiness = parseInt(document.getElementById('number-of-days-spent-running-the-business').value)
+    if (isNaN(numDaysRunningBusiness)) numDaysRunningBusiness = 0
+    let numPassionateEmployees = parseInt(document.getElementById('number-of-passionate-employees').value)
+    if (isNaN(numPassionateEmployees)) numPassionateEmployees = 0
+    const numProfitShareEmployees = parseInt(document.getElementById('number-of-profit-share-employees').value)
+    const outputElement = document.getElementById('right-column') // Get the output element
+    outputElement.innerHTML = '' // Clear the output element
+    // Compute
+    let listProfitShare = [] // Make a list to store the profit share percents in
+    if (numProfitShareEmployees > 0){ // Check to see if there are profit-share employees
+        var percentTotal = 0 // Declare our precent total for the profit share employees
+        for (empID = 0; empID < numProfitShareEmployees; empID++) { // Loop through the profit-share inputs to make sure they add up to 100
+            let percent = parseFloat(document.getElementById(`percent${empID}`).value) // Get the percent for this employee
+            listProfitShare.push(percent) // Push the percent to the list
+            percentTotal += percent // Add it to the total
         }
-        // Get the PC percent
-        let PCpercent = parseFloat(document.getElementById('PCpercent').value)
-        // Push the percent to the list
-        listProfitShare.push(PCpercent)
-        // Add it to the total
-        percentTotal += PCpercent
+        let PCpercent = parseFloat(document.getElementById('PCpercent').value) // Get the PC percent
+        listProfitShare.push(PCpercent) // Push the percent to the list
+        percentTotal += PCpercent // Add it to the total
     }
-    console.log(listProfitShare)
-    // Check if percentTotal is less than or more than 100
-    if (percentTotal > 100 || percentTotal < 100) {
-        alert(`Your percentages do not add up to 100! They add up to ${percentTotal}. Please double check your arithmetic and try again.`)
-        return
-    }
-    // Roll 1d100
-    var d100 = getRndInteger(1, 100)
-    console.log(`d100: ${d100}`)
-    // Get the amount of passionate employees
-    var employees = parseInt(document.getElementById('employees').value)
-    console.log(`Employees: ${employees}`)
-    // Get the number of days spent at the business running it
-    var days = parseInt(document.getElementById('days').value)
-    console.log(`Days: ${days}`)
-    // Add the modifiers to the roll
-    var check = d100 + employees + days
-    console.log(`Check: ${check}`)
+    // Handle Input Mistakes
+    if (percentTotal != 100 && percentTotal) return alert(`Your percentages do not add up to 100! They add up to ${percentTotal}. Please double check your arithmetic and try again.`) // Check if percentTotal is not 100
+    // The Check
+    var d100 = getRndInteger(1, 100) // Roll 1d100
+    var check = d100 + numPassionateEmployees + numDaysRunningBusiness // Add the modifiers to the roll
+    let outcome // Declare the object that will store the total gold
     // Determine the outcome
     if (check <= 40) {
-        var rCost = getRndInteger(1, 6) * 5
-        console.log(`Cost: ${rCost}`)
+        var rCost = getRndInteger(1, 6) * 5 // Roll for the cost
         // Granular outcomes
-        if (check <= 20) {
-            var outcome = -rCost * 1.5
-        } else if (check <= 30) {
-            var outcome = -rCost * 1
-        } else if (check <= 40) {
-            var outcome = -rCost * 0.5
-        }
+        if (check <= 20) outcome = -rCost * 1.5
+        else if (check <= 30) outcome = -rCost * 1
+        else if (check <= 40) outcome = -rCost * 0.5
     } else if (check >= 61) { 
         // Granular outcomes
-        if (check <= 80) {
-            var outcome = getRndInteger(1, 6) * 5
-        } else if (check <= 90) {
-            var outcome = (getRndInteger(1, 8) + getRndInteger(1, 8)) * 5
-        } else if (check >= 91) {
-            var outcome = (getRndInteger(1, 10) + getRndInteger(1, 10) + getRndInteger(1, 10)) * 5
-        }
-    } else {
-        var outcome = 0
-    }
-    console.log(`Outcome: ${outcome}`)
+        if (check <= 80) outcome = getRndInteger(1, 6) * 5
+        else if (check <= 90) outcome = (getRndInteger(1, 8) + getRndInteger(1, 8)) * 5
+        else if (check >= 91) outcome = (getRndInteger(1, 10) + getRndInteger(1, 10) + getRndInteger(1, 10)) * 5
+    } else outcome = 0
+    outputElement.innerHTML = `Roll: <code>${d100} + ${numPassionateEmployees} + ${numDaysRunningBusiness} = ${check} </code>`
     // If profit share
-    if (profitShare > 0){
-        // Loop through the percents
-        for (perc = 0; perc < listProfitShare.length; perc++){
-            // Calculate their share
-            let share = (listProfitShare[perc] / 100) * outcome
-            // Check if it's the last element in the list
-            if (perc < listProfitShare.length - 1) {
-                // Set up HTML for NPC employees to append
-                var HTML = `Employee ${perc}'s share of the profits is ${share} gp.`
-            } else {
-                // Set up PC HTML
-                var HTML = `PC's share of the profits is ${share} gp.`
-            }
-            // Create a new div
-            let div = document.createElement('div')
-            div.innerHTML = HTML
-            document.getElementById('output').appendChild(div)
+    if (numProfitShareEmployees > 0){
+        for (perc = 0; perc < listProfitShare.length; perc++){ // Loop through the percents
+            let share = (listProfitShare[perc] / 100) * outcome // Calculate their share
+            // Dealing with the HTML
+            let HTML // Set up PC HTML
+            if (perc < listProfitShare.length - 1) HTML = `Employee ${perc}'s share of the profits is <b>${share} gp</b>.` // Set up HTML for NPC employees to append
+            else HTML = `PC's share of the profits is <b>${share} gp</b>.`
+            // New Div
+            let div = document.createElement('div') // Create a new div
+            div.innerHTML = HTML // Set its innerHTML
+            outputElement.appendChild(div) // Append it to the DOM
         }
-    } else {
-        document.getElementById('output').innerHTML = `This month, your business earned a profit of ${outcome} gp.`
-    }
-    // APPEND TO THE DB
-    if (campaignName){
-        // FIRESTORE
-        import('/src/pages/profile/firebaseInit.js').then((init)=> { 
-            // IMPORTS
-                let db = init.db
-                let auth = init.auth
-                let onAuthStateChanged = init.onAuthStateChanged
-                let addDoc = init.addDoc
-                let collection = init.collection
-            // Work with the FireStore Database
-            onAuthStateChanged(auth, (user) => { // Check if User is logged in
-                if (user){
-                    // UPDATE DATA
-                    var date = new Date(); // Instantiate a new Date objectzsz
-                    const today = date.toLocaleDateString() // Today's date
-                    // Set up the NPC object
-                    var npcObj = {"number-of-days": days,
-                                "number-of-employees": employees,
-                                "number-of-profit-share-employees": profitShare,
-                                "income": document.getElementById('output').innerHTML,
-                                "note": note,
-                                "date": today}
-                    // SET THE DATA
-                    addDoc(collection(db, `campaigns`, user.uid, campaignName, `business`, 'business_history'), npcObj)
-                }
-            })
-        }).catch(error => { console.log(error) }) // Auth Errors
-    }
+    } else outputElement.innerHTML += `<br>This month, your business earned a profit of <b>${outcome} gp</b>.`
 }
-// TODO: Function to populate the profit-share employees
+// Function to populate the profit-share employees
 function populateProfitShare(){
     // Clear the div
-    var PSE = document.getElementById('profit_share_employees')
+    var PSE = document.getElementById('profit-share-employees-html')
     PSE.innerHTML = ''
     // Get number of profit-share employees
-    var profitShare = document.getElementById('profit_share').value
+    var numProfitShareEmployees = document.getElementById('number-of-profit-share-employees').value
     // Loop through the number of profit share employees
-    for (empID = 0; empID < profitShare; empID++) {
+    for (empID = 0; empID < numProfitShareEmployees; empID++) {
         // Set up the HTML to append
         var HTML = `<label for="percent${empID}">Employee ${empID}'s Percent of Profit: </label>
                     <input type="number" id="percent${empID}" name="profit_share" min="0" max="10" value="0">`
@@ -176,36 +107,95 @@ function populateProfitShare(){
         div.innerHTML = HTML
         PSE.appendChild(div)
 }
-// TODO: Function to save a business
+// Function to save a business
 function saveBusiness(){
     // Inputs
-    const pop = parseInt(document.getElementById("population").value)
-    const wealth = document.getElementById('wealth').value
-    const magicness = document.getElementById('magicness').value
+    const numDaysRunningBusiness = parseInt(document.getElementById('number-of-days-spent-running-the-business').value)
+    const numPassionateEmployees = parseInt(document.getElementById('number-of-passionate-employees').value)
+    const numProfitShareEmployees = parseInt(document.getElementById('number-of-profit-share-employees').value)
     const name = document.getElementById('name').value
-    if (!name || !pop) return alert("Please enter a name and/or population before saving a location.") // See if name is blank
+    if (!name) return alert("Please enter a name before saving a business.") // See if name is blank
     // Local Storage Pull
-    if (!localStorage.getItem('location_list')) localStorage.setItem('location_list', '[]') // Check if location_list exists
-    let cityList = JSON.parse(localStorage.getItem('location_list')) // Parse the JSON to read it
-    const locationIdx = cityList.findIndex(i => i.NAME == name) // Get the index of this location
-    console.log("Location Index:", locationIdx)
+    if (!localStorage.getItem('business_list')) localStorage.setItem('business_list', '[]') // Check if business_list exists
+    let businessList = JSON.parse(localStorage.getItem('business_list')) // Parse the JSON to read it
+    const locationIdx = businessList.findIndex(i => i.NAME == name) // Get the index of this location
+    // Profit Share Employees Data
+    let profitShareEmployees = []
+    let pcProfitPercent = 100
+    if (numProfitShareEmployees > 0) {
+        for (let index = 0; index < numProfitShareEmployees; index++) { // Loop through them and grab their percents
+            const element = document.getElementById(`percent${index}`)
+            const percentOfShare = parseFloat(element.value)
+            profitShareEmployees.push({
+                "EMPLOYEE_ID": index,
+                "PROFIT_PERCENT": percentOfShare
+            })    
+        } 
+        pcProfitPercent = document.getElementById('PCpercent').value
+    }
+    // Update JSON
     if (locationIdx >= 0) { // Update the JSON
-        cityList[locationIdx].NAME = name
-        cityList[locationIdx].POPULATION = pop
-        cityList[locationIdx].WEALTH = wealth
-        cityList[locationIdx].MAGICNESS = magicness
+        businessList[locationIdx].NAME = name
+        businessList[locationIdx].NUM_PASSIONATE_EMPLOYEES = numPassionateEmployees
+        businessList[locationIdx].NUM_PROFIT_SHARE_EMPLOYEES = numProfitShareEmployees
+        businessList[locationIdx].PROFIT_SHARE_EMPLOYEES = profitShareEmployees
+        businessList[locationIdx].PC_PROFIT_PERCENT = pcProfitPercent
     } else if (locationIdx < 0) { // Append a new Location to the JSON
         const city = { // JSON Object
                 "NAME": name, 
-                "POPULATION": pop,
-                "WEALTH": wealth,
-                "MAGICNESS": magicness
+                "NUM_PASSIONATE_EMPLOYEES": numPassionateEmployees,
+                "NUM_PROFIT_SHARE_EMPLOYEES": numProfitShareEmployees,
+                "PROFIT_SHARE_EMPLOYEES": profitShareEmployees,
+                "PC_PROFIT_PERCENT": pcProfitPercent,
             }
-        cityList.push(city) // Push to the array 
+        businessList.push(city) // Push to the array 
     }
-    localStorage.setItem('location_list', JSON.stringify(cityList)) // Set local storage
+    localStorage.setItem('business_list', JSON.stringify(businessList)) // Set local storage
     // Update DOM
-    setBusinessDropdown() // Set up the City Dropdown with the new city that was just added
+    populateBusinessDropdown() // Set up the City Dropdown with the new city that was just added
+}
+// Function to populate the business dropdown
+function populateBusinessDropdown(){
+    const businessList = JSON.parse(localStorage.getItem('business_list')) // Parse the Local Storage businesses
+    const businessDropdown = document.getElementById('business') // Get the dropdown where the business names will be displayed
+    businessDropdown.innerHTML = '' // Set the dropdown to emtpy
+    const selectBusiness = document.createElement('option') // Create the "Select Businiess" option
+    selectBusiness.innerHTML = 'Select Business' // Set its innerHTML
+    selectBusiness.value = 'custom' // Set its value
+    businessDropdown.appendChild(selectBusiness) // Append it to the Dropdown
+    // Populate the Dropdown with the businessesz
+    if (businessList) {
+        businessList.forEach(element => {
+            let option = document.createElement('option')
+            option.value = element.NAME
+            option.id = element.NAME
+            option.innerHTML = element.NAME
+            businessDropdown.appendChild(option)
+        });
+    }
+}
+// Function to chang ethe inputs based on the selected business
+function changeBusinessInputsBasedOnSelectedBusiness() {
+    // Inputs
+    const name = document.getElementById('business').value
+    if (name == 'custom') return // If the user selects "Select Business"
+    const passionateEmployeesElement = document.getElementById('number-of-passionate-employees')
+    const profitShareEmployeesElement = document.getElementById('number-of-profit-share-employees')
+    const nameElement = document.getElementById('name')
+    // Local Storage
+    const businessList = JSON.parse(localStorage.getItem('business_list')) // Parse the Local Storage businesses
+    // Update DOM
+    nameElement.value = name
+    passionateEmployeesElement.value = businessList.find(i => i.NAME == name).NUM_PASSIONATE_EMPLOYEES
+    profitShareEmployeesElement.value = businessList.find(i => i.NAME == name).NUM_PROFIT_SHARE_EMPLOYEES
+    populateProfitShare()
+    // Profit Share Employees percents
+    const profitShareEmployees = businessList.find(i => i.NAME == name).PROFIT_SHARE_EMPLOYEES
+    profitShareEmployees.forEach(element => {
+        const DOMelement = document.getElementById(`percent${element.EMPLOYEE_ID}`)
+        DOMelement.value = element.PROFIT_PERCENT
+    });
+    document.getElementById('PCpercent').value = businessList.find(i => i.NAME == name).PC_PROFIT_PERCENT
 }
 // Function to calculate the cost of a mercenary
 function calculatingMercenaryCost(){

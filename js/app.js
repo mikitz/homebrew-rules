@@ -245,7 +245,8 @@ function showCalculatorDialog(element) {
     // ===============
     //   Special DOM
     // ===============
-    if (ID == 'Demographics Calculator') { // If the modal is for calculating level distribution
+    // If the modal is for calculating level distribution
+    if (ID == 'Demographics Calculator') { 
         // Add "Save Location" Button
         const submit = document.createElement('button')
         submit.value = 'Save Location'
@@ -260,15 +261,25 @@ function showCalculatorDialog(element) {
         document.getElementById('location').addEventListener('change', function () { setInputsBasedOnSelectedLocation() })
         setCityDropdown() // Set up the City Dropddown
     }
-    if (ID == 'Running a Business') { // If the modal is for the business roll
+    // If the modal is for the business roll
+    if (ID == 'Running a Business') { 
         // Add "Save Business" Button
         const submit = document.createElement('button')
         submit.value = 'Save Business'
         submit.innerText = 'Save Business'
         submit.addEventListener('click', function(e) { 
             e.preventDefault()
-            saveLocation()
+            saveBusiness()
             eval(calculator)
         })
+        modalForm.appendChild(submit)
+        // Add a Profit Share Employees div
+        const div = document.createElement('div')
+        div.id = 'profit-share-employees-html'
+        insertAfter(document.getElementById('number-of-profit-share-employees'), div) // Insert the div before the buttons
+        // Update DOM
+        document.getElementById('number-of-profit-share-employees').addEventListener('input', function() { populateProfitShare() })
+        document.getElementById('business').addEventListener('change', function() { changeBusinessInputsBasedOnSelectedBusiness() })
+        populateBusinessDropdown() // Set up the business dropdown
     }
 }
