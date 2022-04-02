@@ -17,9 +17,8 @@ function demographicsCalculator(){
 
     // CALCULATE
         // Calculate the demographics
-        document.getElementById('right-column').innerHTML = `Population: ${pop.toLocaleString()}`
-        const table = document.createElement('table')
-        table.classList.add('styled-table')
+        const table = document.createElement('div')
+        table.classList.add('flex-container')
         // Loop through each level and calculate its population
         for (lvl = 1; lvl < 20 + 1; lvl++) {
             // Get the respective percentage
@@ -27,18 +26,19 @@ function demographicsCalculator(){
             var demographics = parseInt(Math.round(pop * perc))
             demographics = parseInt(Math.round((demographics * modMagicness) * modWealth))
             // Create a new row in the table
-            var row = document.createElement('tr')
+            var row = document.createElement('div')
+            row.setAttribute('class', 'flex-item')
             row.setAttribute('id', `lvl-${lvl}`)
             table.appendChild(row)
             // Add the level to the row
-            const tLevel = document.createElement('td')
-            tLevel.setAttribute("style", "padding: 5px 5px")
-            tLevel.innerHTML = lvl
+            const tLevel = document.createElement('span')
+            // tLevel.setAttribute("style", "padding: 5px 5px")
+            tLevel.innerHTML = `<b>Level ${lvl}:</b>`
             row.appendChild(tLevel)
             // Add the popuulation to the row
-            const tPop = document.createElement('td')
-            tPop.setAttribute("style", "padding: 5px 5px")
-            tPop.innerHTML = demographics
+            const tPop = document.createElement('span')
+            // tPop.setAttribute("style", "padding: 5px 5px")
+            tPop.innerHTML = ` <i>${demographics}</i>`
             row.appendChild(tPop)
             // Append the row to the table
         }

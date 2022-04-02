@@ -1,0 +1,16 @@
+@import 'constants.css';
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: space-between;
+}
+.flex-item {
+    padding: 3px;
+    margin: 2px;
+    border: var(--light-primary) 2px solid;
+    /* min-width: 80px; */
+}
