@@ -148,7 +148,7 @@ function runningABusiness() {
         }).catch(error => { console.log(error) }) // Auth Errors
     }
 }
-// Function to populate the profit-share employees
+// TODO: Function to populate the profit-share employees
 function populateProfitShare(){
     // Clear the div
     var PSE = document.getElementById('profit_share_employees')
@@ -175,6 +175,37 @@ function populateProfitShare(){
         div.setAttribute('id', `PCpercentDiv`)
         div.innerHTML = HTML
         PSE.appendChild(div)
+}
+// TODO: Function to save a business
+function saveBusiness(){
+    // Inputs
+    const pop = parseInt(document.getElementById("population").value)
+    const wealth = document.getElementById('wealth').value
+    const magicness = document.getElementById('magicness').value
+    const name = document.getElementById('name').value
+    if (!name || !pop) return alert("Please enter a name and/or population before saving a location.") // See if name is blank
+    // Local Storage Pull
+    if (!localStorage.getItem('location_list')) localStorage.setItem('location_list', '[]') // Check if location_list exists
+    let cityList = JSON.parse(localStorage.getItem('location_list')) // Parse the JSON to read it
+    const locationIdx = cityList.findIndex(i => i.NAME == name) // Get the index of this location
+    console.log("Location Index:", locationIdx)
+    if (locationIdx >= 0) { // Update the JSON
+        cityList[locationIdx].NAME = name
+        cityList[locationIdx].POPULATION = pop
+        cityList[locationIdx].WEALTH = wealth
+        cityList[locationIdx].MAGICNESS = magicness
+    } else if (locationIdx < 0) { // Append a new Location to the JSON
+        const city = { // JSON Object
+                "NAME": name, 
+                "POPULATION": pop,
+                "WEALTH": wealth,
+                "MAGICNESS": magicness
+            }
+        cityList.push(city) // Push to the array 
+    }
+    localStorage.setItem('location_list', JSON.stringify(cityList)) // Set local storage
+    // Update DOM
+    setBusinessDropdown() // Set up the City Dropdown with the new city that was just added
 }
 // Function to calculate the cost of a mercenary
 function calculatingMercenaryCost(){

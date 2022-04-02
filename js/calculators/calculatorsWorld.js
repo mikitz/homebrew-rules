@@ -1,12 +1,3 @@
-// Function to set the dropdown to the saved index
-function setDropdown(){
-    // Set up the dropdown by ID
-    const idxMagicness = document.getElementById("magicness")
-    // Pull data from localStorage
-    let dMagicness = localStorage.getItem('magicness')
-    // Set the selected index
-    idxMagicness.selectedIndex = parseInt(dMagicness)
-}
 // Calculate level demographics
 function demographicsCalculator(){ 
     document.getElementById("right-column").innerHTML = ""
@@ -52,63 +43,53 @@ function demographicsCalculator(){
             // Append the row to the table
         }
         document.getElementById('right-column').appendChild(table)
-    
 }
 // Function to add a City
-// TODO: Update to LocalStorage
-function addCity(){
-    // USER INPUTS
-        // Population
-        const pop = parseInt(document.getElementById("population").value)
-        // Wealth
-        const wealth = document.getElementById('wealth').value
-        // Magicness
-        const magicness = document.getElementById('magicness').value
-        // Name
-        const name = document.getElementById('name').value
-    // LOCAL STORAGE PULL
-        // Check if city_list exists
-        if (!localStorage.getItem('city_list')) {
-            // Set an empty array if not
-            localStorage.setItem('city_list', '[]')
-        }
-        // Parse the JSON to read it
-        let cityList = JSON.parse(localStorage.getItem('city_list'))
-        // console.log(cityList)
-    // ERROR STOP
-        // See if name is blank
-        if (!name || !pop) {
-            alert("Please enter a name and/or population before you save the city")
-            return
-        }
-    // LOCAL STORAGE PUSH
-        // JSON Object
-        const city = {"NAME": name,
-                    "POPULATION": pop,
-                    "WEALTH": wealth,
-                    "MAGICNESS": magicness}
-        // Push to the array        
-        cityList.push(city)
-        // Set local storage
-        localStorage.setItem('city_list', JSON.stringify(cityList))
-    // SET DROPDOWN
-    setCityDropdown()
+function saveLocation(){
+    // Inputs
+    const pop = parseInt(document.getElementById("population").value)
+    const wealth = document.getElementById('wealth').value
+    const magicness = document.getElementById('magicness').value
+    const name = document.getElementById('name').value
+    if (!name || !pop) return alert("Please enter a name and/or population before saving a location.") // See if name is blank
+    // Local Storage Pull
+    if (!localStorage.getItem('location_list')) localStorage.setItem('location_list', '[]') // Check if location_list exists
+    let cityList = JSON.parse(localStorage.getItem('location_list')) // Parse the JSON to read it
+    const locationIdx = cityList.findIndex(i => i.NAME == name) // Get the index of this location
+    console.log("Location Index:", locationIdx)
+    if (locationIdx >= 0) { // Update the JSON
+        cityList[locationIdx].NAME = name
+        cityList[locationIdx].POPULATION = pop
+        cityList[locationIdx].WEALTH = wealth
+        cityList[locationIdx].MAGICNESS = magicness
+    } else if (locationIdx < 0) { // Append a new Location to the JSON
+        const city = { // JSON Object
+                "NAME": name, 
+                "POPULATION": pop,
+                "WEALTH": wealth,
+                "MAGICNESS": magicness
+            }
+        cityList.push(city) // Push to the array 
+    }
+    localStorage.setItem('location_list', JSON.stringify(cityList)) // Set local storage
+    // Update DOM
+    setCityDropdown() // Set up the City Dropdown with the new city that was just added
 }
 // Function to set the Cities select dropdown
 // TODO: Update to LocalStorage
 function setCityDropdown(){
     // LOCAL STORAGE PULL
         // Cities
-        const cities = JSON.parse(localStorage.getItem('city_list'))
+        const cities = JSON.parse(localStorage.getItem('location_list'))
     // DROPDOWN
         // Cities Dropdown
-        var citiesDrop = document.getElementById('city-list')
+        const citiesDrop = document.getElementById('location')
         // Clear it
         citiesDrop.innerHTML = ''
         // Add Select City
         const selectCity = document.createElement('option')
         // Set its inner html
-        selectCity.innerHTML = 'Select a City'
+        selectCity.innerHTML = 'Select Location'
         // Set its value
         selectCity.value = 'custom'
         // Append to the dropdown
@@ -131,4 +112,25 @@ function setCityDropdown(){
                 citiesDrop.appendChild(option)
             })
         }
+}
+// Function to set population and name based on selected city
+function setInputsBasedOnSelectedLocation(){
+    // Inputs
+    const name = document.getElementById('location').value
+    if (name == 'custom') return // If the user selects "Select Location"
+    const popInput = document.getElementById("population")
+    const wealthInput = document.getElementById('wealth')
+    const magicnessInput = document.getElementById('magicness')
+    const nameInput = document.getElementById('name')
+    
+    // Local Storage
+    const cities = JSON.parse(localStorage.getItem('location_list')) // Get the location list from local storage
+    const pop = cities.find(i => i.NAME == name).POPULATION
+    const wealth = cities.find(i => i.NAME == name).WEALTH
+    const magicness = cities.find(i => i.NAME == name).MAGICNESS
+    // Update DOM
+    popInput.value = pop
+    wealthInput.value = wealth
+    magicnessInput.value = magicness
+    nameInput.value = name
 }

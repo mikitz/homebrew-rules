@@ -123,17 +123,6 @@ function generateTable(selectedClass){
             }
         });       
 }
-// Function to populate the Number Dropdown
-function populateMagicalExperimentDropdown(){
-// SCHOOL DROPDOWN
-    // TODO: Only add schools for which the PC has spells. (12/22/2021)
-
-// NUMBER DROPDOWN
-    // TODO: Only add in numbers which the player may choose -- base this on the level of the PC and filter out spells that the PC cannot cast. (12/22/2021)
-
-// COMBINATION DROPDOWN
-    // TODO: Modify the combos that have been discovered based on the the school and number (12/22/2021)
-}
 // Function to get the outcome for a casting a spell of a higher level
 function outcome(){
     // Inputs

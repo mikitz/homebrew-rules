@@ -171,10 +171,9 @@ function showCalculatorDialog(element) {
     // ====================
     //   Set Up the Modal
     // ====================
-    console.log("ID pre:", element.innerText)
     let ID = (element.innerText).replace(/-\w+/gm, "").replace(/-\w+\s\w+/gm, "")
     if (ID.toUpperCase() === ID) ID = ID.toTitleCase() // Format the ID
-    console.log("ID:", ID)
+    if(ID == 'Running A Business') ID = 'Running a Business'
     const idCamel = camelize(ID) // Convert the ID into camel case
     const modal = document.getElementById('calc-modal') // Get the modal element
     const closeModal = document.getElementById('close-modal') // Get the upper-right X
@@ -219,6 +218,12 @@ function showCalculatorDialog(element) {
                 input.appendChild(option)
             });
         }
+        if (type == 'text') {
+            input = document.createElement('input') // Set up the Input element
+            input.id = htmlID // Set its ID
+            input.placeholder = (element.NAME).toTitleCase() // Add in the place holder
+            input.type = 'text'
+        }
 
         modalForm.appendChild(label) // Add a Label
         modalForm.innerHTML += '<br>' // Add a line break
@@ -237,4 +242,33 @@ function showCalculatorDialog(element) {
     })
     modalForm.innerHTML += '<br>' // Add a line break
     modalForm.appendChild(submit)
+    // ===============
+    //   Special DOM
+    // ===============
+    if (ID == 'Demographics Calculator') { // If the modal is for calculating level distribution
+        // Add "Save Location" Button
+        const submit = document.createElement('button')
+        submit.value = 'Save Location'
+        submit.innerText = 'Save Location'
+        submit.addEventListener('click', function(e) { 
+            e.preventDefault()
+            saveLocation()
+            eval(calculator)
+        })
+        modalForm.appendChild(submit)
+        // Update DOM
+        document.getElementById('location').addEventListener('change', function () { setInputsBasedOnSelectedLocation() })
+        setCityDropdown() // Set up the City Dropddown
+    }
+    if (ID == 'Running a Business') { // If the modal is for the business roll
+        // Add "Save Business" Button
+        const submit = document.createElement('button')
+        submit.value = 'Save Business'
+        submit.innerText = 'Save Business'
+        submit.addEventListener('click', function(e) { 
+            e.preventDefault()
+            saveLocation()
+            eval(calculator)
+        })
+    }
 }
