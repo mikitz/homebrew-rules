@@ -1,3 +1,21 @@
+/* ================== 
+      Mobile Nav 
+================== */
+@media only screen and (max-width: 600px) {
+  .sidenav {
+    background-color: var(--light-quaternary) !important;
+    width: 50px !important;
+  }
+  .sidenav button span {
+    display: none;
+  }
+  .sidenav .fa-caret-down {
+    display: none;
+  }
+}
+/* ================== 
+        Nav 
+================== */
  /* Fixed sidenav, full height */
  .sidenav {
     height: 100%;
