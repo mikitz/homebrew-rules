@@ -25,6 +25,7 @@ function demographicsCalculator(){
             var perc = levelDemographicsData.find(i => i.LEVEL == lvl).PERCENTAGE_OF_POPULATION
             var demographics = parseInt(Math.round(pop * perc))
             demographics = parseInt(Math.round((demographics * modMagicness) * modWealth))
+            if (demographics == 0) continue // Skip this one if it's 0
             // Create a new row in the table
             var row = document.createElement('div')
             row.setAttribute('class', 'flex-item')
