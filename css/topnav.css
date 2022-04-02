@@ -1,5 +1,12 @@
 @import 'constants.css';
-
+/* ================== 
+      Mobile Nav 
+================== */
+@media only screen and (max-width: 600px) {
+  .topnav {
+    display: none !important;
+  }
+}
 /* Add a black background color to the top navigation */
  .topnav {
     /* top: 150px; */
