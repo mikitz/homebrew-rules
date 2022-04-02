@@ -12,7 +12,7 @@ function buildPage(clickedElement){
         ID = 'home'
         title = 'Home'
     } else {
-        if ((clickedElement.id).includes("-icon")) ID = (clickedElement.id).replace("-icon", "")
+        if ((clickedElement.id).includes("-icon")) ID = (clickedElement.id).replace("-icon", "").replaceAll("_", " ")
         else ID = clickedElement.id // Grab the ID from the clicked element
         title = clickedElement.innerText // Grab the innerText, which is the page title, from the clicked element
         if (!title) title = ID.toTitleCase()
