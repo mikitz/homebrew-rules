@@ -54,6 +54,22 @@ function factorialize(n) {
     if (n == 0) return 1
     return (n * factorialize(n - 1))
 }
+// Function to calculate combinations
+function nCr(n, r){
+    // Compute n factorial
+    var nFact = factorialize(n)
+    console.log(`n factorial: ${nFact}`)
+    // Compute r factorial
+    var rFact = factorialize(r)
+    console.log(`r factorial: ${rFact}`)
+    // Compute n - r factorial
+    var nrFact = factorialize(n - r)
+    console.log(`n - r factorial: ${nrFact}`)
+    // Compute nCr
+    var result = parseFloat((nFact / (rFact * nrFact)))
+    // Return
+    return parseFloat(result)
+}
 // Function to select the contents of an element
 // Source: https://www.codegrepper.com/code-examples/javascript/frameworks/nextjs/copy+a+table+to+clipboard+javascript
 function selectElementContents(el) {

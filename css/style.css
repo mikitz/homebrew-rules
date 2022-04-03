@@ -82,7 +82,7 @@ code {
 .fa-copy {
     cursor: pointer;
 }
-.fa-calculator {
+main .fa-calculator {
     color: var(--light-primary) !important;
     height: inherit !important;
     padding-left: 15px;

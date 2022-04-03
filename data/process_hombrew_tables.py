@@ -12,7 +12,7 @@ def camel_case(s):
 import pandas as pd # Import Pandas
 xlsx = pd.ExcelFile('Homebrew Rules Tables.xlsx') # Read the XLSX using Pandas
 sheets = xlsx.sheet_names # Get the sheet names
-jsFile = open(f"data.js", "w") # Create a new file
+jsFile = open(f"data.js", "w") # Create a new file with a file version
 # =============================
 #    Process the Pages sheet
 # =============================
@@ -34,8 +34,8 @@ for page in pages: # Loop through all the pages
         for idx, row in df.iterrows(): # Loop through all the rows of the DataFrame
             isNull = (df[idx:idx+1].isnull().all(axis=1)).to_list()[0] # Get a boolean of whether this row is all NaN
             if isNull or df.shape[0] - 1 == idx: # Check if this row is NaN
-                if prevNullRow: table = df[prevNullRow + 1:idx].reset_index(drop=True) # Splice the table out using the last noted NaN row's index
-                else: table = df[0:idx].reset_index(drop=True) # Splice the table out starting from index 0
+                if prevNullRow: table = df[prevNullRow + 1:idx+1].reset_index(drop=True) # Splice the table out using the last noted NaN row's index
+                else: table = df[0:idx+1].reset_index(drop=True) # Splice the table out starting from index 0
                 tableName = table[table.columns[0]][0] # Pull out the table's name
                 tableLength = table.shape[0] # Get the table's length
                 table = table[1:tableLength] # Splice the table
@@ -49,7 +49,7 @@ for page in pages: # Loop through all the pages
 # ====================================
 #    Process the Page Content Sheet
 # ====================================
-dfPageContent = pd.read_excel(xlsx, sheet_name="Page Content")
-contentJSON = dfPageContent.to_json(orient='records')
-jsFile.write(f"\nlet pageContent = {contentJSON}")
+dfPageContent = pd.read_excel(xlsx, sheet_name="Page Content") # Read the sheet into a DF
+contentJSON = dfPageContent.to_json(orient='records') # Set up the content to be written
+jsFile.write(f"\nlet pageContent = {contentJSON}") # Write the content to the file
 jsFile.close() # Close the file
