@@ -283,4 +283,12 @@ function showCalculatorDialog(element) {
         document.getElementById('business').addEventListener('change', function() { changeBusinessInputsBasedOnSelectedBusiness() })
         populateBusinessDropdown() // Set up the business dropdown
     }
+    // If the modal is for XP Calculator
+    if (ID == 'Xp Calculator') {
+        // Add the creature div
+        const div = document.createElement('div')
+        div.id = 'creatures'
+        insertAfter(document.getElementById('number-of-different-CRs-in-the-encounter'), div)
+        document.getElementById('number-of-different-CRs-in-the-encounter').addEventListener('input', function() { popCreatureInputs() })
+    }
 }

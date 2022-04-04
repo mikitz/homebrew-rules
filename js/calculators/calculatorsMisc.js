@@ -1,53 +1,16 @@
-// Function to calculate the weight of currency
-function currencyWeight(){
-    // Clear output
-    document.getElementById('output').innerHTML = ''
-    // Get number of pieces
-    var pieces = parseInt(document.getElementById("pieces").value)
-    // Divide it by 50
-    var weightPounds = (pieces / 50).toFixed(2)
-    // Conver to KG
-    var weightKG = (weightPounds / 2.205).toFixed(2)
-    // Set up the message
-    var vMessage = `<h2>Output</h2>
-                    ${pieces} pieces weigh ${weightPounds} lbs (${weightKG} kg).`
-    // Populate the element
-    populateElement('output', vMessage, 'p')
-}
-// Set Listeners
-function setListenersCurrencyWeight(){
-    document.getElementById('pieces').addEventListener('input', function(){
-        currencyWeight()
-    })
-}
-// Calculate the distance to the horizon
-function calculate_horizon(){
-    // Clear Output
-    document.getElementById('output').innerHTML = ''
-    // Get height
-    var h = document.getElementById("height").value
-    // Get radius
-    var r = document.getElementById("radius").value
-    // Compute
-    var l = Math.round(Math.sqrt(2 * r * h))
-    // Print the probability
-    var p = document.createElement('p')
-    p.innerHTML = `<h2>Output</h2>
-                    ${l} feet <br>
-                    ${(l/5280).toFixed(2)} miles`
-    document.getElementById("output").appendChild(p)	
-}
+// ====================
+//     D&D Specific
+// ====================
 // Function to calculate the number of creatures needed to defeat/kill for a party of x size to reach y level
 function howManyCreaturesToAnyLevel(){
     // Get the CR
-    var b = document.getElementById("cr")
+    var b = document.getElementById("creature-CR")
     var CR = b.options[b.selectedIndex].text
     // Get the Desired Level
-    var a = document.getElementById("lvl")
+    var a = document.getElementById("desired-level")
     var level = a.options[a.selectedIndex].text
     // Get the number of party memebers
-    var c = document.getElementById("party")
-    var party = parseInt(c.options[c.selectedIndex].text)
+    var party = parseInt(document.getElementById("number-of-party-members").value)
     // Pull the XP per creature based on the cr
     var cXP = XP_by_CR.find(i => i.CR == CR).XP
     // Pull the XP needed for the given level
@@ -57,22 +20,13 @@ function howManyCreaturesToAnyLevel(){
     var rCreatures = Math.ceil(nrCreatures).toLocaleString()
     // Build the message
     var vMessage = `With <b>${party} party members</b>, you (and your group) will have to kill <b>${rCreatures} CR ${CR}</b> creatures in order to reach <b>level ${level}</b>.`
-    document.getElementById('output').innerHTML = vMessage
-    // Log for debugging
-    console.log(`INITIAL VARS
-    Input CR: ${CR}
-    Input Lvl: ${level}
-    cXP: ${cXP}
-    nXP: ${nXP}
-    Party Members: ${party}
-    NR Creatures: ${nrCreatures}
-    R Creatures: ${rCreatures}`)
+    document.getElementById('right-column').innerHTML = vMessage
 }
 // Function to populate the dom with creature inputs
 function popCreatureInputs(){
     // USER INPUTS
         // Number of Creature Types
-        let quantity = parseInt(document.getElementById('quantity').value)
+        let quantity = parseInt(document.getElementById('number-of-different-CRs-in-the-encounter').value)
         if (quantity > 20){
             quantity = 20
         }
@@ -89,7 +43,8 @@ function popCreatureInputs(){
                 // Set ID
                 div.id = `creature-${index}-div`
                 // Set innerHTML
-                div.innerHTML = `<label for="creature${index}-cr"><b>Creature ${index}</b> CR:</label>
+                div.innerHTML = `<div><b>Creature ${index}</b></div>
+                <label for="creature${index}-cr">CR:</label>
                 <select name="creature${index}-cr" id="creature${index}-cr">
                     <option value="0">0</option>
                     <option value="0.125">1/8</option>
@@ -125,7 +80,7 @@ function popCreatureInputs(){
                     <option value="28">28</option>
                     <option value="29">29</option>
                     <option value="30">30</option>
-            </select>
+            </select><br>
             <label for="creature-${index}-quantity">Quantity:</label>
                 <input type="number" id="creature-${index}-quantity" name="creature-${index}-quantity">`
         // PUSH TO DOM
@@ -139,7 +94,7 @@ function xpCalculator(){
     const campaignName = localStorage.getItem('selectedCampaign')
     // USER INPUTS
         // Number of Creatures
-        var quantity = parseInt(document.getElementById('quantity').value)
+        var quantity = parseInt(document.getElementById('number-of-different-CRs-in-the-encounter').value)
         if (quantity > 20){
             quantity = 20
         }
@@ -180,34 +135,25 @@ function xpCalculator(){
         console.log("XP per PC:", totalPCxp)
     // PUSH TO DOM
         // Clear the element
-        document.getElementById('output').innerHTML = ''
+        document.getElementById('right-column').innerHTML = ''
         // Set its innerHTML
-        document.getElementById('output').innerHTML = `<h2>Output</h2>
+        document.getElementById('right-column').innerHTML = `<h2>Output</h2>
                                                     <b>Creatures Defeated:</b> ${totalCreatures}<br>
-                                                    <b>Total XP:</b> ${totalXP}<br>
+                                                    <b>Total XP:</b> ${totalXP.toLocaleString()}<br>
                                                     <b>Party Size:</b> ${partySize}<br>
-                                                    <b>Total XP per PC:</b> ${totalPCxp}`
+                                                    <b>Total XP per PC:</b> ${totalPCxp.toLocaleString()}`
 }
 // Function to roll any given number of checksPC
 function rollMultipleChecks(){
     // USER INPUTS
-        // Campaign Name
-        const campaignName = localStorage.getItem('selectedCampaign')
-        // Note
-        const note = document.getElementById('note').value
         // Prof. Bonus
-        var prof = parseInt(document.getElementById('prof-pc').value)
+        var prof = parseInt(document.getElementById('PC-proficiency-bonus').value)
         // Ability Mod.
-        var abilityMod = parseInt(document.getElementById('ability-pc').value)
+        var abilityMod = parseInt(document.getElementById('PC-ability-score-modifier').value)
         // Quantity
         var quantity = parseInt(document.getElementById('quantity').value)
         // DC
-        var DC = parseInt(document.getElementById('dc').value)
-    // Log it
-    // console.log(`INPUT VARS
-    //             Ability Mod: ${abilityMod}
-    //             Proficiency: ${prof}
-    //             DC: ${DC}`)
+        var DC = parseInt(document.getElementById('difficulty-class').value)
     // Roll the dice
         // Define the lists
         var [nat1sPC, nat20sPC, successesPC, failuresPC, rollsPC, checksPC]  = [[], [], [], [], [], []]
@@ -253,7 +199,7 @@ function rollMultipleChecks(){
                     Failures: ${failuresPC.length}<br>
                     <b>Total Successes: ${successesFinal}</b>`
     // Populate the element
-    document.getElementById('output_rolls').innerHTML = vMessage
+    document.getElementById('right-column').innerHTML = vMessage
     // APPEND TO THE DB
     if (campaignName){
         // FIRESTORE
@@ -291,20 +237,16 @@ function rollMultipleOpposedChecks(){
         // GENERAL
             // Quantity
             var quantity = parseInt(document.getElementById('quantity').value)
-            // Campaign Name
-            const campaignName = localStorage.getItem('selectedCampaign')
-            // Note
-            const note = document.getElementById('note').value
         // PLAYER CHARACTER
             // Prof. Bonus
-            var profPC = parseInt(document.getElementById('prof-pc').value)
+            var profPC = parseInt(document.getElementById('PC-ability-score-modifier').value)
             // Ability Mod.
-            var abilityModPC = parseInt(document.getElementById('ability-pc').value)
+            var abilityModPC = parseInt(document.getElementById('PC-proficiency-bonus').value)
         // NON-PLAYER CHARACTER
             // Prof. Bonus
-            var profNPC = parseInt(document.getElementById('prof-npc').value)
+            var profNPC = parseInt(document.getElementById('NPC-proficiency-bonus').value)
             // Ability Mod.
-            var abilityModNPC = parseInt(document.getElementById('ability-npc').value)
+            var abilityModNPC = parseInt(document.getElementById('NPC-ability-score-modifier').value)
     // Define the lists
         // PLAYER CHARACTER
         var [nat1sPC, nat20sPC, successesPC, failuresPC, rollsPC, checksPC]  = [[], [], [], [], [], []]
@@ -340,7 +282,7 @@ function rollMultipleOpposedChecks(){
                     PC Successes: ${successesPC.length}<br>
                     NPC Successes: ${successesNPC.length}<br>`
     // Populate the element
-    document.getElementById('output_rolls').innerHTML = vMessage
+    document.getElementById('right-column').innerHTML = vMessage
     // APPEND TO THE DB
     if (campaignName){
         // FIRESTORE
@@ -372,14 +314,17 @@ function rollMultipleOpposedChecks(){
         }).catch(error => { console.log(error) }) // Auth Errors
     }
 }
+// ==========================
+//     Dice Probabilities
+// ==========================
 // Calculates the probability of obtaining a single specific outcome across n rolls of a d-sided die
 function singleSpecificOutcomeProbCalc() {
     // Clear Output
-    document.getElementById('output1').innerHTML = ""
+    document.getElementById('right-column').innerHTML = ""
     // Get number of dice
-    var n = parseInt(document.getElementById("n1").value)
+    var n = parseFloat(document.getElementById("number-of-dice-(n)").value)
     // Get sides on each die
-    var d = parseInt(document.getElementById("d1").value)
+    var d = parseFloat(document.getElementById("number-of-sides-on-each-die-(d)").value)
     // Calculate
     var prob = parseFloat(1 - ((d - 1) / d)**n)
     probString = parseFloat(prob*100).toFixed(2)+"%"
@@ -390,18 +335,18 @@ function singleSpecificOutcomeProbCalc() {
     // Print the probability
     var p = document.createElement('p')
     p.innerHTML = `Probability: ${probString}<br>Fraction: ${frac}`
-    document.getElementById("output1").appendChild(p)
+    document.getElementById("right-column").appendChild(p)
 }
 // Calculates the probability of obtaining an outcome of o or greater, on at least one of n d-sided dice
 function singleSpecificOutcomeOrGreaterProbCalc() {
     // Clear Output
-    document.getElementById('output2').innerHTML = ""
+    document.getElementById('right-column').innerHTML = ""
     // Get number of dice
-    var n = parseFloat(document.getElementById("n2").value)
+    var n = parseFloat(document.getElementById("number-of-dice-(n)").value)
     // Get sides on each die
-    var d = parseFloat(document.getElementById("d2").value)
-    // Get the specific outcome
-    var o = parseFloat(document.getElementById("o2").value)
+    var d = parseFloat(document.getElementById("number-of-sides-on-each-die-(d)").value)
+    // Get the value that defines a success
+    var o = parseFloat(document.getElementById("outcome-or-greater-desired-(o)").value)
     // Calculate
     var prob = parseFloat(1 - ((d - (d - o + 1)) / d)**n)
     probString = parseFloat(prob*100).toFixed(2)+"%"
@@ -412,7 +357,7 @@ function singleSpecificOutcomeOrGreaterProbCalc() {
     // Print the probability
     var p = document.createElement('p')
     p.innerHTML = `Probability: ${probString}<br>Fraction: ${frac}`
-    document.getElementById("output2").appendChild(p)
+    document.getElementById("right-column").appendChild(p)
 }
 function calcProbComplex(O, K, N, S){
     // VARIABLES
@@ -449,16 +394,16 @@ function calcProbComplex(O, K, N, S){
 // Function that is run on click that implements the above
 function calculateMoreComplexProbability(){
     // Clear Output
-    document.getElementById('output3').innerHTML = ""
+    document.getElementById('right-column').innerHTML = ""
     // USER INPUTS
         // Get number of dice
-        var N = parseFloat(document.getElementById("n3").value)
+        var N = parseFloat(document.getElementById("number-of-dice-(n)").value)
         // Get sides on each die
-        var S = parseFloat(document.getElementById("d3").value)
+        var S = parseFloat(document.getElementById("number-of-sides-on-each-die-(d)").value)
         // Get the value that defines a success
-        var O = parseFloat(document.getElementById("o3").value)
+        var O = parseFloat(document.getElementById("outcome-or-greater-desired-(o)").value)
         // Get the number of success needed
-        var K = parseFloat(document.getElementById("k3").value)
+        var K = parseFloat(document.getElementById("number-of-successes-needed-(k)").value)
     // FUNCTION
         // Use the above function
         const probability = calcProbComplex(O, K, N, S)
@@ -476,5 +421,41 @@ function calculateMoreComplexProbability(){
         // Set its innerHTML
         p.innerHTML = `Probability: ${probString}<br>Fraction: ${frac}`
         // Append the newly created element to the DOM
-        document.getElementById("output3").appendChild(p)
+        document.getElementById("right-column").appendChild(p)
+}
+// =========================
+//     RPG Miscellaneous
+// =========================
+// Function to calculate the weight of currency
+function currencyWeight(){
+    // Clear output
+    document.getElementById('right-column').innerHTML = ''
+    // Get number of pieces
+    var pieces = parseInt(document.getElementById("pieces").value)
+    // Divide it by 50
+    var weightPounds = (pieces / 50).toFixed(2)
+    // Conver to KG
+    var weightKG = (weightPounds / 2.205).toFixed(2)
+    // Set up the message
+    var vMessage = `<h3>Output</h3>
+                    ${pieces} pieces weigh ${weightPounds} lbs (${weightKG} kg).`
+    // Populate the element
+    populateElement('right-column', vMessage, 'p')
+}
+// Calculate the distance to the horizon
+function horizonCalculator(){
+    // Clear Output
+    document.getElementById('right-column').innerHTML = ''
+    // Get height
+    var h = document.getElementById("height-of-the-observer-(h)-in-feet").value
+    // Get radius
+    var r = document.getElementById("radius-of-the-planet-(R)").value
+    // Compute
+    var l = Math.round(Math.sqrt(2 * r * h))
+    // Print the probability
+    var p = document.createElement('p')
+    p.innerHTML = `<h3>Output</h3>
+                    ${l} feet <br>
+                    ${(l/5280).toFixed(2)} miles`
+    document.getElementById("right-column").appendChild(p)	
 }
