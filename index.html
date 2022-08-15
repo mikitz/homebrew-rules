@@ -66,7 +66,10 @@
     </div>
     <script>
         buildSideNav()
-        buildPage()
+        const pageName = getPageNameFromURL(window.location)
+        if (pageName) buildPage(pageName)
+        else buildPage()
         document.getElementById('home').classList.add('active') // Set active class
+        
     </script>
 </html>

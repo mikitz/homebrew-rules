@@ -83,12 +83,14 @@ function buildSideNav() {
         span.id = htmlPage
         span.addEventListener('click', function() { 
             buildPage(this)
-            var dropdownContent = document.getElementById(`${htmlPage}-dropdown-content`)
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
+            try {
+                var dropdownContent = document.getElementById(`${htmlPage}-dropdown-content`)
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            } catch (error) {console.error("dropdownContent error:", error)}
         })
         button.appendChild(span)
         let dropdownIcon

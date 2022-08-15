@@ -12,10 +12,17 @@ function buildPage(clickedElement){
         ID = 'home'
         title = 'Home'
     } else {
-        if ((clickedElement.id).includes("-icon")) ID = (clickedElement.id).replace("-icon", "").replaceAll("_", " ")
-        else ID = clickedElement.id // Grab the ID from the clicked element
-        title = clickedElement.innerText // Grab the innerText, which is the page title, from the clicked element
-        if (!title) title = ID.toTitleCase()
+        const elementTest = clickedElement.id
+        if (elementTest) {
+            if ((clickedElement.id).includes("-icon")) ID = (clickedElement.id).replace("-icon", "").replaceAll("_", " ")
+            else ID = clickedElement.id // Grab the ID from the clicked element
+            title = clickedElement.innerText // Grab the innerText, which is the page title, from the clicked element
+            if (!title) title = ID.toTitleCase()
+        }
+        else {
+            ID = clickedElement.replaceAll("_", " ")
+            title = ID.toTitleCase()
+        }
     }
     // Active Page
     pages.forEach(element => {
@@ -155,6 +162,23 @@ function buildPage(clickedElement){
         }
     });
     buildTopNav() // Build the Top Nav
+    console.log("🚀 ~ file: app.js ~ line 165 ~ buildPage ~ ID", ID)
+    if (ID != 'home') {
+        const url = window.location
+        const parser = new URL(url || window.location);
+        parser.searchParams.set('page', ID);
+        window.history.pushState(ID, "", parser.href)
+        const hash = getHashFromURL(window.location)
+        if (hash) {
+            const urlWithHashRemoved = url.href.replace(hash, "")
+            window.history.pushState(ID, "", urlWithHashRemoved)
+        }
+    } else {
+        const url = window.location
+        const parser = new URL(url || window.location);
+        parser.searchParams.set('page', 'home');
+        window.history.pushState(ID, "", parser.href)
+    }
 }
 // Function to set up the calculator dialog
 function showCalculatorDialog(element) {
@@ -290,5 +314,19 @@ function showCalculatorDialog(element) {
         div.id = 'creatures'
         insertAfter(document.getElementById('number-of-different-CRs-in-the-encounter'), div)
         document.getElementById('number-of-different-CRs-in-the-encounter').addEventListener('input', function() { popCreatureInputs() })
+    }
+}
+// Function to return the page name from the URL
+function getPageNameFromURL(url) {
+    const parser = new URL(url || window.location);
+    return parser.searchParams.get('page')
+}
+// Function to return the hash from the URL
+function getHashFromURL(url) {
+    const HREF = url.href
+    if (HREF.includes('#')) {
+        const hashIndex = HREF.indexOf('#', -1)
+        const urlLength = HREF.length
+        return HREF.slice(hashIndex, urlLength)
     }
 }
