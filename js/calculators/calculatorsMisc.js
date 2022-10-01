@@ -449,7 +449,7 @@ function horizonCalculator(){
     // Get height
     var h = document.getElementById("height-of-the-observer-(h)-in-feet").value
     // Get radius
-    var r = document.getElementById("radius-of-the-planet-(R)").value
+    var r = (document.getElementById("radius-of-the-planet-(R)").value) * 5280
     // Compute
     var l = Math.round(Math.sqrt(2 * r * h))
     // Print the probability

@@ -219,18 +219,19 @@ function showCalculatorDialog(element) {
     document.getElementById('calc-title').innerText = `${ID} Calculator` // Set the Title
     inputs.forEach(element => { // Loop through the Inputs
         let htmlID = IDify(element.NAME) // Convert the element into an  HTML ID
-
+        console.log("🚀 ~ file: app.js ~ line 222 ~ showCalculatorDialog ~ htmlID", htmlID)
         let label = document.createElement('label')
         label.innerText = (element.NAME).toTitleCase()
         label.for = htmlID
-
+        
         const type = element.TYPE
         let input
         if (type == 'number') {
             input = document.createElement('input') // Set up the Input element
             input.id = htmlID // Set its ID
+            if (htmlID == "radius-of-the-planet-(R)") input.setAttribute('value', 3959)
             input.placeholder = (element.NAME).toTitleCase() // Add in the place holder
-            input.type = 'number'
+            input.type = 'number'            
         }
         if (type == 'select') {
             input = document.createElement('select') // Create the select element
