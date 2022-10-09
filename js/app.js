@@ -210,9 +210,11 @@ function showCalculatorDialog(element) {
     //   Get Data
     // ============
     const data = findRow(ID) // Get the row from the table where this is in a cell
+    console.log("🚀 ~ file: app.js ~ line 213 ~ showCalculatorDialog ~ data", data)
     const calculator = data.CALC // Get the calculator function name
     // const inputs = (data.INPUTS).split(", ") // Get the inputs needed for the function as a list
     const inputs = JSON.parse(data.INPUTS)
+    console.log("🚀 ~ file: app.js ~ line 217 ~ showCalculatorDialog ~ inputs", inputs)
     // ==============
     //   Update DOM
     // ==============
